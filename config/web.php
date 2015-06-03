@@ -52,8 +52,8 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
     	'urlManager' => [
-    		'enablePrettyUrl' => true,
-    		'showScriptName' => false,//隐藏index.php
+    		'enablePrettyUrl' => false,
+    		'showScriptName' => true,//隐藏index.php
     		//'enableStrictParsing' => false,
     		//'suffix' => '.html',//后缀
     		'rules' => [
