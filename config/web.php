@@ -75,13 +75,7 @@ $config = [
     	],
     	'assetManager' => [
     			'bundles' => [
-    					'yii\web\JqueryAsset' => [
-    							'sourcePath' => null,   // 一定不要发布该资源
-    							'js' => [
-    									'js/jquery-1.10.2.js'
-//     									'//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
-    							]
-    				],
+    					
     			],
     		],
     ],
