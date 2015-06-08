@@ -347,5 +347,19 @@ http://localhost:8085/index.php?r=sale/default/index
 
 crontab  -e
 
+$this->registerJsFile("@web/js/jquery-11.js");
+$this->registerCssFile("@web/js/jquery-11.css");
 
+
+<?php $form = ActiveForm::begin(); ?>
+			<fieldset>
+			<div class="field">
+			<?= $form->field($model, 'username')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号','class'=>'mobile'])->hint('请输入手机号')?>
+			</div>
+			
+			<div class="field">
+   			<?= $form->field($model, 'password')->textInput(['maxlength' => 60])?>
+   			</div>
+		</fieldset>
+		<?php ActiveForm::end(); ?>
 
