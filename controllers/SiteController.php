@@ -49,6 +49,10 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+    	//$this->layout=null;
+    	//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    	//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+    	//var_dump($_REQUEST); 
         return $this->render('index');
     }
 

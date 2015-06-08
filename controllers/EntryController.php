@@ -94,6 +94,7 @@ class EntryController extends Controller{
 	}
 	
 	public function actionAddUsers(array $id=null){
+		
 // 		Yii::trace("parameter id is $id");
 		$this->layout='@app/views/layouts/manager.php';
 		var_dump($id);
