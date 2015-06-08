@@ -1,8 +1,14 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-$this->title = '蝶富平台';
+//$this->title = '蝶富平台';
+$this->title="test";
+$this->css=null;
+$this->cssFiles=null;
+//var_dump($this->assetBundles);
+//$this->registerCss($css);
 
 ?>
 <style type="text/css">
@@ -40,8 +46,15 @@ body{
 
 
 <div class="container">
-		<a style="top: 2685px;" id="btn" class="btn" href="http://ysk.xmgapay.com/wap.php/reg/reg/invite_mobile/13724346621.html"><img src="images/quick_register.png"></a>
+		
+		<a style="top: 2685px;" id="btn" class="btn" href="<?= Url::toRoute(['/sale/vip-login/index'])?>"><img src="images/quick_register.png"></a>
+		
+		<?php //echo Html::a('Update', ['/sale/vip-login/index'], ['class' => 'btn btn-primary','style'=>'top: 2685px;']) ?>
+		
+		<!-- 
 		<img class="container_bg" src="images/bg.png">
+		 -->
+		 
 	</div>
 
 <script type="text/javascript">

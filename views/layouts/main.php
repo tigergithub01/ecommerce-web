@@ -9,6 +9,7 @@ use app\assets\AppAsset;
 /* @var $content string */
 
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -18,24 +19,13 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-   
-    <?php $this->head() ?>
+    
+    <?php /*$this->head()*/?>
 </head>
 <body>
 
 <?php $this->beginBody() ?>
-    <div class="wrap">
-            <?= $content ?>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="container">
-            <p class="pull-left">&copy; 智富坊 <?= date('Y') ?></p>
-            <p class="pull-right">蝶富平台</p>
-        </div>
-    </footer>
-
+    <?= $content ?>
 <?php $this->endBody() ?>
 </body>
 </html>
