@@ -402,4 +402,6 @@ ActiveForm模式：
 );?>
 
 http://172.16.33.252:8085/index.php
+
+r=sale%2Fvip-order%2Fcontact
     		
