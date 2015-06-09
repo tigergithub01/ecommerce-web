@@ -57,8 +57,8 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 
 		</div>
 		<div class="detail_btn_bar">
-			<a class="default primary"
-				href="">付款</a>
+			<a class="default primary" 
+				href="<?=Url::toRoute(['/sale/vip-order/confirm'])?>">付款</a>
 		</div>
 	</section>
 	<section id="1" style="display: none;">
