@@ -351,15 +351,55 @@ $this->registerJsFile("@web/js/jquery-11.js");
 $this->registerCssFile("@web/js/jquery-11.css");
 
 
-<?php $form = ActiveForm::begin(); ?>
-			<fieldset>
-			<div class="field">
-			<?= $form->field($model, 'username')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号','class'=>'mobile'])->hint('请输入手机号')?>
-			</div>
-			
-			<div class="field">
-   			<?= $form->field($model, 'password')->textInput(['maxlength' => 60])?>
-   			</div>
-		</fieldset>
-		<?php ActiveForm::end(); ?>
+150609:
+php表单：
 
+普通模式：		
+<form action="<?= Url::toRoute('vip-login/index')?>" class="form-wrap ajax-form" method="post">
+			<fieldset>
+				<div class="field">
+					<input name="VipLoginForm[vip_no]" class="mobile" 
+						placeholder="请输入手机号" data-role="mobile" type="tel" value=<?php echo $model->vip_no?>>
+				</div>
+				<div class="field">
+					<input name="VipLoginForm[password]" class="mobile" 
+						placeholder="请输入密码" data-role="mobile" type="tel" value=<?php echo $model->password?>>
+				</div>
+				
+				<div class="btn-wrap">
+					<input name="submit" class="btn btn-orange" id="submit" value="登录"
+						type="submit"> <input name="url"
+						value="L3dhcC5waHAvd2ViL2dvb2RzL2dpZC8xMjg5MS5odG1s" type="hidden">
+				</div>
+			</fieldset>
+		</form>
+		
+ActiveForm模式：		
+		<div class="form-wrap ajax-form">
+		<?php $form = ActiveForm::begin(['action' => ['vip_login/login'],'method'=>'post',]); ?>
+			<fieldset>
+				<div class="field">
+			<?= $form->field($model, 'vip_no')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号','class'=>'mobile'])?>
+			</div>
+
+				<div class="field">
+   			<?= $form->field($model, 'password')->textInput(['maxlength' => 60,'placeholder'=>'请输入密码','class'=>'mobile'])?>
+   			</div>
+			</fieldset>
+			<div class="btn-wrap">
+	    	 <?= Html::submitButton('登录', ['class' => 'btn btn-orange'])?>
+	    </div>
+		<?php ActiveForm::end(); ?>
+		</div>		
+
+<?php var_dump($model->getErrors());?>
+<?php foreach ($model->getErrors() as $value) {
+    			echo $value;
+    		}?>
+    		
+<?php $this->registerJs(
+    '$("document").ready(function(){ alert("hi"); });'
+);?>
+
+http://172.16.33.252:8085/index.php
+    		
