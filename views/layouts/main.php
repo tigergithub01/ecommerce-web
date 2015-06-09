@@ -20,7 +20,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     
-    <?php /*$this->head()*/?>
+    <?php $this->head()?>
 </head>
 <body>
 
