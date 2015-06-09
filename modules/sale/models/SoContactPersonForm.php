@@ -22,7 +22,7 @@ class SoContactPersonForm extends Model
     public function rules()
     {
         return [
-            [['name', 'phone_number', 'province_id', 'city_id', 'district_id'], 'required'],
+            [['name', 'phone_number', 'province_id', 'city_id', 'district_id','detail_address'], 'required'],
             //[['province_id', 'city_id', 'district_id'], 'integer'],
             [['name'], 'string', 'max' => 30],
             [['phone_number'], 'string', 'max' => 20],
