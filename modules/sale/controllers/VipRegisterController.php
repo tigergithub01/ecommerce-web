@@ -8,6 +8,7 @@ use yii\web\Controller;
 use app\modules\sale\models\VipForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\vip\Vip;
 
 
 class VipRegisterController extends \yii\web\Controller
@@ -32,9 +33,32 @@ class VipRegisterController extends \yii\web\Controller
     	$model = new VipForm(['scenario' => 'register']);
     	if ($model->load(Yii::$app->request->post())) {
 //     		return $this->goBack();
+			
+    		$connection = Yii::$app->db;
+    		$trans=$connection->beginTransaction();
+    		try {
+    			$vip = new Vip();
+    			$vip->vip_no=$model->vip_no;
+    			$vip->password=$model->password;
+    			$vip->status=1;
+    			
+    			//TODO:for date field
+    			$vip->register_date='2015-01-01';
+    			if(!$vip->validate()){
+    			 echo 'validate error';
+    			 return;
+    			}
+    			if(!$vip->save()){
+    				echo 'validate error';
+    				$trans->rollBack();
+    			}
+    			$trans->commit();
+    		} catch (\Exception $e) {
+    			$trans->rollBack();
+    			throw $e;
+    		}
     		return $this->redirect(['/sale/vip-center/index']);
     	} else {
-    		//$model->addError('password','用户名或密码不正确');
     		return $this->render('index', [
     				'model' => $model,
     		]);

@@ -8,6 +8,7 @@ use yii\web\Controller;
 use app\modules\sale\models\VipForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\vip\Vip;
 
 
 class VipLoginController extends \yii\web\Controller
@@ -28,6 +29,9 @@ class VipLoginController extends \yii\web\Controller
 	
     public function actionIndex()
     {
+    	
+//     	$vips = Vip::find()->all();
+//     	var_dump($vips);
     	//app\modules\sale\models
     	$model = new VipForm(['scenario' => 'login']);
     	if ($model->load(Yii::$app->request->post())) {
