@@ -16,7 +16,7 @@ use Yii;
  * @property integer $district_id
  * @property string $detail_address
  */
-class SoContactPerson extends \yii\db\ActiveRecord
+class SoContactPersonForm extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
