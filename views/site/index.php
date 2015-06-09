@@ -4,35 +4,28 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 //$this->title = '蝶富平台';
-$this->title="test";
-
-
-//var_dump($this->assetBundles);
-//$this->registerCss($css);
-
-
+$this->title="平台";
+$this->registerJsFile("js/jquery/jquery-1.8.2.min.js",['position' => \yii\web\View::POS_HEAD]);
 ?>
 
-<div class="vip-login-form" style="margin: 10px;">
-<?=Html::a('手机快速注册',['/sale/vip-register/index'],['class' => 'btn btn-primary','style'=>'width:100%;margin-top:10px;'])?>
+<div class="platform-index-form">
+	<?php echo Html::button('手机快速注册',['id'=>'btn_quick_register','class' => 'btn btn-primary','style'=>'width:100%;margin-top:5px;margin-left:2px;height:60px;'])?>
+	<img class="container_bg" src="images/sale/bg.png" style="width:100%">
 </div>
-<div class="container">
 		
 		<!-- 
 		<a id="btn" class="btn" href="<?= Url::toRoute(['/sale/vip-register/index'])?>"><img src="/images/sale/quick_register.png"></a>
 		 -->
 		<?php //echo Html::a('Update', ['/sale/vip-login/index'], ['class' => 'btn btn-primary','style'=>'top: 2685px;']) ?>
 		
-		<!-- 
-		<img class="container_bg" src="images/bg.png">
-		 -->
-		 
-	</div>
 
 <script type="text/javascript">
-window.onload = function(){
-	document.getElementById("btn").style.top = parseInt(document.body.scrollHeight - document.getElementById("btn").clientHeight - 6) + "px";
-};
+$(function(){
+	$("#btn_quick_register").click(function(){
+		window.location.href='<?=Url::toRoute(['/sale/vip-register/index'])?>';	
+	});	
+});
+
 </script>
 
 
