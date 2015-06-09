@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "APP下载";
+$this->registerCssFile('css/sale/bootstrap.css');
 ?>
 
 <div class="download-app-form" style="margin: 10px;">
