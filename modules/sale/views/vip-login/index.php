@@ -4,33 +4,34 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "登录";
+
+$this->registerCssFile('css/sale/bootstrap.css');
 ?>
 
-<div data-role="container" class="body userLogin">
-	<header data-role="header"> </header>
-	<section data-role="body" class="section-body">
-		
-		 <form action="<?= Url::toRoute('vip-login/index')?>" class="form-wrap ajax-form" method="post">
-			<fieldset>
-				<div class="field">
-					<input name="VipLoginForm[username]" class="mobile" 
-						placeholder="请输入手机号" data-role="mobile" type="tel">
-				</div>
-				<div class="field">
-					<input name="VipLoginForm[password]" class="mobile" 
-						placeholder="请输入密码" data-role="mobile" type="tel">
-				</div>
-				
-				<div class="btn-wrap">
-					<input name="submit" class="btn btn-orange" id="submit" value="登录"
-						type="submit"> <input name="url"
-						value="L3dhcC5waHAvd2ViL2dvb2RzL2dpZC8xMjg5MS5odG1s" type="hidden">
-				</div>
-			</fieldset>
-		</form>
-	</section>
+
+<div class="vip-login-form" style="margin: 10px;">
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'vip_no')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号'])?>
+
+    <?= $form->field($model, 'password')->passwordInput(['maxlength' => 16,'placeholder'=>'请输入密码'])?>
+
+    
+    <div class="form-group">
+        <?= Html::submitButton('登录', ['class' => 'btn btn-primary','style'=>'width:100%']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
 </div>
 
+<style type="text/css">
+<!--
+.control-label {
+	display: none;
+}
+-->
+</style>
 
 <script type="text/javascript">
 	var button = $('.btn_s');

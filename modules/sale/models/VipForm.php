@@ -8,15 +8,23 @@ use yii\base\Model;
 /**
  * LoginForm is the model behind the login form.
  */
-class VipLoginForm extends Model
+class VipForm extends Model
 {
-    public $username;
+    public $vip_no;
     public $password;
-//     public $verifyCode;
+    public $parent_vip_no;
+    public $verifyCode;
 //     public $rememberMe = true;
 
 
-
+    public function scenarios()
+    {
+    	return [
+    			'login' => ['vip_no', 'password'],
+    			'register' => ['vip_no', 'password', 'parent_vip_no','verifyCode'],
+    	];
+    }
+    
     /**
      * @return array the validation rules.
      */
@@ -24,12 +32,22 @@ class VipLoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['vip_no', 'password','parent_vip_no','verifyCode'], 'required'],
             // rememberMe must be a boolean value
 //             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
 //             ['password', 'validatePassword'],
         ];
+    }
+    
+    public function attributeLabels()
+    {
+    	return [
+    			'vip_no' => '会员手机号码',
+    			'password' => '密码',
+    			'verifyCode' => '手机验证码',
+    			'parent_vip_no' => '推荐人手机号码',
+    	];
     }
 
     /**

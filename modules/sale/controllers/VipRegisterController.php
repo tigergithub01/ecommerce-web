@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 
-class VipLoginController extends \yii\web\Controller
+class VipRegisterController extends \yii\web\Controller
 {
 	public $enableCsrfValidation = false;
 	
@@ -29,10 +29,9 @@ class VipLoginController extends \yii\web\Controller
     public function actionIndex()
     {
     	//app\modules\sale\models
-    	$model = new VipForm(['scenario' => 'login']);
+    	$model = new VipForm(['scenario' => 'register']);
     	if ($model->load(Yii::$app->request->post())) {
-//     		Yii::$app->session
-// 			$_SESSION[]
+//     		return $this->goBack();
     		return $this->redirect(['/sale/vip-center/index']);
     	} else {
     		//$model->addError('password','用户名或密码不正确');
@@ -51,10 +50,6 @@ class VipLoginController extends \yii\web\Controller
     	
     }
     
-    public function actionLogout(){
-    	//TODO:clear session
-    	return $this->redirect(['index']);
-    }
-    
+   
 
 }

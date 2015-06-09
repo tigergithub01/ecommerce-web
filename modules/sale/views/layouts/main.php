@@ -5,17 +5,22 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 //AppAsset::register($this);
-$this->registerCssFile('css/sale/common.css');
-$this->registerCssFile('css/sale/buserInfo.css');
-$this->registerCssFile('css/sale/jNotify.css');
-$this->registerJsFile('js/sale/public.js');
-$this->registerJsFile('js/sale/jNotify.js');
-$this->registerJsFile('js/sale/spin.js');
-$this->registerJsFile('js/sale/common.js');
+
+//$this->registerCssFile('css/sale/bootstrap.css');
+//$this->registerCssFile('css/sale/buserInfo.css');
+//$this->registerCssFile('css/sale/jNotify.css');
+
+
+//$this->registerJsFile('js/sale/public.js');
+//$this->registerJsFile('js/sale/jNotify.js');
+//$this->registerJsFile('js/sale/spin.js');
+//$this->registerJsFile('js/sale/common.js');
+$this->registerJsFile("js/jquery/jquery-1.8.2.min.js",['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 <?php $this->beginPage() ?>
