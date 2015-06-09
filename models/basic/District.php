@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  * @property integer $city_id
  */
-class TDistrict extends \yii\db\ActiveRecord
+class District extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
