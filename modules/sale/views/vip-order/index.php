@@ -11,10 +11,9 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 ?>
 
 
-<div class="vip-order-form" style="margin: 10px;">
+<div class="vip-order-form" style="margin: 2px;">
 	<header data-role="header" class="nav">
 		<ul class="box" id="Menu">
-
 			<li><a class="on" href="javascript:;"
 				onclick="change_bg(this);zxb(0)">待支付</a></li>
 
@@ -58,8 +57,6 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 
 		</div>
 		<div class="detail_btn_bar">
-			<a class="default danger" href="javascript:void(0)"
-				onclick="confirm_url('确定要取消此订单吗？','')">取消订单</a>
 			<a class="default primary"
 				href="">付款</a>
 		</div>
@@ -106,9 +103,6 @@ function foot_bg(obj)
 		<div class="home-menu" id="container">
 			<div class="widget_wrap">
 				<ul class="box" id="Menu">
-					<li><a onclick="foot_bg(this)"
-						href="<?=Url::toRoute(['/sale/vip-cart/index'])?>" class=""><span
-							data-count="0">&nbsp;</span><label>购物车</label></a></li>
 					<li><a onclick="foot_bg(this)"
 						href="<?=Url::toRoute(['/sale/vip-center/index'])?>" class=""><span>&nbsp;</span><label>个人中心</label></a>
 					</li>

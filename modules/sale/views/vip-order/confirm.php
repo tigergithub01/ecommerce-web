@@ -12,15 +12,13 @@ $this->registerCssFile ('css/sale/payment.css',['position' => \yii\web\View::POS
 
 <div class="vip-center-form" style="margin: 10px;">
 	<div class="payment_info_bar">
-		<div class="item"><span class="tag">收货人</span><span class="content">郭生 13724346621</span></div>
+		<div class="item"><span class="tag">收货人</span><span class="content">郭生 13788888888</span></div>
 		<hr class="gray_solid">
-		<div class="item"><span class="tag">收货地址</span><span class="content">广东深圳市南山区科技园A8大厦</span></div>
+		<div class="item"><span class="tag">收货地址</span><span class="content">广东深圳市南山区</span></div>
 	</div>
 	<form action="" method="post" class="ajaxForm">
 	<div class="payment_info_bar">
 		<div class="item"><span class="tag">订单号</span><span class="content">os201505131650223943</span></div>
-		<hr class="gray_solid">
-		<div class="item"><span class="tag">交易类型</span><span class="content">网购</span></div>
 		<hr class="gray_solid">
 		<div class="item"><span class="tag">交易金额</span><span class="content price">213.00元</span></div>
 	</div>

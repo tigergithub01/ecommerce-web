@@ -6,6 +6,7 @@ use yii\helpers\Url;
 $this->title = "注册";
 
 $this->registerCssFile('css/sale/bootstrap.css');
+$this->registerCssFile('css/sale/headerBar.css');
 ?>
 
 <header>
@@ -13,16 +14,16 @@ $this->registerCssFile('css/sale/bootstrap.css');
 	<div class="title">注册</div>
 	<div class="button"></div>
 </header>
-<div class="vip-login-form" style="margin: 10px;">
+<div class="vip-login-form" style="margin: 5px;">
     <?php $form = ActiveForm::begin(); ?>
 	
     <?= $form->field($model, 'vip_no')->textInput(['maxlength' => 10,'placeholder'=>'请输入您的手机号码'])?>
     
     <div style="display: block;overflow: hidden;">
-     	<div style="float:left;width:300px;">
+     	<div style="float:left;width:150px;">
 	    <?= $form->field($model, 'verifyCode')->textInput(['maxlength' => 10,'placeholder'=>'请输入验证码'])?>
 	    </div>
-	    <div style="float:left;width:200px;margin-left: 10px">
+	    <div style="float:left;width:200px;margin-left: 5px">
 	    <?= Html::button('获取验证码',['class' => 'btn btn-primary','id'=>'btn_get_verfityCode'])?>
 	    </div>
     </div>
@@ -33,81 +34,16 @@ $this->registerCssFile('css/sale/bootstrap.css');
 
     
     <div class="form-group">
-        <?= Html::submitButton('注册', ['class' => 'btn btn-primary','style'=>'width:100%']) ?>
-        <?php /*echo Html::button('下载APP',['class' => 'btn btn-primary','id'=>'btn_download_app','style'=>'width:100%;margin-top:10px;'])*/?>
-        <?=Html::a('下载APP',['/sale/download-app/index'],['class' => 'btn btn-primary','style'=>'width:100%;margin-top:10px;'])?>
+        <?= Html::submitButton('注册', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;']) ?>
+        <?php echo Html::button('下载APP',['class' => 'btn btn-primary','id'=>'btn_download_app','style'=>'width:100%;margin-top:10px;height:60px;'])?>
+        <?php /*Html::a('下载APP',['/sale/download-app/index'],['class' => 'btn btn-primary','style'=>'width:100%;margin-top:10px;'])*/?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
 
-<style type="text/css">
-/* ------------------------------------------------ 头部 ------------------------------------ */
-@media screen and (max-width: 380px) {
-	html{
-		font-size: 10px;
-	}
-}
-@media screen and (min-width: 380px) and (max-width:500px) {
-	html{
-		font-size: 12px;
-	}
-}
-@media screen and (min-width: 500px) and (max-width:650px) {
-	html{
-		font-size: 13px;
-	}
-}
-@media screen and (min-width: 650px) {
-	html{
-		font-size: 14px;
-	}
-}
-header{
-	background: #337ab7;
-	color: white;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	display: table;
-	width: 100%;
-}
-header .button, .title{
-	display: table-cell;
-	height: 50px;
-	overflow: hidden;
-	margin: 0px;
-	padding: 0px;
-	vertical-align: middle;
-}
-header .button{
-	width: 27%;
-	height: 50px;
-}
-header .title{
-	width: 46%;
-	font-size: 1.8rem;
-	margin-top: 0px;
-	line-height: 50px;
-}
-header .button .back{
-	overflow: hidden;
-	display: table-cell;
-	text-decoration: none;
-	color: white;
-	font-size: 1.6rem;
-	padding: 2px 0px 0px 0px;
-}
-header .button .back img{
-	border: none;
-	width: 26px;
-	height: auto;
-	padding: 0px 0px 0px 10px;
-	vertical-align: middle;
-}
-/* ------------------------------------------------ 头部 ------------------------------------ */
-</style>
+
 
 <style type="text/css">
 <!--
@@ -123,6 +59,10 @@ $(function(){
 	$("#btn_get_verfityCode").click(function(){
 		console.debug('btn_get_verfityCode clicked');	
 		alert('xx');
+	});
+
+	$("#btn_download_app").click(function(){
+		window.location.href='<?=Url::toRoute(['/sale/download-app/index'])?>';	
 	});
 });
 
