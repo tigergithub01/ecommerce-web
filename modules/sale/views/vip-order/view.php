@@ -29,10 +29,6 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		</div>
 	</div>
 	<div class="order_item_bar">
-		<div class="title">
-			<a class="left" href="#">云商微店 </a>
-		</div>
-		<hr class="gray_solid">
 			<div class="info_block">
 				<div class="img"><img src="%E8%AE%A2%E5%8D%95%E8%AF%A6%E6%83%85-%E6%8F%90%E4%BA%A4%E5%90%8E%E6%9F%A5%E7%9C%8B_files/s_55239527bef52.jpg"></div>
 				<div class="info_title">
