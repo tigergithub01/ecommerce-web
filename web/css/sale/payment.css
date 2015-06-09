@@ -85,12 +85,12 @@
 	background-size: cover;
 	-webkit-background-size: cover;
 	-o-background-size: cover;
-	background-image: url("../images/icon_checkbox_no.png");
+	background-image: url("/images/sale/icon_checkbox_no.png");
 	vertical-align: middle;
 	margin: 8px 20px 0px 0px;
 }
 .payment_info_bar .checkbox_checked{
-	background-image: url("../images/icon_checkbox_ok.png");
+	background-image: url("/images/sale/icon_checkbox_ok.png");
 }
 .payment_tip_bar{
 	padding: 6px 18px 6px 18px;
