@@ -5,7 +5,7 @@ namespace app\modules\sale\controllers;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use app\modules\sale\models\VipForm;
+use app\modules\sale\models\SoContactPersonForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -39,7 +39,8 @@ class VipOrderController extends \yii\web\Controller
     
     public function actionContact()
     {
-    	return $this->render('contact');
+    	$model = new SoContactPersonForm(); 
+    	return $this->render('contact',['model'=>$model]);
     }
     
     public function actionConfirm()

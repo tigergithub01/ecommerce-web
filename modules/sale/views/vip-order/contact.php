@@ -12,6 +12,23 @@ $this->registerCssFile('css/sale/bootstrap.css');
 
 
 <div class="vip-order-detail-form" style="margin: 10px;">
+	<?php $form = ActiveForm::begin(); ?>
+	
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
+    
+    <?= $form->field($model, 'phone_number')->passwordInput(['maxlength' => 10,'placeholder'=>'请输入手机号码'])?>
+    
+    
+    
+	<?= $form->field($model, 'detail_address')->passwordInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
+    
+    <div class="form-group">
+        <?php /*Html::submitButton('注册', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;'])*/ ?>
+        <?php echo Html::button('下一步',['class' => 'btn btn-primary','id'=>'btn_submit_contact','style'=>'width:100%;margin-top:10px;height:60px;'])?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+    
 	<div class="payment_info_bar">
 		<div class="item input_block">
 			<span class="label left">收货人</span>
@@ -65,6 +82,8 @@ $this->registerCssFile('css/sale/bootstrap.css');
 			</span>
 		</div>
 	</div>
+	
+	<!-- 
 	<div class="payment_info_bar">
 		<div class="item input_block">
 			<span class="label left">留言</span>
@@ -75,6 +94,7 @@ $this->registerCssFile('css/sale/bootstrap.css');
 			<input name="ubid" id="ubid" value="658" type="hidden">
 		</div>
 	</div>
+	 -->
 	<div class="payment_btn_bar">
 		<!-- 
 		<button class="submit">下一步</button>
@@ -85,27 +105,19 @@ $this->registerCssFile('css/sale/bootstrap.css');
 </div>
 
 <style type="text/css">
-/* ------------------------------------------------ 头部 ------------------------------------ */
-
-header{
-	background: #337ab7;
-	color: white;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	display: table;
-	width: 100%;
+<!--
+.control-label {
+	display: block;
 }
-
-/* ------------------------------------------------ 头部 ------------------------------------ */
+-->
 </style>
 
 
 
 <script type="text/javascript">
 $(function(){
-	$(".info_block").click(function(){
-		window.location.href='<?=Url::toRoute(['/sale/product/view'])?>';	
+	$("#btn_submit_contact").click(function(){
+		window.location.href='<?=Url::toRoute(['/sale/vip-order/confirm'])?>';	
 	});		
 });
 
