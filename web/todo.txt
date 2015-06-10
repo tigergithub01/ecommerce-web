@@ -417,6 +417,10 @@ www.ihuyi.com
 验证码登录地址：http://106.ihuyi.cn/a
 这个是账号密码
 
+cf_tiger_guo
+123456
+
+
 微信支付：
 wiriclub@126.com 
 密码 zff16888 
@@ -452,4 +456,8 @@ numerical : CNumberValidator 的别名, 确保了特性是一个有效的数字.
 required : CRequiredValidator 的别名, 确保了特性不为空.
 type : CTypeValidator 的别名, 确保了特性为指定的数据类型.
 unique : CUniqueValidator 的别名, 确保了特性在数据表字段中是唯一的.
-url : CUrlValidator 的别名, 确保了特性是一个有效的路径.        		
+url : CUrlValidator 的别名, 确保了特性是一个有效的路径.  
+
+ 150611：
+ 自定义404页面
+ 		
