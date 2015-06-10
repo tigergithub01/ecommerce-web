@@ -3,11 +3,11 @@ session_start();
 if($_POST){
 	//echo '<pre>';print_r($_POST);print_r($_SESSION);
 	if($_POST['mobile']!=$_SESSION['mobile'] or $_POST['mobile_code']!=$_SESSION['mobile_code'] or empty($_POST['mobile']) or empty($_POST['mobile_code'])){
-		exit('ÊÖ»úÑéÖ¤ÂëÊäÈë´íÎó¡£');	
+		exit('æ‰‹æœºéªŒè¯ç è¾“å…¥é”™è¯¯ã€‚');	
 	}else{
 		$_SESSION['mobile'] = '';
 		$_SESSION['mobile_code'] = '';	
-		exit('×¢²á³É¹¦¡£');	
+		exit('æ³¨å†ŒæˆåŠŸã€‚');	
 	}
 }
 function random($length = 6 , $numeric = 0) {
@@ -36,8 +36,9 @@ $_SESSION['send_code'] = random(6,1);
 <script language="javascript">
 	function get_mobile_code(){
         $.post('sms.php', {mobile:jQuery.trim($('#mobile').val()),send_code:<?php echo $_SESSION['send_code'];?>}, function(msg) {
+			console.debug(msg);
             alert(jQuery.trim(unescape(msg)));
-			if(msg=='Ìá½»³É¹¦'){
+			if(msg=='æäº¤æˆåŠŸ'){
 				RemainTime();
 			}
         });
@@ -52,15 +53,15 @@ $_SESSION['send_code'] = random(6,1);
 			iMinute = parseInt(iTime/60)
 			if (iSecond >= 0){
 				if(iMinute>0){
-					sSecond = iMinute + "·Ö" + iSecond + "Ãë";
+					sSecond = iMinute + "åˆ†" + iSecond + "ç§’";
 				}else{
-					sSecond = iSecond + "Ãë";
+					sSecond = iSecond + "ç§’";
 				}
 			}
 			sTime=sSecond;
 			if(iTime==0){
 				clearTimeout(Account);
-				sTime='»ñÈ¡ÊÖ»úÑéÖ¤Âë';
+				sTime='è·å–æ‰‹æœºéªŒè¯ç ';
 				iTime = 59;
 				document.getElementById('zphone').disabled = false;
 			}else{
@@ -68,7 +69,7 @@ $_SESSION['send_code'] = random(6,1);
 				iTime=iTime-1;
 			}
 		}else{
-			sTime='Ã»ÓĞµ¹¼ÆÊ±';
+			sTime='æ²¡æœ‰å€’è®¡æ—¶';
 		}
 		document.getElementById('zphone').value = sTime;
 	}	
@@ -77,17 +78,17 @@ $_SESSION['send_code'] = random(6,1);
 <form action="reg.php" method="post" name="formUser">
 	<table width="100%"  border="0" align="left" cellpadding="5" cellspacing="3">
 		<tr>
-			<td align="right">ÊÖ»ú<td>
+			<td align="right">æ‰‹æœº<td>
 		<input id="mobile" name="mobile" type="text" size="25" class="inputBg" /><span style="color:#FF0000"> *</span> 
-        <input id="zphone" type="button" value=" »ñÈ¡ÊÖ»úÑéÖ¤Âë " onClick="get_mobile_code();"></td>
+        <input id="zphone" type="button" value=" è·å–æ‰‹æœºéªŒè¯ç  " onClick="get_mobile_code();"></td>
         </tr>
 		<tr>
-			<td align="right">ÑéÖ¤Âë</td>
+			<td align="right">éªŒè¯ç </td>
 			<td><input type="text" size="8" name="mobile_code" class="inputBg" /></td>
 		</tr>
 		<tr>
 			<td align="right"></td>
-			<td><input type="submit" value=" ×¢²á " class="button"></td>
+			<td><input type="submit" value=" æ³¨å†Œ " class="button"></td>
 		</tr>
 	</table>
 </form>

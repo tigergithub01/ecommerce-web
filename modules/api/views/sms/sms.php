@@ -60,7 +60,7 @@ if(empty($_SESSION['send_code']) or $send_code!=$_SESSION['send_code']){
 	exit('请求超时，请刷新页面后重试');
 }
 
-$post_data = "account=用户名&password=密码&mobile=".$mobile."&content=".rawurlencode("您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。");
+$post_data = "account=cf_tiger_guo&password=e10adc3949ba59abbe56e057f20f883e&mobile=".$mobile."&content=".rawurlencode("您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。");
 //密码可以使用明文密码或使用32位MD5加密
 $gets =  xml_to_array(Post($post_data, $target));
 if($gets['SubmitResult']['code']==2){
