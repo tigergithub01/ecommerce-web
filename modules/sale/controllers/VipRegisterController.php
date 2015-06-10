@@ -32,8 +32,16 @@ class VipRegisterController extends \yii\web\Controller
     	//app\modules\sale\models
     	$model = new VipForm(['scenario' => 'register']);
     	if ($model->load(Yii::$app->request->post())) {
-//     		return $this->goBack();
-			
+    		
+    		$vip = new Vip();
+    		$vip->vip_no=$model->vip_no;
+    		$vip->password=$model->password;
+    		$vip->status=1;
+    		 
+    		//TODO:for date field
+    		$time = time();
+    		$vip->register_date=$time;    		
+    		
     		$connection = Yii::$app->db;
     		$trans=$connection->beginTransaction();
     		try {
@@ -43,14 +51,16 @@ class VipRegisterController extends \yii\web\Controller
     			$vip->status=1;
     			
     			//TODO:for date field
-    			$vip->register_date='2015-01-01';
+    			$time = time();
+    			$vip->register_date=$time;
     			if(!$vip->validate()){
-    			 echo 'validate error';
+    			 //echo 'validate error';
     			 return;
     			}
     			if(!$vip->save()){
-    				echo 'validate error';
+    				//echo 'validate error';
     				$trans->rollBack();
+    				
     			}
     			$trans->commit();
     		} catch (\Exception $e) {
