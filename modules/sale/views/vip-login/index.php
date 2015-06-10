@@ -18,7 +18,7 @@ $this->registerCssFile('css/sale/bootstrap.css');
 
     
     <div class="form-group">
-        <?= Html::submitButton('登录', ['class' => 'btn btn-primary','style'=>'width:100%']) ?>
+        <?= Html::submitButton('登录', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

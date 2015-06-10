@@ -16,7 +16,7 @@ $this->registerCssFile('css/sale/bootstrap.css');
 	
     <?= $form->field($model, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
     
-    <?= $form->field($model, 'phone_number')->passwordInput(['maxlength' => 10,'placeholder'=>'请输入手机号码'])?>
+    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号码'])?>
     
     <?= $form->field($model, 'province_id')->dropDownList($provinces,
                                               ['prompt'=>'--请选择收货省份--','style'=>'width:100%']) ?>
@@ -27,10 +27,10 @@ $this->registerCssFile('css/sale/bootstrap.css');
     <?= $form->field($model, 'district_id')->dropDownList($districts,
                                               ['prompt'=>'--请选择所属片区--','style'=>'width:100%']) ?>                                                                                   
     
-	<?= $form->field($model, 'detail_address')->passwordInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
+	<?= $form->field($model, 'detail_address')->textInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
     
     <div class="form-group">
-        <?php echo Html::submitButton('注册', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;'])?>
+        <?php echo Html::submitButton('下一步', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;'])?>
         <?php /*echo Html::button('下一步',['class' => 'btn btn-primary','id'=>'btn_submit_contact','style'=>'width:100%;margin-top:10px;height:60px;'])*/?>
     </div>
 
