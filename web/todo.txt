@@ -404,4 +404,26 @@ ActiveForm模式：
 http://172.16.33.252:8085/index.php
 
 r=sale%2Fvip-order%2Fcontact
+
+http://q.cnblogs.com/q/45695/
+
+
+
+短信接口：
+www.ihuyi.com
+
+用户名：cf_zff  
+密码：agpW7c
+验证码登录地址：http://106.ihuyi.cn/a
+这个是账号密码
+
+微信支付：
+wiriclub@126.com 
+密码 zff16888 
+
+
+支付宝支付：
+wiriclub@163.com 
+密码 zff16888 
+
     		
