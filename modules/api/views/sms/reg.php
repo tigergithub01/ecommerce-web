@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\Url;
+
 session_start();
 if($_POST){
 	//echo '<pre>';print_r($_POST);print_r($_SESSION);
@@ -32,10 +34,15 @@ $_SESSION['send_code'] = random(6,1);
 <meta http-equiv="content-type" content="text/html; charset=gb2312" />
 <title>demo</title>
 </head>
-<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-1.8.2.js"></script>
 <script language="javascript">
 	function get_mobile_code(){
-        $.post('sms.php', {mobile:jQuery.trim($('#mobile').val()),send_code:<?php echo $_SESSION['send_code'];?>}, function(msg) {
+		
+        $.post('<?php echo Url::toRoute(['/api/sms/sms'])?>', 
+                {mobile:jQuery.trim($('#mobile').val()),
+            send_code:<?php echo $_SESSION['send_code'];?>,
+            '_csrf':'<?= @Yii::$app->request->csrfToken ?>'	
+            }, function(msg) {
 			console.debug(msg);
             alert(jQuery.trim(unescape(msg)));
 			if(msg=='提交成功'){
@@ -75,7 +82,11 @@ $_SESSION['send_code'] = random(6,1);
 	}	
 </script>
 <body>
-<form action="reg.php" method="post" name="formUser">
+
+<form action="<?php echo url::toRoute(['/api/sms/reg'])?>" method="post" name="formUser">
+	<!-- 
+	<input type="hidden" name="'_crsf" value="<?php echo @Yii::$app->request->csrfToken?>">
+	 -->
 	<table width="100%"  border="0" align="left" cellpadding="5" cellspacing="3">
 		<tr>
 			<td align="right">手机<td>
