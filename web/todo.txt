@@ -460,4 +460,11 @@ url : CUrlValidator 的别名, 确保了特性是一个有效的路径.
 
  150611：
  自定义404页面
+ 
+ $userHost = Yii::$app->request->userHost; 
+$userIP = Yii::$app->request->userIP;
+
+echo $_REQUEST['r'];
+echo Yii::$app->request->get('r');
+
  		
