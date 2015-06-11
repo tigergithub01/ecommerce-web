@@ -17,7 +17,7 @@ $this->registerCssFile('css/sale/headerBar.css');
 <div class="vip-login-form" style="margin: 5px;">
     <?php $form = ActiveForm::begin(); ?>
 	
-    <?= $form->field($model, 'vip_no')->textInput(['maxlength' => 10,'placeholder'=>'请输入您的手机号码'])?>
+    <?= $form->field($model, 'vip_no')->textInput(['maxlength' => 11,'placeholder'=>'请输入您的手机号码'])?>
     
     <div style="display: block;overflow: hidden;">
      	<div style="float:left;width:150px;">
@@ -30,7 +30,7 @@ $this->registerCssFile('css/sale/headerBar.css');
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => 16,'placeholder'=>'请设置6~16位密码'])?>
     
-    <?= $form->field($model, 'parent_vip_no')->passwordInput(['maxlength' => 10,'placeholder'=>'请输入推荐手机号码'])?>
+    <?= $form->field($model, 'parent_vip_no')->textInput(['maxlength' => 11,'placeholder'=>'请输入推荐手机号码'])?>
 
     
     <div class="form-group">
