@@ -467,4 +467,12 @@ $userIP = Yii::$app->request->userIP;
 echo $_REQUEST['r'];
 echo Yii::$app->request->get('r');
 
+alipay api url:
+http://open.alipay.com/index.htm
+https://openhome.alipay.com/doc/docIndex.htm?url=https://openhome.alipay.com/doc/viewKbDoc.htm?key=236698&type=cat
+
+weixin api url:
+http://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=11_1
+
+
  		
