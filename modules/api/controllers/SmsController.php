@@ -2,22 +2,33 @@
 
 namespace app\modules\api\controllers;
 
+use Yii;
 use yii\web\Controller;
+use yii\web\Session;
 
-class SmsController extends Controller
-{
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-    
-    public function actionReg()
-    {
-    	return $this->render('reg');
-    }
-    
-    public function actionSms()
-    {
-    	return $this->render('sms');
-    }
+use app\modules\api\controllers\BaseApiController;
+
+class SmsController extends BaseApiController {
+	
+	public function actionIndex() {
+		return $this->render ( 'index' );
+	}
+	public function actionReg() {
+		// Yii::$app->session
+		// echo Yii::$app->session['send_code'];
+		// var_dump(Yii::$app->session);
+		$session = Yii::$app->session;
+		$session->open ();
+		$_SESSION ['send_code'] = '6666';
+		$session->close ();
+		
+		// echo $_REQUEST['r'];
+		// echo Yii::$app->request->get('r');
+		
+		// echo $_REQUEST['send_code'];
+		return $this->render ( 'reg' );
+	}
+	public function actionSms() {
+		return $this->render ( 'sms' );
+	}
 }
