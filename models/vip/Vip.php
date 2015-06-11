@@ -41,7 +41,7 @@ class Vip extends \yii\db\ActiveRecord
             [['vip_no', 'id_card'], 'string', 'max' => 30],
             [['name', 'password'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 60],
-            [['vip_no'], 'unique']
+            [['vip_no'], 'unique','message'=>'{value}已经被注册过了']
         ];
     }
 
