@@ -9,10 +9,12 @@ use Yii;
  *
  * @property integer $id
  * @property integer $code_type
+ * @property string $phone_number
  * @property string $sent_time
  * @property string $expiration_time
  * @property string $verify_code
  * @property string $sms_content
+ * 
  */
 class PhoneVerifyCode extends \yii\db\ActiveRecord
 {
@@ -31,7 +33,7 @@ class PhoneVerifyCode extends \yii\db\ActiveRecord
     {
         return [
             [['code_type'], 'integer'],
-            [['sent_time', 'expiration_time', 'verify_code'], 'required'],
+            [['phone_number','sent_time', 'verify_code'], 'required'],
             [['sent_time', 'expiration_time'], 'safe'],
             [['verify_code'], 'string', 'max' => 10],
             [['sms_content'], 'string', 'max' => 200]
@@ -46,6 +48,7 @@ class PhoneVerifyCode extends \yii\db\ActiveRecord
         return [
             'id' => '主键编号',
             'code_type' => '验证码用途类型（注册、找回密码）',
+        	'phone_number' => '手机号码',
             'sent_time' => '发送时间',
             'expiration_time' => '过期时间',
             'verify_code' => '验证码',
