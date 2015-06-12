@@ -57,14 +57,57 @@ $this->registerCssFile('css/sale/headerBar.css');
 <script type="text/javascript">
 $(function(){
 	$("#btn_get_verfityCode").click(function(){
-		console.debug('btn_get_verfityCode clicked');	
-		alert('xx');
+		$.post('<?php echo Url::toRoute(['/api/sms/sms'])?>', 
+                {mobile:jQuery.trim($('#vipform-vip_no').val()),
+            send_code:<?php echo $_SESSION['send_code'];?>,
+            '_csrf':'<?= @Yii::$app->request->csrfToken ?>'	
+            }, function(msg) {
+// 			console.debug(msg);
+            alert(jQuery.trim(unescape(msg)));
+			if(msg=='提交成功'){
+				RemainTime();
+			}
+        });
 	});
 
 	$("#btn_download_app").click(function(){
 		window.location.href='<?=Url::toRoute(['/sale/download-app/index'])?>';	
 	});
 });
+
+var iTime = 59;
+var Account;
+function RemainTime(){
+	$("#btn_get_verfityCode").attr('disabled',true);
+// 	document.getElementById('btn_get_verfityCode').disabled = true;
+	var iSecond,sSecond="",sTime="";
+	if (iTime >= 0){
+		iSecond = parseInt(iTime%60);
+		iMinute = parseInt(iTime/60)
+		if (iSecond >= 0){
+			if(iMinute>0){
+				sSecond = iMinute + "分" + iSecond + "秒";
+			}else{
+				sSecond = iSecond + "秒";
+			}
+		}
+		sTime=sSecond;
+		if(iTime==0){
+			clearTimeout(Account);
+			sTime='获取手机验证码';
+			iTime = 59;
+// 			document.getElementById('btn_get_verfityCode').disabled = false;
+			$("#btn_get_verfityCode").attr('disabled',false);
+		}else{
+			Account = setTimeout("RemainTime()",1000);
+			iTime=iTime-1;
+		}
+	}else{
+		sTime='没有倒计时';
+	}
+	$("#btn_get_verfityCode").text(sTime);
+// 	document.getElementById('btn_get_verfityCode').value = sTime;
+}	
 
 
 </script>

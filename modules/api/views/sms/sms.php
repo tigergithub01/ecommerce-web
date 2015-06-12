@@ -1,4 +1,8 @@
 <?php
+use app\models\system\PhoneVerifyCode;
+use app\modules\sale\models\SaleConstants;
+
+
 session_start();
 
 header("Content-type:text/html; charset=UTF-8");
@@ -61,15 +65,27 @@ if(empty($_SESSION['send_code']) or $send_code!=$_SESSION['send_code']){
 	exit('请求超时，请刷新页面后重试');
 }
 
-/*
-$post_data = "account=cf_tiger_guo1&password=e10adc3949ba59abbe56e057f20f883e&mobile=".$mobile."&content=".rawurlencode("您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。");
-//密码可以使用明文密码或使用32位MD5加密
+
+
+$post_data = "account=cf_zff&password=79f882747fef15b3ddf87a6b20c9eaaf&mobile=".$mobile."&content=".rawurlencode("您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。");
+// $post_data = "account=cf_tiger_guo&password=e10adc3949ba59abbe56e057f20f883e&mobile=".$mobile."&content=".rawurlencode("您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。");
+// //密码可以使用明文密码或使用32位MD5加密
 $gets =  xml_to_array(Post($post_data, $target));
 if($gets['SubmitResult']['code']==2){
 	$_SESSION['mobile'] = $mobile;
 	$_SESSION['mobile_code'] = $mobile_code;
+	
+	//get sms verify code successfully.
+	//insert mobile_code into database.
+	$model = new PhoneVerifyCode();
+	$model->phone_number = $mobile;
+	$model->sent_time=date (SaleConstants::$date_format, time () );
+	$model->verify_code=$mobile_code;
+	$model->sms_content="您的验证码是：".$mobile_code."。请不要把验证码泄露给其他人。";
+	$model->save();
+// 	echo '提交成功';
+	
 }
 echo $gets['SubmitResult']['msg'];
-*/
-echo '错误';
+
 ?>
