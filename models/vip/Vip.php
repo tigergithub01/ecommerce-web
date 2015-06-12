@@ -21,6 +21,10 @@ use Yii;
  */
 class Vip extends \yii\db\ActiveRecord
 {
+    
+	//transient fields
+    public $parent_vip_no;
+    
     /**
      * @inheritdoc
      */
@@ -62,6 +66,7 @@ class Vip extends \yii\db\ActiveRecord
             'email_verify_flag' => '安全邮箱是否已验证(1:是；0：否)',
             'status' => '会员状态(1:正常、0:停用)',
             'register_date' => '注册时间',
+        	'parent_vip_no' => '推荐人手机号码',
         ];
     }
 }
