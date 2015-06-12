@@ -25,13 +25,14 @@ header {
 <div class="vip-center-form">
 	<header data-role="header">
 		<div class="uc-user">
-			<a href="#" class="box">
+			<a href="<?=Url::toRoute(['/sale/vip-center/view'])?>" class="box">
 				<div class="" >
 					<p></p>
-					<p>已绑定：137****6621</p>
-					<!-- 
+					<p>已绑定：<?php echo $_SESSION['current_vip']['vip_no']?></p>
+					
 					<span class="right-txt"></span>
-					 -->
+					 
+					 
 				</div>
 			</a>
 		</div>
@@ -64,13 +65,11 @@ header {
 			<ul class="list">
 				<li><a href="<?=Url::toRoute(['/sale/vip-order/index'])?>"><i
 						class="icon-order"></i>全部订单</a></li>
-				<!-- 
-                <li><a href="<?=Url::toRoute(['/sale/vip-login/logout'])?>"><i class="icon-fav-shop"></i>退出登录</a></li>
-                 -->
 				<li><a href="<?=Url::toRoute(['/sale/vip-collect/index'])?>"><i
 						class="icon-fav"></i>我的收藏</a></li>
-
-
+				<!-- 
+				<li><a href="<?=Url::toRoute(['/sale/vip-login/logout'])?>"><i class="icon-fav-shop"></i>退出登录</a></li>
+				 -->		
 			</ul>
 		</div>
 		<!--管理地址-->

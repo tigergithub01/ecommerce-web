@@ -9,37 +9,51 @@ use app\modules\sale\models\VipForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\vip\Vip;
+use yii\web\Session;
+use app\modules\sale\models\SaleConstants;
 
 
 class VipLoginController extends \yii\web\Controller
 {
-	public $enableCsrfValidation = false;
 	
-	public function behaviors()
-	{
-		return [
-				'verbs' => [
-						'class' => VerbFilter::className(),
-						'actions' => [
-								'delete' => ['post'],
-						],
-				],
-		];
-	}
-	
+	/**
+	 * login
+	 * @return Ambigous <string, string>|\yii\web\Response
+	 */
     public function actionIndex()
     {
-    	
-//     	$vips = Vip::find()->all();
-//     	var_dump($vips);
-    	//app\modules\sale\models
     	$model = new VipForm(['scenario' => 'login']);
     	if ($model->load(Yii::$app->request->post())) {
-//     		Yii::$app->session
-// 			$_SESSION[]
-    		return $this->redirect(['/sale/vip-center/index']);
+    		//find vip from vip_no
+    		$vip_db = Vip::find ()->where ( 'vip_no=:vip_no', [ 
+					':vip_no' => $model->vip_no 
+			] )->one ();
+    		if(empty($vip_db)){
+    			$model->addError ( 'vip_no', '您输入的手机号码还没有注册' );
+    			return $this->render ( 'index', [
+    					'model' => $model
+    			] );
+    		}else{
+    			if(!($vip_db->password==md5($model->password))){
+    				$model->addError ( 'password', '您输入的密码不正确' );
+    				return $this->render ( 'index', [
+    						'model' => $model
+    				] );
+    			}else{
+    				$vip_db->last_login_date=date ( SaleConstants::$date_format, time () );
+    				$vip_db->update();
+    				
+    				$session = Yii::$app->session;
+    				if(!($session->isActive)){
+    					$session->open();
+    				}
+    				$session->set(SaleConstants::$session_vip, $vip_db);
+    				$session->timeout=1*24*60;
+    				
+    				return $this->redirect(['/sale/vip-center/index']);
+    			}
+    		}
     	} else {
-    		//$model->addError('password','用户名或密码不正确');
     		return $this->render('index', [
     				'model' => $model,
     		]);
@@ -55,8 +69,13 @@ class VipLoginController extends \yii\web\Controller
     	
     }
     
+    /**
+     * logout
+     * @return \yii\web\Response
+     */
     public function actionLogout(){
-    	//TODO:clear session
+    	$session = Yii::$app->session;
+		$vip = $session->remove(SaleConstants::$session_vip);
     	return $this->redirect(['index']);
     }
     
