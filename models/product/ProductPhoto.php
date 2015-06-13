@@ -28,8 +28,8 @@ class ProductPhoto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'product_id', 'url', 'primary_flag'], 'required'],
-            [['id', 'product_id', 'primary_flag'], 'integer'],
+            [['product_id', 'url', 'primary_flag'], 'required'],
+            [['product_id', 'primary_flag'], 'integer'],
             [['url'], 'string', 'max' => 200]
         ];
     }
