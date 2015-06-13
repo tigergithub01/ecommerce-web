@@ -52,4 +52,7 @@ class VipCenterController extends BaseSaleController {
 				'model' => $_SESSION[SaleConstants::$session_vip] 
 		] );
 	}
+	
+	
+	
 }

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use app\modules\sale\models\SaleConstants;
 
 $this->title = "产品详情";
 $this->registerCssFile ( 'css/sale/header.css', [ 
@@ -10,27 +11,50 @@ $this->registerCssFile ( 'css/sale/header.css', [
 $this->registerCssFile ( 'css/sale/goods.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
+$this->registerCssFile ( 'js/sale/slidebox/jquery.slideBox.css', [ 
+		'position' => \yii\web\View::POS_END 
+] );
+$this->registerJsFile ( "js/jquery/jquery-1.8.2.min.js", [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
 
+$this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
 ?>
 
 
 <div class="vip-center-form">
+
+	<div id="demo1" class="slideBox">
+		<ul class="items">
+  <?php foreach ($photoList as $photo){?>
+  		<li><a href="javascript:void(0)" title=""><img style="width: 100%"
+					height="300px"
+					src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>"></a></li>
+  <?php } ?>
+  </ul>
+	</div>
+
+
+
+
 	<div class="goods_info_bar">
 		<div class="title">
-			<span class="btl">丽瓦丽干红</span> <span class="scr"><img
-				src="images/sale/collect.png"
-				class="fav_goods" id="caocao_pic" onclick="change_pic()">
+			<span class="btl"><?php echo $model['name']?></span> <span
+				class="scr">
+				<!-- 
+				<?php if(!isset($_SESSION[SaleConstants::$session_vip])){?>
+				<img src="images/sale/collect.png" class="fav_goods"
+				id="btn_collect">
+				<?php }?>
+				 -->
+		
 		</div>
 
 		<div class="sale_info">
-			<span class="price">售价：<span class="value">￥368.00</span></span>
+			<span class="price">售价：<span class="value">￥<?php echo floor($model['price']*100)/100?></span></span>
 		</div>
-
-		<div class="sale_info">
-			<span class="yunfei">运费：<span>免运费</span></span>
-			<!--<span class="sale">销量0笔</span>-->
-		</div>
-
 		<hr class="gray_solid">
 	</div>
 
@@ -46,8 +70,7 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 					</div>
 					<div class="info">
 						<span class="price">￥<span class="s_price">368.00</span></span><span
-							class="gray">
-							<!--（库存<span class="s_stock">200</span>件）-->
+							class="gray"> <!--（库存<span class="s_stock">200</span>件）-->
 						</span><br> <span class="gray">请选择规格</span>
 					</div>
 					<div class="btn_close">
@@ -97,28 +120,21 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 			<!----<a class="item_full left" data-target="detail_block" href="javascript:void(0)">图文详情</a>----->
 
 			<a class="item rborder active" data-target="detail_block"
-				href="javascript:void(0)">图文详情</a> 
+				href="javascript:void(0)">图文详情</a>
 			<!-- 
 			<a class="item"
 				data-target="comment_block" href="javascript:void(0)">用户评价<span
 				class="danger">（0）</span></a>
-			 -->		
+			 -->
 
 		</div>
 		<div class="detail_block">
-			<div class="detail_content">波尔多AOC 法国酒庄原瓶原装进口，绝无中间环节 入口圆润，也适合初学人士
-				产品详情： 名称：德拉贝尔干红 葡萄酒产地：法国．波尔多（法定产区） 参考年份：２０１１ 葡萄品种：美乐，赤霞珠 等级：ＡＯP
-				橡木桶陈酿：９个月 容量：７５０ml 酒精度：13% 产品类型： 干型红葡萄酒 香气：水果与植物气息 口感：口感圆润柔和，单宁细腻
-				适饮温度： 16°C~18°C 贮藏温度：10°C~18°C避光卧放 醒酒时间： 30分钟以上 生产商：SBE达克戴斯酒厂
-				配餐建议：可配川菜、烤鸭、烧肉、火腿、牛排、野味…… 品尝纪录：单宁柔和易饮，入口圆润，酒体适中，余味立体、丰富。</div>
+			<div class="detail_content"><?php echo $model['description']?></div>
 			<div class="img_block" id="aa2">
-				<img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/552394a32bea8.jpg"><img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/552394c15d671.jpg"><img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/552394e343f37.jpg"><img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/552394f63d976.jpg"><img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/5523950b479ea.jpg"><img
-					src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/552395258824e.jpg">
+				 <?php foreach ($photoList as $photo){?>
+				  		<img
+					src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>">
+				  <?php } ?>
 			</div>
 		</div>
 
@@ -177,14 +193,14 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 		<!-- 非供应商的商品 -->
 		<a class="man_button"
 			href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
-			src="images/sale/icon_man.png"></a> 
-			<!-- 
+			src="images/sale/icon_man.png"></a>
+		<!-- 
 			<a class="cart_button"
 			href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
 			src="images/sale/icon_cart.png"></a> 
 			 -->
-			<a class="buy_button1 buy"
-			href="<?=Url::toRoute(['/sale/vip-order/contact'])?>">立即购买</a>
+		<a class="buy_button1 buy"
+			href="<?=Url::toRoute(['/sale/vip-order/add-contact','product_id'=>$model['id']])?>">立即购买</a>
 	</div>
 
 </div>
@@ -202,6 +218,7 @@ header {
 }
 
 /* ------------------------------------------------ 头部 ------------------------------------ */
+
 </style>
 
 
@@ -225,6 +242,69 @@ $(function(){
 		$(".comment_block").hide();
 		$("." + target).show();
 	});
+
+	$(".items img").width($(document.body).width());	
+	$('#demo1').slideBox({hideClickBar:false});
+
+	$('#btn_collect').click(function(){
+		var src = $('#btn_collect').prop('src');
+		console.debug(src);
+		if(src.indexOf('collect.png')>=0){
+			collect_add();	
+		}else{
+			collect_del();	
+		}
+	});
+
+
+	function collect_add(){
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/sale/vip-collect/add'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+		    	product_id:<?php echo $model['id']?>,
+		    	'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
+		    	},     
+		    	
+		    async :true, 
+		    error:function(){     
+		       alert('获取数据失败');    
+		    },     
+		    success:function(data){ 
+			    if(data.status==1){
+			    	$('#btn_collect').prop('src','images/sale/collect-undo.png');
+			    	alert('收藏成功'); 
+			    }
+		    	
+		    }  
+		}); 
+	}
+
+	function collect_del(){
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/sale/vip-collect/del'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+		    	product_id:<?php echo $model['id']?>,
+		    	'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
+		    	},     
+		    async :true, 
+		    error:function(){     
+		       alert('获取数据失败');    
+		    },     
+		    success:function(data){ 
+			    if(data.status==1){
+			    	$('#btn_collect').prop('src','images/sale/collect.png');
+			    	alert('取消收藏成功'); 
+			    }
+		    	
+		    }  
+		}); 
+	}
+		
+	
 });
 
 

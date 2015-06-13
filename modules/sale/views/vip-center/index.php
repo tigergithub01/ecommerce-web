@@ -65,8 +65,10 @@ header {
 			<ul class="list">
 				<li><a href="<?=Url::toRoute(['/sale/vip-order/index'])?>"><i
 						class="icon-order"></i>全部订单</a></li>
+						<!-- 
 				<li><a href="<?=Url::toRoute(['/sale/vip-collect/index'])?>"><i
 						class="icon-fav"></i>我的收藏</a></li>
+						 -->
 				<!-- 
 				<li><a href="<?=Url::toRoute(['/sale/vip-login/logout'])?>"><i class="icon-fav-shop"></i>退出登录</a></li>
 				 -->		

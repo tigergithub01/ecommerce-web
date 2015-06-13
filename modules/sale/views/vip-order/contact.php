@@ -11,7 +11,7 @@ $this->registerCssFile('css/sale/bootstrap.css');
 ?>
 
 
-<div class="vip-order-detail-form" style="margin: 10px;">
+<div class="vip-order-contact-form" style="margin: 10px;">
 	<?php $form = ActiveForm::begin(['options' => ['class' => 'form-vertical'],]); ?>
 	
     <?= $form->field($model, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
@@ -55,6 +55,59 @@ $(function(){
 	$("#btn_submit_contact").click(function(){
 		window.location.href='<?=Url::toRoute(['/sale/vip-order/confirm'])?>';	
 	});		
+
+
+	$('#socontactpersonform-province_id').change(function(){
+// 		console.debug('socontactpersonform-province_id changed.');
+		$("#socontactpersonform-city_id option[value!='']").remove();	
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/sale/vip-order/find-cities'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+			    province_id:$('#socontactpersonform-province_id').val(),
+		    	//'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
+		    	},     
+		    async :true, 
+		    error:function(){     
+		       alert('获取数据失败');    
+		    },     
+		    success:function(data){ 
+			    if(data.status==1){
+			    	
+				    $.each(data.value,function(i,v){
+				    	$('#socontactpersonform-city_id').append("<option value='"+v.id+"'>"+v.name+"</option>");	
+				    });
+			    }
+		    }  
+		}); 
+	});
+
+
+	$('#socontactpersonform-city_id').change(function(){
+		$("#socontactpersonform-district_id option[value!='']").remove();		
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/sale/vip-order/find-districts'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+		    	city_id:$('#socontactpersonform-city_id').val(),
+		    	},     
+		    async :true, 
+		    error:function(){     
+		       alert('获取数据失败');    
+		    },     
+		    success:function(data){ 
+			    if(data.status==1){
+				    $.each(data.value,function(i,v){
+				    	$('#socontactpersonform-district_id').append("<option value='"+v.id+"'>"+v.name+"</option>");	
+				    });
+			    }
+		    	
+		    }  
+		}); 
+	});
+	 
 });
 
 

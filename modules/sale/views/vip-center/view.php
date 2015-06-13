@@ -5,6 +5,7 @@ use yii\helpers\Url;
 
 $this->title = "会员详细信息";
 $this->registerCssFile('css/sale/bootstrap.css');
+$this->registerCssFile('css/sale/headerBar.css');
 ?>
 
 <style type="text/css">
@@ -14,6 +15,13 @@ table.detail-view th{
 }
 
 </style>
+
+<header>
+	<div class="button"><a class="back" href="javascript:window.history.back();"><img src="images/sale/btn_back.png">返回</a></div>
+	<div class="title">会员详细信息</div>
+	<div class="button"></div>
+</header>
+
 <div class="vip-info-form">
 	<?= DetailView::widget([
         'model' => $model,

@@ -8,36 +8,27 @@ use yii\web\Controller;
 use app\modules\sale\models\VipForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\modules\sale\controllers\BaseSaleController;
+use app\models\product\Product;
+use app\models\product\ProductPhoto;
+use app\modules\sale\models\SaleConstants;
 
-
-class ProductController extends \yii\web\Controller
-{
-	public $enableCsrfValidation = false;
-	
-	public function behaviors()
-	{
-		return [
-				'verbs' => [
-						'class' => VerbFilter::className(),
-						'actions' => [
-								'delete' => ['post'],
-						],
-				],
-		];
+class ProductController extends BaseSaleController {
+	public function actionView() {
+		$product_id = $_REQUEST ['id'];
+		
+		$model = Product::findOne ( $product_id );
+		if (empty ( $model )) {
+			throw new NotFoundHttpException ();
+		}
+		
+		$photoList = ProductPhoto::find ()->where ( 'product_id=:product_id', [ 
+				':product_id' => $product_id 
+		] )->all ();
+		
+		return $this->render ( 'view', [ 
+				'model' => $model,
+				'photoList' => $photoList 
+		] );
 	}
-	
-   /*  public function actionIndex()
-    {
-    	return $this->render('index');
-    } */
-    
-    
-    public function actionView()
-    {
-    	return $this->render('view');
-    }
-    
-    
-    
-
 }
