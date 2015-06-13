@@ -465,6 +465,11 @@ http://t.cn/RAjJtmz
 http://172.16.33.252:8085/index.php?r=sale/vip-login/index
 http://172.16.33.252:8085/index.php?r=api/product/index
 
+150613:
+//jquery android toast.
+
+http://localhost:8085/index.php?r=sale%2Fproduct%2Fview&id=4
+
 
 
 
