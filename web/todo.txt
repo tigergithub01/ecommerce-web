@@ -470,7 +470,7 @@ http://172.16.33.252:8085/index.php?r=api/product/index
 
 http://localhost:8085/index.php?r=sale%2Fproduct%2Fview&id=4
 
-
+&XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14340830204631
 
 
 
