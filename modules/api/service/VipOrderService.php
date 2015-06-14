@@ -27,8 +27,10 @@ class VipOrderService {
 			foreach ( $soDetailList as $soDetail ) {
 				$product = Product::findOne ( $soDetail->product_id );
 				
-				//get main photo 
-				$productPhoto = ProductPhoto::find()->where('product_id=:product_id',[':product_id'=>$product['id']])->andWhere('primary_flag=1')->one();
+				// get main photo
+				$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [ 
+						':product_id' => $product ['id'] 
+				] )->andWhere ( 'primary_flag=1' )->one ();
 				$product->primaryPhoto = $productPhoto;
 				
 				$soDetail->product = $product;
@@ -40,8 +42,8 @@ class VipOrderService {
 		$vip = Vip::findOne ( $soSheet ['vip_id'] );
 		$soSheet->vip = $vip;
 		
-		//get order status for display
-		$order_status = Parameter::findOne($soSheet['status']);
+		// get order status for display
+		$order_status = Parameter::findOne ( $soSheet ['status'] );
 		$soSheet->order_status = $order_status;
 		
 		// get contact information
@@ -64,7 +66,7 @@ class VipOrderService {
 	
 	/**
 	 * get order list by vip and status
-	 * 
+	 *
 	 * @param unknown $vip_id        	
 	 * @param unknown $status_id        	
 	 * @return NULL
@@ -74,12 +76,16 @@ class VipOrderService {
 		if (empty ( $status_id )) {
 			$dataList = SoSheet::find ()->where ( 'vip_id=:vip_id', [ 
 					':vip_id' => $vip_id 
+			] )->orderBy ( [ 
+					'order_date' => SORT_DESC 
 			] )->all ();
 		} else {
 			$dataList = SoSheet::find ()->where ( 'vip_id=:vip_id', [ 
 					':vip_id' => $vip_id 
 			] )->andWhere ( 'status=:status', [ 
 					':status' => $status_id 
+			] )->orderBy ( [ 
+					'order_date' => SORT_DESC 
 			] )->all ();
 		}
 		
@@ -87,8 +93,8 @@ class VipOrderService {
 			foreach ( $dataList as $soSheet ) {
 				$orderId = $soSheet ['id'];
 				
-				//get order status for display
-				$order_status = Parameter::findOne($soSheet['status']);
+				// get order status for display
+				$order_status = Parameter::findOne ( $soSheet ['status'] );
 				$soSheet->order_status = $order_status;
 				
 				// get sale order detail list
