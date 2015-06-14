@@ -7,6 +7,7 @@ body {
     font-family: "STHeiti","Microsoft YaHei";
 }
 
+.not-set {display:none;}
 .center {text-align:center;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*+height:1%;}
@@ -207,6 +208,8 @@ button_link:hover,.button_link:link{
    
     
 }
+.search_area{ padding:10px 0px;}
+.search_area .form-input { width:150px;}
 /****** validation *****/
 label.has-error{
     color:#ff0000;
