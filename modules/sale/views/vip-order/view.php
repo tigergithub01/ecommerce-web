@@ -13,17 +13,20 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 <div class="vip-order-detail-form" style="margin: 10px;">
 	<div class="order_detail_status">
 		<div class="item">
-			<div class="title">待付款</div>
-			<div class="content">订单金额（含运费）：￥213.00</div>
+			<div class="title"><?php echo $model['order_status']['pa_val']?></div>
+			<div class="content">订单金额：￥<?php echo floor($model['order_amt']*100)/100 ?></div>
+			<!-- 
 			<div class="content">运费：￥0.00</div>
+			 -->
 		</div>
 		<div class="item">
 			<hr class="gray_solid">
 		</div>
 		<div class="item">
-			<div class="title">收货人：郭生 13788888888</div>
-			<div class="content">收货地址：广东深圳市南山区</div>
+			<div class="title">收货人：<?php echo $model['soContactPerson']['name']?> <?php echo $model['soContactPerson']['phone_number']?></div>
+			<div class="content">收货地址：<?php echo $model['soContactPerson']['province']['name'].$model['soContactPerson']['city']['name'].$model['soContactPerson']['district']['name'].$model['soContactPerson']['detail_address']?></div>
 		</div>
+		<!--  
 		<div class="item">
 			<hr class="gray_solid">
 		</div>
@@ -31,19 +34,24 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 			<div class="title">买家留言：</div>
 			<div class="content">&nbsp;</div>
 		</div>
+		-->
 	</div>
 	<div class="order_item_bar">
+		<?php foreach ($model['soDetailList'] as $soDetail) {?>
+		
 		<div class="info_block">
 			<div class="img">
+				<a href="<?=Url::toRoute(['/sale/product/view','id'=>$soDetail['product']['id']])?>">
 				<img
-					src="%E8%AE%A2%E5%8D%95%E8%AF%A6%E6%83%85-%E6%8F%90%E4%BA%A4%E5%90%8E%E6%9F%A5%E7%9C%8B_files/s_55239527bef52.jpg">
+					src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$soDetail['product']['primaryPhoto']['id']])?>">
+					</a>
 			</div>
 			<div class="info_title">
-				<div class="name">中大鳄鱼男士鞋春夏季新品潮流鞋子白运动休闲板鞋男韩版防滑透气</div>
+				<div class="name"><?php echo $soDetail['product']['name'] ?></div>
 				<div class="standard">
-					规格：<span>×10</span>
+					数量：<span><?php echo $soDetail['quantity']?></span>
 				</div>
-				<div class="price1">￥100.00</div>
+				<div class="price1">￥<?php echo floor($soDetail['amount']*100)/100?></div>
 			</div>
 			<!---------------
 				<div class="info_price">
@@ -53,13 +61,16 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
                 ----------------->
 		</div>
 		<hr class="gray_solid">
+		<?php }?>
+		
+		
 		<div class="statistic_block">
-			<span>共1件 </span> <span>运费：0.00 </span> <span>实付：</span> <span
-				class="price">￥213.00</span>
+			<span>共<?php echo $model['order_quantity']?>件 </span>  <span>实付：</span> <span
+				class="price">￥<?php echo floor($model['order_amt']*100)/100?></span>
 		</div>
 		<hr class="gray_solid">
 		<div class="trade_block">
-			<div>下单时间：2015-05-13 16:50</div>
+			<div>下单时间：<?php echo $model['order_date']?></div>
 			<div>付款时间：-</div>
 			<div>成交时间：-</div>
 		</div>
@@ -70,7 +81,7 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 			onclick="confirm_url('确定要取消此订单吗？','')">取消订单</a>
 		 -->
 		 <a
-			class="default primary" href="<?=Url::toRoute(['/sale/vip-order/confirm'])?>">付款</a>
+			class="default primary" href="<?=Url::toRoute(['/sale/vip-order/confirm','orderId'=>$model['id']])?>">付款</a>
 	</div>
 
 </div>
@@ -81,7 +92,8 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 <script type="text/javascript">
 $(function(){
 	$(".info_block").click(function(){
-		window.location.href='<?=Url::toRoute(['/sale/product/view'])?>';	
+		//var product_id = $(this).attr('product_id');
+		//window.location.href='<?=Url::toRoute(['/sale/product/view'])?>';	
 	});		
 });
 

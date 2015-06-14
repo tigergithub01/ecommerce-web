@@ -4,14 +4,23 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "订单列表";
-$this->registerCssFile ('css/sale/common.css',['position' => \yii\web\View::POS_HEAD] );
-$this->registerCssFile ('css/sale/orderlb.css',['position' => \yii\web\View::POS_HEAD] );
-$this->registerCssFile ('css/sale/header.css',['position' => \yii\web\View::POS_HEAD] );
-$this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_HEAD] );
+$this->registerCssFile ( 'css/sale/common.css', [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
+$this->registerCssFile ( 'css/sale/orderlb.css', [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
+$this->registerCssFile ( 'css/sale/header.css', [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
+$this->registerCssFile ( 'css/sale/order.css', [ 
+		'position' => \yii\web\View::POS_HEAD 
+] );
 ?>
 
 
 <div class="vip-order-form" style="margin: 2px;">
+	<!-- 
 	<header data-role="header" class="nav">
 		<ul class="box" id="Menu">
 			<li><a class="on" href="javascript:;"
@@ -31,75 +40,29 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 
 		</ul>
 	</header>
+	 -->
 	<section id="0" style="display: block;">
+		<?php foreach ($orderList as $order) {?>
 		<div class="order_item_bar">
-			<div class="info_block">
-				<div class="img">
-					<img
-						src="">
-				</div>
-				<div class="info_title">
-					<div class="name">丽瓦丽干红</div>
-					<div class="standard">
-						规格：<span>×2</span>
-					</div>
-					<div class="price1">￥368.00</div>
-
-				</div>
-
-			</div>
-			<hr class="gray_solid" style="margin-left: 12px;">
-			<div class="statistic_block">
-				<span>共1件 </span> <span>运费：0.00 </span> <span>实付：</span> <span
-					class="price">￥736.00</span>
-			</div>
-			<hr class="gray_solid" style="margin-left: 12px;">
-
+			订单编号<?php echo $order['code']?>&nbsp; </br>
+			订单金额：<?php echo $order['order_amt']?>&nbsp; </br>
+			订购数量：<?php echo $order['order_quantity']?></br>
+			订单状态: <?php echo $order['order_status']['pa_val']?></br>
+			订单提交日期：<?php echo $order['order_date']?>
 		</div>
+		<hr class="gray_solid" style="margin-left: 12px;">
+		<?php if ($order['status']==3001){?>
 		<div class="detail_btn_bar">
-			<a class="default primary" 
-				href="<?=Url::toRoute(['/sale/vip-order/confirm'])?>">付款</a>
+			<a class="default primary"
+				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
+			<a class="default primary"
+				href="<?=Url::toRoute(['/sale/vip-order/confirm','orderId'=>$order['id']])?>">付款</a>
 		</div>
-	</section>
-	<section id="1" style="display: none;">
-		<div class="nav-content toggle-content">
-			<ul class="nav-item on empty" data-type="deliver"
-				data-empty="您还没有相关的订单~"></ul>
-		</div>
-	</section>
-	<section id="2" style="display: none;">
-		<div class="nav-content toggle-content">
-			<ul class="nav-item on empty" data-type="deliver"
-				data-empty="您还没有相关的订单~"></ul>
-		</div>
-	</section>
-	<section id="3" style="display: none;">
-		<div class="nav-content toggle-content">
-			<ul class="nav-item on empty" data-type="deliver"
-				data-empty="您还没有相关的订单~"></ul>
-		</div>
-	</section>
-	<section id="4" style="display: none;">
-		<div class="nav-content toggle-content">
-			<ul class="nav-item on empty" data-type="deliver"
-				data-empty="您还没有相关的订单~"></ul>
-		</div>
+		<?php }?>
+		<?php }?>
+		
 	</section>
 	<footer data-role="footer">
-		<script type="text/javascript">
-function foot_bg(obj)
-{
-    var a=document.getElementById("Menu").getElementsByTagName("a");
-    for(var i=0;i<a.length;i++)
-    {
-        a[i].className="";
-    }
-    obj.className="current";
-}
-</script>
-
-
-
 		<div class="home-menu" id="container">
 			<div class="widget_wrap">
 				<ul class="box" id="Menu">
@@ -115,43 +78,11 @@ function foot_bg(obj)
 </div>
 
 <style type="text/css">
-/* ------------------------------------------------ 头部 ------------------------------------ */
-header {
-	background: #337ab7;
-	color: white;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	display: table;
-	width: 100%;
-}
 
-/* ------------------------------------------------ 头部 ------------------------------------ */
 </style>
 
 
-<script>
-				  function zxb(a){
-				      var tli=document.getElementById("Menu").getElementsByTagName("li");          
-					  for(var j=0; j<=4; j++){
-					  document.getElementById(j).style.display=j==a?"block":"none";
-					                                            
-					  }
-					  }
-					 
-				</script>
 
-<script type="text/javascript">
-function change_bg(obj)
-{
-    var a=document.getElementById("Menu").getElementsByTagName("a");
-    for(var i=0;i<a.length;i++)
-    {
-        a[i].className="";
-    }
-    obj.className="on";
-}
-</script>
 
 <script type="text/javascript">
 $(function(){
