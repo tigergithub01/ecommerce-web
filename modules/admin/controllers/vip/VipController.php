@@ -12,19 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * VipController implements the CRUD actions for Vip model.
  */
-class VipController extends Controller
+class VipController extends \app\modules\admin\controllers\MyController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
+   
 
     /**
      * Lists all Vip models.

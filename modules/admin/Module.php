@@ -8,9 +8,8 @@ class Module extends \yii\base\Module
 
     public function init()
     {
-    	$this->layout='main';
+    	$this->layout='Main';
         parent::init();
-
-        // custom initialization code goes here
+       
     }
 }

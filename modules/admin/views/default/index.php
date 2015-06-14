@@ -1,12 +1,117 @@
-<div class="admin-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+<?php
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>"/>
+    <base target='centerifr'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <title>管理后台</title>
+    <link href="<?=\Yii::getAlias('@web/css/admin_index.css')?>" rel="stylesheet" type="text/css"/>
+    <link href="<?=\Yii::getAlias('@web/css/layout-default.css')?>" rel="stylesheet" type="text/css"/>
+    <link href="<?=\Yii::getAlias('@web/css/Font-Awesome-3.2.1/css/font-awesome.min.css')?>" rel="stylesheet" type="text/css"/>  
+    <!--[if IE 7]>
+    <link href="<?=\Yii::getAlias('@web/css/Font-Awesome-3.2.1/css/font-awesome-ie7.min.css')?>" rel="stylesheet" type="text/css"/>   
+    <![endif]-->
+    <script src="<?=\Yii::getAlias('@web/js/jquery-1.11.3.min.js')?>" type="text/javascript"></script>
+    <script src="<?=\Yii::getAlias('@web/js/jquery.layout-latest.js')?>" type="text/javascript"></script>
+    <style type='text/css'>
+        .submenu {display: none;}
+        .ui-layout-center {overflow:hidden;}
+    </style>
+    <script type="text/javascript">
+        function ifrrize(){
+            var size=$('#centerifr').parent();           
+            $('#centerifr').css({height:size.innerHeight()-2});
+        }
+            
+        $(document).ready(function () {
+            $('body').layout({ applyDemoStyles: false,
+               north__resizable:true,
+               spacing_open:1,
+               west:{size:188},
+               north:{spacing_open:0},
+               center:{
+                   onresize:ifrrize,
+                   onshow_end:function(){ }
+            }
+            });
+            
+            var currentUl=null;
+            
+            $("li.menu1").click(function(){                
+            }).children("a").click(function(){
+                var cu=$(this).next("ul");
+                
+                if(currentUl && cu!=currentUl){
+                    currentUl.slideToggle("fast",function(){
+                        currentUl=cu;
+                        currentUl.slideToggle("fast");
+                    });                    
+                }else{
+                    currentUl=cu;
+                    currentUl.slideToggle("fast"); 
+                }  
+                
+                return false;
+            });
+            
+            ifrrize();
+            
+        });
+
+    </script>
+    <?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
+<div class="ui-layout-center">
+    <iframe name='centerifr' id='centerifr' style='width:100%;border:0px;' src="" frameborder="0"></iframe>
 </div>
+<div class="ui-layout-north">
+ <div id='top_wrap'>
+        <img src="<?=\Yii::getAlias('@web/images/logo.png')?>" style="max-height: 100%;">
+        <div style="float: right;margin-right:25px;padding:3px 15px;border-radius: 10px;background-color:#03537b;margin-top:25px;">
+            <i class="icon-user"></i>&nbsp;<?=yii::$app->user->identity->user_id?>(<?=yii::$app->user->identity->user_name?>)&nbsp;<i style="color:#272727;">|</i>&nbsp;<?=Html::a('退出', ['logout'],['target'=>'_top'])?>
+        </div>
+    </div>
+</div>
+
+    <div class="ui-layout-west">
+        <div style='background-color:#3c95c8;height:40px;line-height: 40px;color:#fff;padding-left:30px;font-size:14px;font-weight:bold;border-top:2px solid #5ab8ef;'>
+            <span class='mnav'>菜单导航</span></div>
+        <ul>
+            <li class='menu1'><a href=""><span class="m11">产品管理</span></a>
+                <ul class="submenu">
+                    <li><a href="<?=Url::to(['product/product-type/'])?>"><span class="m2">产品类别</span></a></li>
+                    <li><a href="<?=Url::to(['product/product/'])?>"><span class="m2">产品列表</span></a></li>
+                    <li><a href="<?=Url::to(['login'])?>"><span class="m2">产品类别</span></a></li>
+                </ul>
+            </li>
+            <li class='menu1'><a href=""><span class="m11">订单管理</span></a>
+                <ul class="submenu">
+                    <li><a href="<?=Url::to(['login'])?>"><span class="m2">产品类别</span></a></li>
+                    <li><a href="<?=Url::to(['login'])?>"><span class="m2">产品列表</span></a></li>
+                    <li><a href="<?=Url::to(['login'])?>"><span class="m2">产品类别</span></a></li>
+                </ul>
+            </li>
+            <li class='menu1'><a href=""><span class="m11">其他管理</span></a>
+                <ul class="submenu">
+                    <li><a href="<?=Url::to(['login'])?>" target='_self'><span class="m2">产品类别</span></a></li>
+                    <li><a href="#" target='_self'><span class="m2">产品列表</span></a></li>
+                    <li><a href="#" target='_self'><span class="m2">产品类别</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+  
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
