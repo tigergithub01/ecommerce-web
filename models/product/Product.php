@@ -33,6 +33,8 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    
+    public $primaryPhoto;
     /**
      * @inheritdoc
      */

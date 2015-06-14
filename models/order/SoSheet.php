@@ -35,6 +35,7 @@ class SoSheet extends \yii\db\ActiveRecord
 	public $soDetailList;
 	public $vip;
 	public $soContactPerson;
+	public $order_status;
 	
     /**
      * @inheritdoc
