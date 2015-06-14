@@ -1,0 +1,87 @@
+html,
+body {
+    height: 100%;
+    padding:0px;
+    margin:0px;
+    font-family: "STHeiti","Microsoft YaHei";
+    font-size:14px;
+}
+html,body,li,a,p,span,td,div{
+    font-family: "STHeiti","Microsoft YaHei";
+}
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+#top_wrap{
+    height:88px;
+    background:url(../images/adminbk_1.png) repeat-x;
+    overflow: hidden;
+    color:#fff;
+}
+#top_wrap a{
+    color:#fff;
+    text-decoration:none;
+}
+#top_wrap i{margin:0px 3px;}
+
+.mnav{
+    background:url(../images/mnav.png) no-repeat left center;
+    padding-left:28px;
+}
+#menu_wrap{
+    float:left;
+    width:188px;    
+}
+a { text-decoration:none;}
+ul,li{
+    list-style-type: none;
+    padding:0px;
+    margin:0px;
+}
+li.menu1{
+    padding:0px;
+    margin:0px;
+}
+li.menu1 a{
+    display:block;
+    height: 34px;
+    line-height: 34px;
+    padding-left:30px;   
+    border-bottom:1px solid #b9cad3;
+    color:#000;
+    font-weight: bold;
+    background:#d4e7f0;
+}
+.submenu li{   
+    
+}
+.submenu li a {    
+    background:#f0f9fd;
+    border:0px;   
+    padding-left:38px;
+    font-weight: normal;
+    font-size:12px;
+    line-height: 30px;
+    height:30px;
+}
+.m11 {   
+   padding-left: 21px;
+   background:url(../images/menuicon.png) no-repeat left center;
+}
+.submenu li a:hover{
+    background-color:#3eafe0;
+    color:#fff;
+    border-left:2px solid #ff0000;
+}
+.m2{
+    padding-left: 10px;
+    background:url(../images/arrow_1.png) no-repeat left center;
+}
+
+.submenu li a:hover .m2{
+    background-position: -4px center;
+}
