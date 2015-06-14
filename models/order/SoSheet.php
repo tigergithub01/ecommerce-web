@@ -30,6 +30,12 @@ use Yii;
  */
 class SoSheet extends \yii\db\ActiveRecord
 {
+    
+	//transient fields
+	public $soDetailList;
+	public $vip;
+	public $soContactPerson;
+	
     /**
      * @inheritdoc
      */
@@ -44,8 +50,8 @@ class SoSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'sheet_type_id', 'code', 'vip_id', 'status', 'settle_flag', 'order_date'], 'required'],
-            [['id', 'sheet_type_id', 'vip_id', 'status', 'settle_flag', 'delivery_type', 'pay_type_id'], 'integer'],
+            [['sheet_type_id', 'code', 'vip_id', 'status', 'settle_flag', 'order_date'], 'required'],
+            [['sheet_type_id', 'vip_id', 'status', 'settle_flag', 'delivery_type', 'pay_type_id'], 'integer'],
             [['order_amt', 'order_quantity', 'deliver_fee', 'pay_amt', 'return_amt'], 'number'],
             [['order_date', 'delivery_date', 'pay_date', 'return_date'], 'safe'],
             [['code'], 'string', 'max' => 30],

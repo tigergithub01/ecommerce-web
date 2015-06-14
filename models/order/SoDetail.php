@@ -16,6 +16,8 @@ use Yii;
  */
 class SoDetail extends \yii\db\ActiveRecord
 {
+    
+    public $product;
     /**
      * @inheritdoc
      */
