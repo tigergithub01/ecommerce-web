@@ -20,11 +20,11 @@ use app\models\order\SoSheet;
 use app\models\order\SoDetail;
 use app\modules\admin\controllers\product\ProductTypeController;
 use app\models\product\Product;
-use app\models\order\app\models\order;
 use app\models\vip\Vip;
 use app\modules\api\utils\SheetCodeGenUtil;
 use app\models\order\SoContactPerson;
-
+use app\modules\api\service\VipOrderService;
+use app\modules\api\service\app\modules\api\service;
 
 class VipOrderController extends BaseSaleController {
 	public function beforeAction($action) {
@@ -37,11 +37,20 @@ class VipOrderController extends BaseSaleController {
 		}
 		return parent::beforeAction ( $action );
 	}
-	public function actionIndex() {
-		return $this->render ( 'index' );
+	public function actionIndex($status = null) {
+		$vipOrderService = new VipOrderService ();
+		$vip = $_SESSION [SaleConstants::$session_vip];
+		$orderList = $vipOrderService->getOrderList ( $vip->id, $status );
+		return $this->render ( 'index', [ 
+				'orderList' => $orderList 
+		] );
 	}
-	public function actionView() {
-		return $this->render ( 'view' );
+	public function actionView($orderId) {
+		$vipOrderService = new VipOrderService ();
+		$soSheet = $vipOrderService->getOrder ( $orderId );
+		return $this->render ( 'view', [ 
+				'model' => $soSheet 
+		] );
 	}
 	public function actionAddContact() {
 		// initiate product information
@@ -143,30 +152,29 @@ class VipOrderController extends BaseSaleController {
 					$soDetail->save ();
 				}
 				
-				//save order delivery information
-				$soContactPerson = new SoContactPerson;
+				// save order delivery information
+				$soContactPerson = new SoContactPerson ();
 				$soContactPerson->order_id = $orderId;
-				$soContactPerson->name=$model->name;
+				$soContactPerson->name = $model->name;
 				$soContactPerson->phone_number = $model->phone_number;
 				$soContactPerson->province_id = $model->province_id;
 				$soContactPerson->city_id = $model->city_id;
 				$soContactPerson->district_id = $model->district_id;
 				$soContactPerson->detail_address = $model->detail_address;
-				if(!$soContactPerson->save()){
+				if (! $soContactPerson->save ()) {
 					Yii::trace ( '$soContactPerson->save() errors' );
 					Yii::trace ( $soContactPerson->getErrors () );
-					$trans->rollBack();
-					return $this->render ( 'contact', [
+					$trans->rollBack ();
+					return $this->render ( 'contact', [ 
 							'model' => $model,
 							'provinces' => $provinces_map,
 							'cities' => [ ],
 							'districts' => [ ],
-							'soDetail' => $soDetail
+							'soDetail' => $soDetail 
 					] );
 				}
 				
-				
-				//commit
+				// commit
 				$trans->commit ();
 				
 				// TODO:should be render,not be redirect.
@@ -227,57 +235,56 @@ class VipOrderController extends BaseSaleController {
 	public function actionConfirm() {
 		// submit order
 		$orderId = $_REQUEST ['orderId'];
-		$soSheet = SoSheet::findOne ( $orderId );
-		if (empty ( $soSheet )) {
-			throw new NotFoundHttpException ();
-		}
-		//get sale order detail list
-		$soDetailList = SoDetail::find ()->where ( 'order_id=:order_id', [ 
-				':order_id' => $orderId 
-		] )->all ();
-		if(!empty($soDetailList)){
-			foreach ($soDetailList as $soDetail) {
-				$product = Product::findOne($soDetail->product_id);
-				$soDetail->product = $product;
-			}
-		}
-		$soSheet->soDetailList = $soDetailList;
+		$vipOrderService = new VipOrderService ();
+		$soSheet = $vipOrderService->getOrder ( $orderId );
+		/* $soSheet = SoSheet::findOne ( $orderId );
+		 if (empty ( $soSheet )) {
+		 throw new NotFoundHttpException ();
+		 }
+		 //get sale order detail list
+		 $soDetailList = SoDetail::find ()->where ( 'order_id=:order_id', [ 
+		 ':order_id' => $orderId 
+		 ] )->all ();
+		 if(!empty($soDetailList)){
+		 foreach ($soDetailList as $soDetail) {
+		 $product = Product::findOne($soDetail->product_id);
+		 $soDetail->product = $product;
+		 }
+		 }
+		 $soSheet->soDetailList = $soDetailList;
+		 
+		 //get vip information
+		 $vip = Vip::findOne($soSheet['vip_id']);
+		 $soSheet->vip = $vip;	
+		 
+		 //get contact information
+		 $soContactPerson = SoContactPerson::find()->where('order_id=:order_id',[':order_id'=>$orderId])->one();
+		 if($soContactPerson!=null){
+		 $province = Province::findOne($soContactPerson->province_id);
+		 $city = City::findOne($soContactPerson->city_id);
+		 $district = District::findOne($soContactPerson->district_id);
+		 
+		 $soContactPerson->province = $province;
+		 $soContactPerson->city = $city;
+		 $soContactPerson->district = $district;
+		 }
+		 $soSheet->soContactPerson = $soContactPerson; */
 		
-		//get vip information
-		$vip = Vip::findOne($soSheet['vip_id']);
-		$soSheet->vip = $vip;	
-		
-		//get contact information
-		$soContactPerson = SoContactPerson::find()->where('order_id=:order_id',[':order_id'=>$orderId])->one();
-		if($soContactPerson!=null){
-			$province = Province::findOne($soContactPerson->province_id);
-			$city = City::findOne($soContactPerson->city_id);
-			$district = District::findOne($soContactPerson->district_id);
-			
-			$soContactPerson->province = $province;
-			$soContactPerson->city = $city;
-			$soContactPerson->district = $district;
-		}
-		
-		$soSheet->soContactPerson = $soContactPerson;
-		
-		$pay_type_id = isset($_POST['pay_type_id']) ? $_POST['pay_type_id'] : null;
-		if(empty($pay_type_id)){
-			return $this->render ( 'confirm', [
-					'model' => $soSheet
+		// confirm pay type
+		$pay_type_id = isset ( $_POST ['pay_type_id'] ) ? $_POST ['pay_type_id'] : null;
+		if (empty ( $pay_type_id )) {
+			return $this->render ( 'confirm', [ 
+					'model' => $soSheet 
 			] );
-		}else{
-			//post pay information to third paty system.
-// 			$soSheet->pay_type_id=$pay_type_id;
+		} else {
+			// post pay information to third paty system.
+			// $soSheet->pay_type_id=$pay_type_id;
 			
-			return $this->render ( 'confirm', [
-				'model' => $soSheet
+			return $this->render ( 'confirm', [ 
+					'model' => $soSheet 
 			] );
 		}
 	}
-	
-	
-	function actionSubmit(){
-		
+	function actionSubmit() {
 	}
 }
