@@ -12,11 +12,20 @@ $this->registerCssFile('css/sale/bootstrap.css');
 
 
 <div class="vip-order-contact-form" style="margin: 10px;">
+	
+
 	<?php $form = ActiveForm::begin(['options' => ['class' => 'form-vertical'],]); ?>
+	
+	<div class="so_detail_detail">
+		<input type="hidden" name="detailList[0][product_id]" value="<?php echo $soDetail['product_id']?>">
+		<input type="hidden" name="detailList[0][quantity]" value="<?php echo $soDetail['quantity']?>">
+		<input type="hidden" name="detailList[0][price]" value="<?php echo $soDetail['price']?>">
+		<input type="hidden" name="detailList[0][amount]" value="<?php echo $soDetail['amount']?>">
+	</div>
 	
     <?= $form->field($model, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
     
-    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => 10,'placeholder'=>'请输入手机号码'])?>
+    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => 11,'placeholder'=>'请输入手机号码'])?>
     
     <?= $form->field($model, 'province_id')->dropDownList($provinces,
                                               ['prompt'=>'--请选择收货省份--','style'=>'width:100%']) ?>
