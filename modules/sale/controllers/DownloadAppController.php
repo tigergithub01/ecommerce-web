@@ -38,7 +38,7 @@ class DownloadAppController extends \yii\web\Controller
     	//用以解决中文不能显示出来的问题
     	$file_name=iconv("utf-8","gb2312",$file_name);
     	//$file_sub_path=$_SERVER['DOCUMENT_ROOT']."marcofly/phpstudy/down/down/";
-    	$file_sub_path=$_SERVER['DOCUMENT_ROOT']."/assets/apk/";
+    	$file_sub_path=$_SERVER['DOCUMENT_ROOT']."/upload/app/";
     	$file_path=$file_sub_path.$file_name;
     	//echo $file_path;
     	//echo $file_path;
