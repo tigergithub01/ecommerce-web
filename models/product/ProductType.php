@@ -47,4 +47,10 @@ class ProductType extends \yii\db\ActiveRecord
             'description' => '分类描述',
         ];
     }
+    
+    public function getparent()
+    {
+        return $this->hasOne(ParentProductType::className(), ['id' => 'parent_id']);
+    }
+    
 }

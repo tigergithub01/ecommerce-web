@@ -32,7 +32,7 @@ use Yii;
  * @property string $deduct_level4
  */
 class Product extends \yii\db\ActiveRecord
-{
+{    
     
     public $primaryPhoto;
     /**
@@ -71,23 +71,116 @@ class Product extends \yii\db\ActiveRecord
             'type_id' => '产品所属分类',
             'price' => '价格',
             'description' => '产品描述',
-            'status' => '产品状态（1:正常、0:下架）',
+            'status' => '产品状态',
             'stock_quantity' => '库存数量',
             'safety_quantity' => '安全库存',
             'create_user_id' => '创建人',
             'create_date' => '创建日期',
             'update_user_id' => '更新日期',
             'update_date' => '更新人',
-            'can_return_flag' => '是否能退货（1:可以、0:不可以）',
+            'can_return_flag' => '是否能退货',
             'return_days' => '可退货天数(可以退货时才设置此字段)',
             'return_desc' => '退货规则描述',
             'regular_type_id' => '结算规则类别',
             'deduct_price' => '产品分润单价',
-            'special_deduct_flag' => '是否单独设置分润比例（1:是、0:否）',
-            'deduct_level1' => '一级分润比例(所有分润比例累加值为100)',
+            'special_deduct_flag' => '是否单独设置分润比例',
+            'deduct_level1' => '一级分润比例',
             'deduct_level2' => '二级分润比例',
             'deduct_level3' => '三级分润比例',
             'deduct_level4' => '四级分润比例',
         ];
+    }
+    
+    public function getTypeName(){
+        $d= (new \yii\db\Query())
+                ->select("name")
+                ->from(ProductType::tableName())
+                ->where(['id'=>$this->type_id])
+                ->column();
+        
+        return empty($d)?"":implode('', $d);
+    }
+    
+    public function getCreateUserName(){
+         return $this->getUserName($this->create_user_id);
+    }
+    
+     public function getUpdateUserName(){
+        return $this->getUserName($this->update_user_id);
+    }
+    
+    private function getUserName($user_id){
+        $d= (new \yii\db\Query())
+                ->select("user_name")
+                ->from('t_user')
+                ->where(['id'=>$user_id])
+                ->column();
+        
+        return empty($d)?"":implode('', $d);
+    }
+    
+    public function getProductType()
+    {
+        return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
+    }
+    
+    public static function generateCode(){
+        return md5(time());
+    }
+    
+    public  static function getPhotos($product_id){
+        return $query=(new \yii\db\Query())
+                ->from('t_product_photo')
+                ->where(['product_id'=>$product_id])
+                ->all();
+    }
+    
+    /***
+     * 添加图片
+     */
+     public static function AddPhotos(array $photoArray,$product_id){
+         
+         if(empty($photoArray)){
+             return;
+         }
+         
+         $values=[];
+         foreach ($photoArray as &$item) {
+             $item['url']=  substr($item['url'], strlen(Yii::getAlias('@web')));
+             $values[]=[$product_id,$item['url'],$item['primary_flag']];             
+         }
+         
+        $db=\Yii::$app->db;
+        $db->createCommand()->batchInsert('t_product_photo',['product_id','url','primary_flag'],$values)
+                ->execute();
+    }
+    
+    public static function deleteAllPic($product_id,$pic_id){
+        
+        $db=\Yii::$app->db;
+        $query=(new \yii\db\Query())
+                ->from('t_product_photo')
+                ->where(['product_id'=>$product_id]);
+        
+        if($pic_id){
+            $query->andWhere(['id'=>$pic_id]);
+        }
+        
+        $pics=$query->all();
+        
+        foreach ($pics as $item) {
+            $file=Yii::getAlias('@webroot').$item['url'];
+            if(file_exists($file)){
+                @unlink($file);
+            }
+        }
+        
+        $deleteCondition=['product_id'=>$product_id];
+        if($pic_id){
+            $deleteCondition['id']=$pic_id;
+        }
+        
+        $db->createCommand()->delete('t_product_photo',$deleteCondition)
+                ->execute();
     }
 }
