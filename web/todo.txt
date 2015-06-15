@@ -479,6 +479,9 @@ insert into t_delivery_type(code,name,status)values('shentong','申通快递',1)
 insert into t_delivery_type(code,name,status)values('yuantong','圆通速递',1);
 insert into t_delivery_type(code,name,status)values('yunda','韵达快运',1);
 
+http://localhost:8085/index.php?r=api%2Fnotify%2Findex
+
+
 
 
 
