@@ -24,7 +24,8 @@ $this->registerCssFile ( 'css/sale/payment.css', [
 			<span class="tag">收货地址</span><span class="content"><?php echo $model['soContactPerson']['province']['name'].$model['soContactPerson']['city']['name'].$model['soContactPerson']['district']['name'].$model['soContactPerson']['detail_address']?></span>
 		</div>
 	</div>
-	<form action="<?php echo Url::toRoute('/sale/vip-order/confirm')?>" method="post" class="ajaxForm" id="order_detail_form">
+	<form action="<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>" method="post" class="ajaxForm" id="order_detail_form" target="_blank">
+		<input type="hidden" name="_csrf" value="<?= @Yii::$app->request->csrfToken ?>"/>
 		<div class="payment_info_bar">
 			<div class="item">
 				<span class="tag">订单号</span><span class="content"><?php echo $model['code']?></span>
@@ -46,26 +47,19 @@ $this->registerCssFile ( 'css/sale/payment.css', [
 			</div>
 		</div>
 		<div class="payment_btn_bar">
-			<button class="submit">确认支付</button>
+			<input type="submit" class="submit" value="确认支付"/>
 			<input name="pay_type_id" id="pay_type_id" type="hidden"> 
-			<input name="so_order_id" id="so_order_id" value="<?php echo $model['code']?>" type="hidden">
+			<input name="WIDout_trade_no"  value="<?php echo $model['code']?>" type="hidden"/>
+			<input name="WIDsubject" value="<?php echo $product['name']?>" type="hidden"/>
+			<input name="WIDtotal_fee"  value="<?php echo $model['order_amt']?>" type="hidden"/>
+			<input name="WIDbody"  value="" type="hidden"/>
+			<input name="WIDshow_url" value="<?php echo  Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']])?>" type="hidden"/>
 		</div>
+	</form>
 
 </div>
 
 <style type="text/css">
-/* ------------------------------------------------ 头部 ------------------------------------ */
-header {
-	background: #337ab7;
-	color: white;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	display: table;
-	width: 100%;
-}
-
-/* ------------------------------------------------ 头部 ------------------------------------ */
 </style>
 
 

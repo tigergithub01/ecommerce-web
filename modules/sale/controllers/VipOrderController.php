@@ -270,21 +270,45 @@ class VipOrderController extends BaseSaleController {
 		 }
 		 $soSheet->soContactPerson = $soContactPerson; */
 		
+// 		echo \Yii::$app->request->hostInfo;
+// 		echo $_SERVER['SERVER_NAME'];
+// 		echo $_SERVER['SERVER_PORT'];
+// 		echo $_SERVER['HTTP_HOST'];
+// 		echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+// 		echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		
 		// confirm pay type
 		$pay_type_id = isset ( $_POST ['pay_type_id'] ) ? $_POST ['pay_type_id'] : null;
 		if (empty ( $pay_type_id )) {
+			
+			$soDetailList  = $soSheet->soDetailList;
+			$soDetail = $soDetailList[0];
+			$product = $soDetail->product;
+			
 			return $this->render ( 'confirm', [ 
-					'model' => $soSheet 
+					'model' => $soSheet,
+					'product'=>$product
 			] );
 		} else {
 			// post pay information to third paty system.
 			// $soSheet->pay_type_id=$pay_type_id;
-			
 			return $this->render ( 'confirm', [ 
 					'model' => $soSheet 
 			] );
+			
+			/* return $this->render ( 'sale/alipay-direct/index', [
+					'WIDout_trade_no'=>$soSheet->code,
+			] ); */
+			
+// 			Yii::$app->response->redirect($url)
+			/* return $this->redirect( '/sale/alipay-direct/index', [
+					'WIDout_trade_no'=>$soSheet->code,
+			] ); */
+			
+			
 		}
 	}
 	function actionSubmit() {
+		
 	}
 }
