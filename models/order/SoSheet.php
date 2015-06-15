@@ -27,6 +27,8 @@ use Yii;
  * @property string $return_date
  * @property string $memo
  * @property string $message
+ * @property string $trade_no
+ * @property string $trade_status
  */
 class SoSheet extends \yii\db\ActiveRecord
 {
