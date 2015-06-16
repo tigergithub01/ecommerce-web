@@ -12,7 +12,7 @@ use app\modules\api\service\VipOrderService;
 use app\modules\sale\controllers\BaseSaleController;
 use app\modules\sale\models\SaleConstants;
 
-class AlipayDirectController extends BaseSaleController {
+class AlipayWapDirectController extends BaseSaleController {
 	public $layout = false;
 	public function beforeAction($action) {
 		/* $session = Yii::$app->session;

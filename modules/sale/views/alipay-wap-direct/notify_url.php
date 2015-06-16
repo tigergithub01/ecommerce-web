@@ -15,7 +15,6 @@
  * 如果没有收到该页面返回的 success 信息，支付宝会在24小时内按一定的时间策略重发通知
  */
 use app\modules\api\service\VipOrderService;
-
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
@@ -60,7 +59,6 @@ if($verify_result) {//验证成功
 			//如果有做过处理，不执行商户的业务程序
     	$service = new VipOrderService();
     	$service->executeOrderPayAlipay($out_trade_no, $trade_no, $trade_status);
-				
 		//注意：
 		//付款完成后，支付宝系统发送该交易状态通知
 

@@ -83,8 +83,11 @@ $(function(){
 			return false;
 		}else{
 			if($('#pay_type_id').val()==1){
-				//alipay
-				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>');
+				//alipay direct
+				//$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>');
+				
+				//alipay wap direct
+				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-wap-direct/index')?>');
 			}else if($('#pay_type_id').val()==2){
 				//wxpay
 				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/wxpay/jsapi')?>');

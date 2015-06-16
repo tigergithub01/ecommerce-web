@@ -172,4 +172,35 @@ class VipOrderService {
 		]);
 	}
 	
+	
+	function executeOrderPayApplyWx($order_no,$pay_amt){
+		SoSheet::updateAll ( [
+				'pay_amt' => $pay_amt,
+				'pay_type_id' => 2
+		], 'code=:code', [
+				":code" => $order_no
+		]);
+	}
+	
+	function executeOrderPayWx($order_no,$trade_no,$trade_status){
+		$soSheet = SoSheet::find()->where('code=:code',[':code'=>$order_no])->one();
+		if($soSheet==null){
+			throw new NotFoundHttpException ();
+		}
+		$trade_status = $soSheet->trade_status;
+		if($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+			//record already updated.
+			return;
+		}
+		$pay_date = date ( SaleConstants::$date_format, time () );
+		SoSheet::updateAll ( [
+				'trade_no' => $trade_no,
+				'trade_status' => $trade_status,
+				'pay_date' => $pay_date,
+				'status' => 3002
+		], 'id=:id', [
+				":id" => $soSheet->id
+		]);
+	}
+	
 }
