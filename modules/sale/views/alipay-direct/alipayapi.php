@@ -33,7 +33,8 @@ require_once("lib/alipay_submit.class.php");
         //必填，不能修改
         //服务器异步通知页面路径
 //         $notify_url = "http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/notify_url.php";
-		$notify_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/alipay-direct/notify']);
+// 		$notify_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/alipay-direct/notify']);
+        $notify_url = URL::toRoute(['/sale/alipay-direct/notify'],true);
         //需http://格式的完整路径，不能加?id=123这类自定义参数 
         //页面跳转同步通知页面路径
 //         $return_url = "http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/return_url.php";
