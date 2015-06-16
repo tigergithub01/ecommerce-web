@@ -5,11 +5,10 @@ namespace app\modules\api\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\Session;
-
 use app\modules\api\controllers\BaseApiController;
+use app\components\controller\BaseController;
 
-class SmsController extends BaseApiController {
-	
+class SmsController extends BaseController {
 	public function actionIndex() {
 		return $this->render ( 'index' );
 	}

@@ -8,8 +8,9 @@ use app\models\product\Product;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use app\models\common\JsonObj;
+use app\components\controller\BaseController;
 
-class ProductController extends Controller {
+class ProductController extends BaseController {
 	
 	/**
 	 * product list
