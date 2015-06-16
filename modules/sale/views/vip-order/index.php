@@ -44,7 +44,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 	<section id="0" style="display: block;">
 		<?php foreach ($orderList as $order) {?>
 		<div class="order_item_bar">
-			订单编号<?php echo $order['code']?>&nbsp; </br>
+			订单编号：<?php echo $order['code']?>&nbsp; </br>
 			订单金额：<?php echo $order['order_amt']?>&nbsp; </br>
 			订购数量：<?php echo $order['order_quantity']?></br>
 			订单状态: <?php echo $order['order_status']['pa_val']?></br>
