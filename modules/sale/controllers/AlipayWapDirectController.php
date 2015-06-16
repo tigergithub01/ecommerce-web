@@ -11,8 +11,9 @@ use yii\filters\VerbFilter;
 use app\modules\api\service\VipOrderService;
 use app\modules\sale\controllers\BaseSaleController;
 use app\modules\sale\models\SaleConstants;
+use app\components\controller\BaseController;
 
-class AlipayWapDirectController extends BaseSaleController {
+class AlipayWapDirectController extends BaseController {
 	public $layout = false;
 	public function beforeAction($action) {
 		/* $session = Yii::$app->session;

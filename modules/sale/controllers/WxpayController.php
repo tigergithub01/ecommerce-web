@@ -11,17 +11,11 @@ use yii\filters\VerbFilter;
 use app\modules\api\service\VipOrderService;
 use app\modules\sale\controllers\BaseSaleController;
 use app\modules\sale\models\SaleConstants;
+use app\components\controller\BaseController;
 
-class WxpayController extends BaseSaleController {
+class WxpayController extends BaseController {
 	public $layout = false;
 	public function beforeAction($action) {
-		/* $session = Yii::$app->session;
-		 $vip = $session->get ( SaleConstants::$session_vip );
-		 if (empty ( $vip )) {
-		 return $this->redirect ( [ 
-		 '/sale/vip-login/index' 
-		 ] );
-		 } */
 		return parent::beforeAction ( $action );
 	}
 	public function actionIndex() {

@@ -4,18 +4,18 @@ namespace app\modules\sale\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\components\filters\VipAuthFilter;
+use app\components\controller\BaseController;
+use app\modules\sale\models\SaleConstants;
 
-class BaseSaleController extends Controller {
-	public function behaviors() {
-		return [ 
-				'auth' => [ 
-						'class' => VipAuthFilter::className () 
-				] 
-		];
-	}
+class BaseSaleController extends BaseController {
 	public function beforeAction($action) {
-		// TODO:
+		$session = Yii::$app->session;
+		$vip = $session->get ( SaleConstants::$session_vip );
+		if (empty ( $vip ) || !isset($vip)) {
+			return $this->redirect ( [ 
+					'/sale/vip-login/index' 
+			] );
+		}
 		return parent::beforeAction ( $action );
 	}
 	public function afterAction($action, $result) {

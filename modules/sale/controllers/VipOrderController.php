@@ -28,13 +28,6 @@ use app\modules\api\service\app\modules\api\service;
 
 class VipOrderController extends BaseSaleController {
 	public function beforeAction($action) {
-		$session = Yii::$app->session;
-		$vip = $session->get ( SaleConstants::$session_vip );
-		if (empty ( $vip )) {
-			return $this->redirect ( [ 
-					'/sale/vip-login/index' 
-			] );
-		}
 		return parent::beforeAction ( $action );
 	}
 	public function actionIndex($status = null) {

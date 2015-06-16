@@ -23,18 +23,6 @@ class VipCenterController extends BaseSaleController {
 	 * @see \app\modules\sale\controllers\BaseSaleController::beforeAction()
 	 */
 	public function beforeAction($action) {
-		$session = Yii::$app->session;
-		/* if(!($session->isActive)){
-		 return $this->redirect(['/sale/vip-login/index']);
-		 } */
-		$vip = $session->get ( SaleConstants::$session_vip );
-		// Yii::trace('print current vip') ;
-		// Yii::trace($vip) ;
-		if (empty ( $vip )) {
-			return $this->redirect ( [ 
-					'/sale/vip-login/index' 
-			] );
-		}
 		return parent::beforeAction ( $action );
 	}
 	

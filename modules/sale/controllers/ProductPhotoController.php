@@ -9,8 +9,9 @@ use yii\web\NotFoundHttpException;
 use app\modules\sale\controllers\BaseSaleController;
 use app\models\product\ProductPhoto;
 use app\modules\sale\models\SaleConstants;
+use app\components\controller\BaseController;
 
-class ProductPhotoController extends BaseSaleController {
+class ProductPhotoController extends BaseController {
 	public function actionView() {
 		$id = $_REQUEST ['id'];
 		$model = ProductPhoto::findOne ( $id );

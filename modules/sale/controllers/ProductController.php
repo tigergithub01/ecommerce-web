@@ -12,8 +12,9 @@ use app\modules\sale\controllers\BaseSaleController;
 use app\models\product\Product;
 use app\models\product\ProductPhoto;
 use app\modules\sale\models\SaleConstants;
+use app\components\controller\BaseController;
 
-class ProductController extends BaseSaleController {
+class ProductController extends BaseController {
 	public function actionView() {
 		$product_id = $_REQUEST ['id'];
 		

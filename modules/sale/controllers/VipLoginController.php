@@ -11,9 +11,10 @@ use yii\filters\VerbFilter;
 use app\models\vip\Vip;
 use yii\web\Session;
 use app\modules\sale\models\SaleConstants;
+use app\components\controller\BaseController;
 
 
-class VipLoginController extends \yii\web\Controller
+class VipLoginController extends BaseController
 {
 	
 	/**

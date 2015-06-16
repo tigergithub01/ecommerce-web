@@ -11,18 +11,20 @@ use yii\filters\VerbFilter;
 use app\models\vip\Vip;
 use app\modules\sale\models\SaleConstants;
 use app\models\system\PhoneVerifyCode;
+use app\components\controller\BaseController;
 
-class VipRegisterController extends \yii\web\Controller {
+class VipRegisterController extends BaseController {
 	/**
 	 * register
+	 * 
 	 * @return Ambigous <string, string>|\yii\web\Response
 	 */
 	public function actionIndex() {
 		// start session
 		$session = Yii::$app->session;
-// 		if (! $session->isActive) {
-			$session->open ();
-// 		}
+		// if (! $session->isActive) {
+		$session->open ();
+		// }
 		$_SESSION ['send_code'] = $this->random ( 6, 1 );
 		
 		// start register
@@ -51,42 +53,41 @@ class VipRegisterController extends \yii\web\Controller {
 			}
 			
 			// validate verifyCode from session
-			if (empty($_SESSION ['mobile']) or empty($_SESSION ['mobile_code']) or $model->vip_no != $_SESSION ['mobile'] or $model->verifyCode != $_SESSION ['mobile_code']) {
+			if (empty ( $_SESSION ['mobile'] ) or empty ( $_SESSION ['mobile_code'] ) or $model->vip_no != $_SESSION ['mobile'] or $model->verifyCode != $_SESSION ['mobile_code']) {
 				$model->addError ( 'verifyCode', '手机验证码输入错误。' );
 				return $this->render ( 'index', [ 
 						'model' => $model 
 				] );
 			}
 			
-			
 			// validate verifyCode from database
-			$phoneVerifyCodeModel =  PhoneVerifyCode::find ()->where ( 'phone_number=:phone_number', [ 
+			$phoneVerifyCodeModel = PhoneVerifyCode::find ()->where ( 'phone_number=:phone_number', [ 
 					':phone_number' => $model->vip_no 
 			] )->orderBy ( [ 
 					'sent_time' => SORT_DESC 
 			] )->offset ( 0 )->limit ( 1 )->one ();
-			if(empty($phoneVerifyCodeModel)){
+			if (empty ( $phoneVerifyCodeModel )) {
 				$model->addError ( 'verifyCode', '手机验证码输入错误。' );
-				return $this->render ( 'index', [
-						'model' => $model
+				return $this->render ( 'index', [ 
+						'model' => $model 
 				] );
-			}else{
-				//verifyCode is correct or not
-				if($phoneVerifyCodeModel->verify_code!=$model->verifyCode){
+			} else {
+				// verifyCode is correct or not
+				if ($phoneVerifyCodeModel->verify_code != $model->verifyCode) {
 					$model->addError ( 'verifyCode', '手机验证码输入错误。' );
-					return $this->render ( 'index', [
-							'model' => $model
+					return $this->render ( 'index', [ 
+							'model' => $model 
 					] );
 				}
 				
-				//verifyCode expired or not
+				// verifyCode expired or not
 				$startdate = $phoneVerifyCodeModel->sent_time;
-				$enddate = date (SaleConstants::$date_format, time () );
-				$minute=floor((strtotime($enddate)-strtotime($startdate))%86400/60);
-				if($minute>5){
+				$enddate = date ( SaleConstants::$date_format, time () );
+				$minute = floor ( (strtotime ( $enddate ) - strtotime ( $startdate )) % 86400 / 60 );
+				if ($minute > 5) {
 					$model->addError ( 'verifyCode', '手机验证码输入错误,手机验证码5分钟内有效。' );
-					return $this->render ( 'index', [
-							'model' => $model
+					return $this->render ( 'index', [ 
+							'model' => $model 
 					] );
 				}
 			}
