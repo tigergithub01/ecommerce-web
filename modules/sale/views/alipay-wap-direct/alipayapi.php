@@ -54,6 +54,7 @@ require_once("lib/alipay_submit.class.php");
         //选填
         //超时时间
         $it_b_pay = $_POST['WIDit_b_pay'];
+        //$it_b_pay = date("YmdHis", time() + 600);
         //选填
         //钱包token
         $extern_token = $_POST['WIDextern_token'];
