@@ -24,7 +24,7 @@ $this->registerCssFile ( 'css/sale/payment.css', [
 			<span class="tag">收货地址</span><span class="content"><?php echo $model['soContactPerson']['province']['name'].$model['soContactPerson']['city']['name'].$model['soContactPerson']['district']['name'].$model['soContactPerson']['detail_address']?></span>
 		</div>
 	</div>
-	<form action="<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>" method="post" class="ajaxForm" id="order_detail_form" target="_blank">
+	<form action="<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>" method="post" class="ajaxForm" id="order_pay_form" target="_blank">
 		<input type="hidden" name="_csrf" value="<?= @Yii::$app->request->csrfToken ?>"/>
 		<div class="payment_info_bar">
 			<div class="item">
@@ -38,17 +38,17 @@ $this->registerCssFile ( 'css/sale/payment.css', [
 		<div class="payment_info_bar">
 			<div class="item">
 				<span class="img"><img src="images/sale/icon_alipay.png"></span> <a
-					class="checkbox right" href="javascript:void(0)" id="btn_alipay"></a>
+					class="checkbox right <?php if ($model['pay_type_id']==1) echo 'checkbox_checked' ?>" href="javascript:void(0)" id="btn_alipay"></a>
 			</div>
 			<hr class="gray_solid">
 			<div class="item">
 				<span class="img"><img src="images/sale/icon_weixin.jpg"></span> <a
-					class="checkbox right" href="javascript:void(0)" id="btn_weixin"></a>
+					class="checkbox right <?php if ($model['pay_type_id']==2) echo 'checkbox_checked' ?>" href="javascript:void(0)" id="btn_weixin"></a>
 			</div>
 		</div>
 		<div class="payment_btn_bar">
 			<input type="submit" class="submit" value="确认支付"/>
-			<input name="pay_type_id" id="pay_type_id" type="hidden"> 
+			<input name="pay_type_id" id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
 			<input name="WIDout_trade_no"  value="<?php echo $model['code']?>" type="hidden"/>
 			<input name="WIDsubject" value="<?php echo $product['name']?>" type="hidden"/>
 			<input name="WIDtotal_fee"  value="<?php echo $model['order_amt']?>" type="hidden"/>
@@ -77,10 +77,18 @@ $(function(){
 		
 	});
 
-	$('#order_detail_form').submit(function(){
+	$('#order_pay_form').submit(function(){
 		if($('a.checkbox_checked').length==0){
 			alert('请选择支付方式.');	
 			return false;
+		}else{
+			if($('#pay_type_id').val()==1){
+				//alipay
+				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>');
+			}else if($('#pay_type_id').val()==2){
+				//wxpay
+				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/wxpay/jsapi')?>');
+			}
 		}
 	});
 	
