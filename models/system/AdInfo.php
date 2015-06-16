@@ -14,6 +14,8 @@ use Yii;
  */
 class AdInfo extends \yii\db\ActiveRecord
 {
+    public $url;
+	
     /**
      * @inheritdoc
      */
