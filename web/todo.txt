@@ -488,6 +488,14 @@ Yii::app()->getBaseUrl()
 
 /sale/alipay-direct/index
 
+http://localhost:8085/index.php?r=api/api-test/index
+http://localhost:8085/index.php?r=api/vip-register/ajax-index
+http://localhost:8085/index.php?r=api/vip-login/ajax-index
+
+
+&XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14345052594721
+
+
 
 
 
