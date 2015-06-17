@@ -502,7 +502,12 @@ http://localhost:8085/index.php?r=sale/vip-register/index&parent_vip_no=13724346
 
 &XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14345052594721
 
+insert into t_app_release(name,upgrade_desc,ver_no,force_upgrade,app_path) values
+('1.1','1.解决微信分享问题',1.1,0,'ecommerce-adr.apk');
 
+
+http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr.apk
+http://localhost:8085/index.php?r=api/Fdownload-app/ajax-view
 
 
 
