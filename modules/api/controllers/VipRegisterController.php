@@ -94,6 +94,8 @@ class VipRegisterController extends BaseController {
 				return;
 			} else {
 				$session->set ( SaleConstants::$session_vip, $vip );
+				$session->timeout=1*24*60;
+				
 				$json = new JsonObj ( 1, '注册成功。', $vip );
 				echo (Json::encode ( $json ));
 				return;
