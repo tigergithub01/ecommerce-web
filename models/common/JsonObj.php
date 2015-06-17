@@ -12,11 +12,11 @@ class JsonObj extends Model {
 	 * @var $status
 	 */
 	public $status;
-	public $err;
+	public $msg;
 	public $value;
-	public function __construct($status, $err, $value) {
+	public function __construct($status, $msg, $value) {
 		$this->status = $status;
-		$this->err = $err;
+		$this->msg = $msg;
 		$this->value = $value;
 	}
 }
