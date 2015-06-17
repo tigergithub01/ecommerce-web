@@ -56,7 +56,7 @@ class VipLoginController extends BaseController
     			}
     		}
     	} else {
-    		$json = new JsonObj ( - 1, '数据验证失败，注登录成功。', null );
+    		$json = new JsonObj ( - 1, '数据验证失败，登录不成功。', null );
 			echo (Json::encode ( $json ));
 			return;
     	}
