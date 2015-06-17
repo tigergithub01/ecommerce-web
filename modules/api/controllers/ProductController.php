@@ -19,6 +19,7 @@ class ProductController extends BaseController {
 	public function actionIndex() {
 		// $productList = Product::find ()->all ();
 		$product_name = isset ( $_REQUEST ['product_name'] ) ? $_REQUEST ['product_name'] : '';
+		$product_type_id = isset ( $_REQUEST ['product_type_id'] ) ? $_REQUEST ['product_type_id'] : null;
 		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
 		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
 		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
@@ -31,6 +32,12 @@ class ProductController extends BaseController {
 		$query->where ( 'name like :name', [ 
 				':name' => '%' . $product_name . '%' 
 		] );
+		
+		if (! empty ( $product_type_id )) {
+			$query->andWhere ( 'type_id = :type_id', [ 
+					':type_id' => $product_type_id 
+			] );
+		}
 		
 		//order
 		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
