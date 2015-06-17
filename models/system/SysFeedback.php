@@ -15,6 +15,7 @@ use Yii;
  * @property string $ip_address
  * @property string $os_type
  * @property string $phone_model
+ * @property string $contact_method
  */
 class SysFeedback extends \yii\db\ActiveRecord
 {
@@ -33,9 +34,9 @@ class SysFeedback extends \yii\db\ActiveRecord
     {
         return [
             [['vip_id'], 'integer'],
-            [['feedback_date', 'feedback_type', 'content', 'ip_address'], 'required'],
+            [['feedback_date', 'content', 'ip_address'], 'required'],
             [['feedback_date'], 'safe'],
-            [['feedback_type', 'os_type'], 'string', 'max' => 100],
+            [['feedback_type', 'os_type','contact_method'], 'string', 'max' => 100],
             [['content'], 'string', 'max' => 500],
             [['ip_address'], 'string', 'max' => 30],
             [['phone_model'], 'string', 'max' => 60]
@@ -56,6 +57,7 @@ class SysFeedback extends \yii\db\ActiveRecord
             'ip_address' => 'IP地址',
             'os_type' => '操作系统',
             'phone_model' => '手机型号',
+        	'contact_method' => '联系方式，邮箱或电话',
         ];
     }
 }
