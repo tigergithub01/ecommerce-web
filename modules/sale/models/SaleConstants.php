@@ -16,6 +16,9 @@ class SaleConstants
     
     //advertisment photo path
     public static $ad_path='upload/ad/';
+    
+    //app photo path
+    public static $app_path='upload/app/';
 
 
     
