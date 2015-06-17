@@ -509,5 +509,10 @@ insert into t_app_release(name,upgrade_desc,ver_no,force_upgrade,app_path) value
 http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr.apk
 http://localhost:8085/index.php?r=api/Fdownload-app/ajax-view
 
+http://localhost:8085/index.php?r=api/product/view&id=4
+http://localhost:8085/index.php?r=api/product/index
+http://localhost:8085/index.php?r=api/product/index&product_name=
 
+http://localhost:8085/index.php?r=api/sale-agreement/view
+http://localhost:8085/index.php?r=api/sale-agreement/view-rights
 
