@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\sale\controllers;
+namespace app\modules\api\controllers;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -12,16 +12,16 @@ use app\models\vip\Vip;
 use yii\web\Session;
 use app\modules\sale\models\SaleConstants;
 use app\components\controller\BaseController;
+use app\models\common\JsonObj;
+use yii\helpers\Json;
 
 
 class VipLoginController extends BaseController
 {
 	
-	/**
-	 * login
-	 * @return Ambigous <string, string>|\yii\web\Response
-	 */
-    public function actionIndex()
+	public $enableCsrfValidation = false;
+	
+    public function actionAjaxIndex()
     {
     	$model = new VipForm(['scenario' => 'login']);
     	if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -30,16 +30,15 @@ class VipLoginController extends BaseController
 					':vip_no' => $model->vip_no 
 			] )->one ();
     		if(empty($vip_db)){
-    			$model->addError ( 'vip_no', '您输入的手机号码还没有注册' );
-    			return $this->render ( 'index', [
-    					'model' => $model
-    			] );
+    			$json = new JsonObj ( - 1, '您输入的手机号码还没有注册', null );
+    			echo (Json::encode ( $json ));
+    			return;
     		}else{
     			if(!($vip_db->password==md5($model->password))){
     				$model->addError ( 'password', '您输入的密码不正确' );
-    				return $this->render ( 'index', [
-    						'model' => $model
-    				] );
+    				$json = new JsonObj ( - 1, '您输入的密码不正确', null );
+    				echo (Json::encode ( $json ));
+    				return;
     			}else{
     				$vip_db->last_login_date=date ( SaleConstants::$date_format, time () );
     				$vip_db->update();
@@ -51,13 +50,15 @@ class VipLoginController extends BaseController
     				$session->set(SaleConstants::$session_vip, $vip_db);
     				$session->timeout=1*24*60;
     				
-    				return $this->redirect(['/sale/vip-center/index']);
+    				$json = new JsonObj ( 1, '登录成功。', $vip_db );
+    				echo (Json::encode ( $json ));
+    				return;
     			}
     		}
     	} else {
-    		return $this->render('index', [
-    				'model' => $model,
-    		]);
+    		$json = new JsonObj ( - 1, '数据验证失败，注登录成功。', null );
+			echo (Json::encode ( $json ));
+			return;
     	}
     	
     	/* if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -74,10 +75,12 @@ class VipLoginController extends BaseController
      * logout
      * @return \yii\web\Response
      */
-    public function actionLogout(){
+    public function actionAjaxLogout(){
     	$session = Yii::$app->session;
 		$vip = $session->remove(SaleConstants::$session_vip);
-    	return $this->redirect(['index']);
+		$json = new JsonObj ( 1, '退出登录成功。', null );
+		echo (Json::encode ( $json ));
+		return;
     }
     
 

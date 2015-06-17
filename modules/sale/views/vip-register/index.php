@@ -63,9 +63,11 @@ $(function(){
             '_csrf':'<?= @Yii::$app->request->csrfToken ?>'	
             }, function(msg) {
 // 			console.debug(msg);
-            alert(jQuery.trim(unescape(msg)));
 			if(msg=='提交成功'){
 				RemainTime();
+				alert('短信验证码已经发送');
+			}else{
+				alert(jQuery.trim(unescape(msg)));
 			}
         });
 	});

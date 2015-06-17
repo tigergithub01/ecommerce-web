@@ -16,6 +16,10 @@ class BaseApiController extends BaseController {
 		];
 	} */
 	public function beforeAction($action) {
+		$session = Yii::$app->session;
+		// if (! $session->isActive) {
+		$session->open ();
+		
 		return parent::beforeAction ( $action );
 	}
 	public function afterAction($action, $result) {
