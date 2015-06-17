@@ -14,6 +14,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 class AdInfoController extends BaseApiController {
+	public $enableCsrfValidation = false;
 	public function actionIndex() {
 		$dataList = AdInfo::find ()->all ();
 		if (! empty ( $dataList )) {
