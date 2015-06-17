@@ -9,10 +9,10 @@ use app\models\system\AdInfo;
 use app\modules\api\controllers\BaseApiController;
 use yii\helpers\Json;
 use app\models\common\JsonObj;
-use app\models\system\EarnGuild;	
-
+use app\models\system\EarnGuild;
 
 class EarnGuildController extends BaseApiController {
+	public $enableCsrfValidation = false;
 	public function actionIndex() {
 		$dataList = EarnGuild::find ()->all ();
 		$json = new JsonObj ( 1, null, $dataList );
