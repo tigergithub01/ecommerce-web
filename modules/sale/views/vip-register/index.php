@@ -30,7 +30,15 @@ $this->registerCssFile('css/sale/headerBar.css');
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => 16,'placeholder'=>'请设置6~16位密码'])?>
     
-    <?= $form->field($model, 'parent_vip_no')->textInput(['maxlength' => 11,'placeholder'=>'请输入推荐手机号码'])?>
+    <?php if(empty($parent_vip_no)){?>
+    	<?= $form->field($model, 'parent_vip_no')->textInput(['maxlength' => 11,'placeholder'=>'请输入推荐手机号码'])?>
+    <?php }else{ ?>
+    	<?=$form->field($model, 'parent_vip_no')->hiddenInput(['value'=>$parent_vip_no,'maxlength' => 11,'placeholder'=>'请输入推荐手机号码'])?>
+    <?php } ?>
+    
+    
+    
+    
 
     
     <div class="form-group">

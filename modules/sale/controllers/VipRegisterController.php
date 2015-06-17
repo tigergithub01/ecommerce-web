@@ -21,9 +21,9 @@ class VipRegisterController extends BaseController {
 	 *
 	 * @return Ambigous <string, string>|\yii\web\Response
 	 */
-	
-	
 	public function actionIndex() {
+		$parent_vip_no = isset ( $_REQUEST ['parent_vip_no'] ) ? $_REQUEST ['parent_vip_no'] : null;
+		
 		// start session
 		$session = Yii::$app->session;
 		// if (! $session->isActive) {
@@ -35,7 +35,7 @@ class VipRegisterController extends BaseController {
 		$model = new VipForm ( [ 
 				'scenario' => 'register' 
 		] );
-		if ($model->load ( Yii::$app->request->post () ) && $model->validate()) {
+		if ($model->load ( Yii::$app->request->post () ) && $model->validate ()) {
 			$vip = new Vip ();
 			$vip->vip_no = $model->vip_no;
 			$vip->password = md5 ( $model->password );
@@ -52,7 +52,8 @@ class VipRegisterController extends BaseController {
 			if (! empty ( $vip_db )) {
 				$model->addError ( 'vip_no', '手机号码' . ($model->vip_no) . '已经被占用' );
 				return $this->render ( 'index', [ 
-						'model' => $model 
+						'model' => $model,
+						'parent_vip_no' => $parent_vip_no 
 				] );
 			}
 			
@@ -60,7 +61,8 @@ class VipRegisterController extends BaseController {
 			if (empty ( $_SESSION ['mobile'] ) or empty ( $_SESSION ['mobile_code'] ) or $model->vip_no != $_SESSION ['mobile'] or $model->verifyCode != $_SESSION ['mobile_code']) {
 				$model->addError ( 'verifyCode', '手机验证码输入错误。' );
 				return $this->render ( 'index', [ 
-						'model' => $model 
+						'model' => $model,
+						'parent_vip_no' => $parent_vip_no 
 				] );
 			}
 			
@@ -73,14 +75,16 @@ class VipRegisterController extends BaseController {
 			if (empty ( $phoneVerifyCodeModel )) {
 				$model->addError ( 'verifyCode', '手机验证码输入错误。' );
 				return $this->render ( 'index', [ 
-						'model' => $model 
+						'model' => $model,
+						'parent_vip_no' => $parent_vip_no 
 				] );
 			} else {
 				// verifyCode is correct or not
 				if ($phoneVerifyCodeModel->verify_code != $model->verifyCode) {
 					$model->addError ( 'verifyCode', '手机验证码输入错误。' );
 					return $this->render ( 'index', [ 
-							'model' => $model 
+							'model' => $model,
+							'parent_vip_no' => $parent_vip_no 
 					] );
 				}
 				
@@ -91,7 +95,8 @@ class VipRegisterController extends BaseController {
 				if ($minute > 5) {
 					$model->addError ( 'verifyCode', '手机验证码输入错误,手机验证码5分钟内有效。' );
 					return $this->render ( 'index', [ 
-							'model' => $model 
+							'model' => $model,
+							'parent_vip_no' => $parent_vip_no 
 					] );
 				}
 			}
@@ -103,7 +108,8 @@ class VipRegisterController extends BaseController {
 			if (empty ( $parent_vip_db )) {
 				$model->addError ( 'parent_vip_no', '推荐人手机号码' . ($model->parent_vip_no) . '不存在' );
 				return $this->render ( 'index', [ 
-						'model' => $model 
+						'model' => $model,
+						'parent_vip_no' => $parent_vip_no 
 				] );
 			} else {
 				$vip->parent_id = $parent_vip_db->id;
@@ -111,7 +117,8 @@ class VipRegisterController extends BaseController {
 			
 			if (! $vip->save ()) {
 				return $this->render ( 'index', [ 
-						'model' => $model 
+						'model' => $model,
+						'parent_vip_no' => $parent_vip_no 
 				] );
 			} else {
 				$session->set ( SaleConstants::$session_vip, $vip );
@@ -121,7 +128,8 @@ class VipRegisterController extends BaseController {
 			}
 		} else {
 			return $this->render ( 'index', [ 
-					'model' => $model 
+					'model' => $model,
+					'parent_vip_no' => $parent_vip_no 
 			] );
 		}
 	}
@@ -139,5 +147,4 @@ class VipRegisterController extends BaseController {
 		}
 		return $hash;
 	}
-	
 }
