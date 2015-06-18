@@ -25,6 +25,8 @@ class Vip extends \yii\db\ActiveRecord
 	//transient fields
     public $parent_vip_no;
     
+    public $level;
+    
     /**
      * @inheritdoc
      */
