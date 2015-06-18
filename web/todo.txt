@@ -516,3 +516,17 @@ http://localhost:8085/index.php?r=api/product/index&product_name=
 http://localhost:8085/index.php?r=api/sale-agreement/view
 http://localhost:8085/index.php?r=api/sale-agreement/view-rights
 
+http://localhost:8085/index.php?r=api/vip/view&id=4
+http://localhost:8085/index.php?r=api/vip-bank/view&vip_id=4
+http://localhost:8085/index.php?r=api/vip-bank/bank-list
+
+http://localhost:8085/index.php?r=api/vip-income/view&vip_id=4
+
+http://localhost:8085/index.php?r=api/vip-income-detail/view&id=4
+http://localhost:8085/index.php?r=api/vip-income-detail/index&vip_id=4
+
+http://localhost:8085/index.php?r=api/vip-withdraw-flow/index&vip_id=4
+http://localhost:8085/index.php?r=api/vip-withdraw-flow/view&id=4
+http://localhost:8085/index.php?r=api/vip-withdraw-flow/create
+
+
