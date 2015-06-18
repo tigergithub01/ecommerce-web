@@ -21,6 +21,7 @@ class VipForm extends Model
     {
     	return [
     			'login' => ['vip_no', 'password'],
+    			'update_pwd' => ['vip_no', 'password','verifyCode'],
     			'register' => ['vip_no', 'password', 'parent_vip_no','verifyCode'],
     	];
     }
