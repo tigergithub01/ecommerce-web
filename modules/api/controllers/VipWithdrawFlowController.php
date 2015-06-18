@@ -73,13 +73,13 @@ class VipWithdrawFlowController extends BaseApiController {
 			}			
 			// commit
 			$trans->commit ();
-			$json = new JsonObj ( 1, '保存成功。', $model );
+			$json = new JsonObj ( 1, '保存成功。', $vipWithdrawFlow );
 			echo (Json::encode ( $json ));
 			return;
 		} catch ( Exception $e ) {
 			$trans->rollBack ();
 			// 			throw $e;
-			$json = new JsonObj ( - 1, '保存失败。', $model );
+			$json = new JsonObj ( - 1, '保存失败。', null );
 			echo (Json::encode ( $json ));
 			return;
 		}

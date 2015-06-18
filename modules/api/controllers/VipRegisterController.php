@@ -81,7 +81,7 @@ class VipRegisterController extends BaseController {
 					':parent_vip_no' => $model->parent_vip_no 
 			] )->one ();
 			if (empty ( $parent_vip_db )) {
-				$json = new JsonObj ( - 1, '推荐人手机号码' . ($model->parent_vip_no) . '不存在', null );
+				$json = new JsonObj ( - 1, '推荐人手机号码' . ($model->parent_vip_no) . '未注册。', null );
 				echo (Json::encode ( $json ));
 				return;
 			} else {

@@ -15,6 +15,7 @@ use app\models\vip\Vip;
 use app\models\vip\VipBankcard;
 use app\models\basic\BankInfo;
 use app\modules\sale\models\VipForm;
+use app\modules\api\service\VipService;
 
 class VipController extends BaseApiController {
 	public $enableCsrfValidation = false;
@@ -80,5 +81,21 @@ class VipController extends BaseApiController {
 	 * //TODO:
 	 */
 	public function actionChildren() {
+		$vip_id = isset ( $_REQUEST ['vip_id'] ) ? $_REQUEST ['vip_id'] : null;
+		$vipService = new VipService();
+		$allSubList = $vipService->getChildern($vip_id);
+		$array = ArrayHelper::toArray ( $allSubList, [
+				'app\models\vip\Vip' => [
+						'id',
+						'vip_no',
+						'name',
+						'parent_id',
+						'parent_vip_no',
+						'status',
+						'level',
+				]
+		] );
+		$json = new JsonObj ( 1, null, $array );
+		echo (Json::encode ( $json ));
 	}
 }

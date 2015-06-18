@@ -7,8 +7,13 @@ use yii\web\Controller;
 use yii\web\Session;
 use app\modules\api\controllers\BaseApiController;
 use app\components\controller\BaseController;
+use app\models\system\PhoneVerifyCode;
+use app\models\common\JsonObj;
+use yii\helpers\Json;
+use app\modules\sale\models\SaleConstants;
 
 class SmsController extends BaseController {
+	public $enableCsrfValidation = false;
 	public function actionIndex() {
 		return $this->render ( 'index' );
 	}
@@ -29,5 +34,21 @@ class SmsController extends BaseController {
 	}
 	public function actionSms() {
 		return $this->render ( 'sms' );
+	}
+	public function actionCreate() {
+		$model = new PhoneVerifyCode ();
+		if ($model->load ( Yii::$app->request->post () )) {
+			$model->sent_time = date ( SaleConstants::$date_format, time () );
+			if ($model->save ()) {
+				$json = new JsonObj ( 1, '保存成功。', $model );
+				echo (Json::encode ( $json ));
+			} else {
+				$json = new JsonObj ( - 1, '保存失败。', null );
+				echo (Json::encode ( $json ));
+			}
+		} else {
+			$json = new JsonObj ( - 1, '数据验证失败。', null );
+			echo (Json::encode ( $json ));
+		}
 	}
 }
