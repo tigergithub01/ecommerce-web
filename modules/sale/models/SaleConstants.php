@@ -8,8 +8,8 @@ namespace app\modules\sale\models;
  */
 class SaleConstants 
 {
-    public static $date_format='Y-m-d H:i:s';
-    public static $session_vip='current_vip';
+	public static $session_vip='current_vip';
+	public static $date_format='Y-m-d H:i:s';
     
     //product path
     public static $product_path='upload/product/';

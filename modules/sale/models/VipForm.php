@@ -35,7 +35,7 @@ class VipForm extends Model
             // username and password are both required
             [['vip_no', 'password','parent_vip_no','verifyCode'], 'required'],
         	[['password'], 'string','min'=>6, 'max' => 16,'on' => ['register']],
-        	[['vip_no','parent_vip_no'],'match','pattern'=>'/^1[0-9]{10}$/','message'=>'{attribute}必须为1开头的11位纯数字'],
+        	[['vip_no','parent_vip_no'],'match','pattern'=>'/^1[0-9]{10}$/','message'=>'{attribute}必须为1开头的11位纯数字','on' => ['register']],
             // rememberMe must be a boolean value
 //             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
