@@ -12,8 +12,9 @@ use app\models\common\JsonObj;
 use app\modules\sale\models\SaleConstants;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use app\components\controller\BaseController;
 
-class AdInfoController extends BaseApiController {
+class AdInfoController extends BaseController {
 	public $enableCsrfValidation = false;
 	public function actionIndex() {
 		$dataList = AdInfo::find ()->all ();

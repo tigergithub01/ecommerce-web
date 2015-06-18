@@ -9,8 +9,9 @@ use app\models\system\Notificatioin;
 use app\modules\api\controllers\BaseApiController;
 use yii\helpers\Json;
 use app\models\common\JsonObj;
+use app\components\controller\BaseController;
 
-class NotifyController extends BaseApiController {
+class NotifyController extends BaseController {
 	public function actionIndex() {
 		$dataList = Notificatioin::find ()->all ();
 		$json = new JsonObj ( 1, null, $dataList );

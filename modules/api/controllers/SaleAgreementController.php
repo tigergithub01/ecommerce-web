@@ -14,8 +14,9 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\system\SaleAgreement;
 use app\models\system\UsageRights;
+use app\components\controller\BaseController;
 
-class SaleAgreementController extends BaseApiController {
+class SaleAgreementController extends BaseController {
 	public $enableCsrfValidation = false;
 	public function actionView() {
 		$model = SaleAgreement::find()->one();
