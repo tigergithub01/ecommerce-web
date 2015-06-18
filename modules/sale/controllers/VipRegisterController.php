@@ -106,7 +106,7 @@ class VipRegisterController extends BaseController {
 					':parent_vip_no' => $model->parent_vip_no 
 			] )->one ();
 			if (empty ( $parent_vip_db )) {
-				$model->addError ( 'parent_vip_no', '推荐人手机号码' . ($model->parent_vip_no) . '不存在' );
+				$model->addError ( 'parent_vip_no', '推荐人手机号码' . ($model->parent_vip_no) . '未注册。' );
 				return $this->render ( 'index', [ 
 						'model' => $model,
 						'parent_vip_no' => $parent_vip_no 
