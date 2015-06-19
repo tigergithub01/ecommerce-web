@@ -35,7 +35,12 @@ class VipLoginController extends BaseController
     					'model' => $model
     			] );
     		}else{
-    			if(!($vip_db->password==md5($model->password))){
+    			if($vip_db->status==0){
+					$model->addError ( 'vip_no', '账户已停用' );
+					return $this->render ( 'index', [
+    						'model' => $model
+    				] );
+				}else if (!($vip_db->password==md5($model->password))){
     				$model->addError ( 'password', '您输入的密码不正确' );
     				return $this->render ( 'index', [
     						'model' => $model
