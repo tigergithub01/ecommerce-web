@@ -20,7 +20,6 @@ class SysFeedbackController extends BaseController {
 	public $enableCsrfValidation = false;
 	public function actionCreate() {
 		$model = new SysFeedback ();
-		
 		if ($model->load ( Yii::$app->request->post () )) {
 			$model->feedback_date = date ( SaleConstants::$date_format, time () );
 			$model->ip_address = \Yii::$app->request->userIP;

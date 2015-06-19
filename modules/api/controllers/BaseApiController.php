@@ -6,6 +6,9 @@ use Yii;
 use yii\web\Controller;
 use app\components\filters\AuthFilter;
 use app\components\controller\BaseController;
+use app\modules\sale\models\SaleConstants;
+use app\models\common\JsonObj;
+use yii\helpers\Json;
 
 class BaseApiController extends BaseController {
 	/* public function behaviors() {
@@ -17,9 +20,12 @@ class BaseApiController extends BaseController {
 	} */
 	public function beforeAction($action) {
 		$session = Yii::$app->session;
-		// if (! $session->isActive) {
 		$session->open ();
-		
+		$vip = $session->get ( SaleConstants::$session_vip );
+		if (empty ( $vip ) || !isset($vip)) {
+			echo (Json::encode ( new JsonObj ( - 1, '您没有权限访问。', null ) ));
+			return false;
+		}
 		return parent::beforeAction ( $action );
 	}
 	public function afterAction($action, $result) {

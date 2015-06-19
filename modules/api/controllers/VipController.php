@@ -29,6 +29,8 @@ class VipController extends BaseApiController {
 			return;
 		}
 		$json = new JsonObj ( 1, null, $model );
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+// 		header("Content-type:json/application;charset=utf-8");
 		echo (Json::encode ( $json ));
 	}
 	public function actionUpdate() {
@@ -44,6 +46,10 @@ class VipController extends BaseApiController {
 			return;
 		}
 	}
+	
+	/**
+	 * TODO:弃用
+	 */
 	public function actionUpdatePwd() {
 		// 		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		$model = new VipForm ( [ 

@@ -55,7 +55,7 @@ $mobile = $_POST['mobile'];
 // $mobile = $_REQUEST['mobile'];
 $send_code = $_POST['send_code'];
 
-$mobile_code = random(4,1);
+$mobile_code = random(6,1);
 if(empty($mobile)){
 	exit('手机号码不能为空');
 }

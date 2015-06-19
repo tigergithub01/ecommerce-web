@@ -96,7 +96,24 @@ class VipRegisterController extends BaseController {
 				$session->set ( SaleConstants::$session_vip, $vip );
 				$session->timeout=1*24*60;
 				
-				$json = new JsonObj ( 1, '注册成功。', $vip );
+
+				$array = ArrayHelper::toArray ( $vip_db, [
+						'app\models\vip\Vip' => [
+								'id',
+								'vip_no',
+								'name',
+								'id_card',
+								'last_login_date',
+								'password',
+								'parent_id',
+								'email',
+								'email_verify_flag',
+								'status',
+								'register_date',
+								'parent_vip_no',
+						]
+				] );
+				$json = new JsonObj ( 1, '注册成功。', $array );
 				echo (Json::encode ( $json ));
 				return;
 			}
@@ -106,4 +123,8 @@ class VipRegisterController extends BaseController {
 			return;
 		}
 	}
+	
+	/* public function actionCheckRegistered(){
+		
+	} */
 }

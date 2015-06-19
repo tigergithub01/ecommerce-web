@@ -49,7 +49,7 @@ use yii\helpers\Url;
 		$.post('<?php echo Url::toRoute(['/api/vip-login/ajax-index'])?>', 
                 {
 					'VipForm[vip_no]':'13724346621',
-					'VipForm[password]':'111111',
+					'VipForm[password]':'123456',
             }, function(data) {
                 console.debug(data);
         });
@@ -75,6 +75,17 @@ use yii\helpers\Url;
         });
 	}
 
+	function testUpdatePwd(){
+		$.post('<?php echo Url::toRoute(['/api/vip-login/update-pwd'])?>', 
+                {
+					'VipForm[vip_no]':'13724346621',
+					'VipForm[password]':'123456',
+					'VipForm[verifyCode]':'111111',
+            }, function(data) {
+                console.debug(data);
+        });
+	}
+
 
     </script>
 </head>
@@ -83,6 +94,7 @@ use yii\helpers\Url;
 	<input type="button" value="注册" onclick="testRegister()">
 	<input type="button" value="登录" onclick="testLogin()">
 	<input type="button" value="退出登录" onclick="testLoginOut()">
+	<input type="button" value="修改密码" onclick="testUpdatePwd()">
 	<input type="button" value="插入验证码" onclick="testPhoneVerifyCodeCreate()">
 
 <?php $this->endBody() ?>
