@@ -3,6 +3,8 @@
 namespace app\models\vip;
 
 use Yii;
+use app\models\product\Product;
+
 
 /**
  * This is the model class for table "t_vip_product_collect".
@@ -45,5 +47,9 @@ class VipProductCollect extends \yii\db\ActiveRecord
             'product_id' => '产品编号',
             'collect_date' => '收藏时间',
         ];
+    }
+    
+    public function getProductInfo(){
+        return $this->hasOne(Product::className(), ['id'=>'product_id']);
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models\vip;
 
 use Yii;
+use app\models\basic\BankInfo;
 
 /**
  * This is the model class for table "t_vip_bankcard".
@@ -50,5 +51,9 @@ class VipBankcard extends \yii\db\ActiveRecord
             'branch_name' => '支行',
             'open_addr' => '开户地',
         ];
+    }
+    
+    public function getBankInfo(){
+        return $this->hasOne(BankInfo::className(), ['id'=>'bank_id']);
     }
 }

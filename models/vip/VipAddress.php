@@ -58,4 +58,14 @@ class VipAddress extends \yii\db\ActiveRecord
             'default_flag' => '是否设置为默认收货地址(1：是；0：否)',
         ];
     }
+    
+    public function getAreaSort(){
+        $sql="select p.name as 'provnce',c.name as 'city',d.name as 'district'
+from t_vip_address a left join t_province p on a.province_id=p.id
+left join t_city c on a.city_id=c.id
+left join t_district d on a.district_id=d.id where a.id=:id";
+        
+        $conn=\Yii::$app->db;
+        return $conn->createCommand($sql, [':id'=>$this->id])->queryOne();
+    }
 }

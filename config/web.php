@@ -17,7 +17,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-        ],
+        ],       
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -121,6 +121,7 @@ $config = [
 	'on afterAction' => function ($event) {
 		Yii::trace('afterAction.');
 	},
+                
 ];
 
 if (YII_ENV_DEV) {

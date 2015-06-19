@@ -6,7 +6,8 @@ body {
     margin:0px;
     font-family: "STHeiti","Microsoft YaHei";
 }
-
+.red {color:#ff0000;}
+.link_split { margin:0px 5px;}
 .not-set {display:none;}
 .center {text-align:center;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
@@ -15,6 +16,7 @@ a { text-decoration: none;font-size:12px;}
 a:hover {
     
 }
+ul,li { list-style: none;}
 .breadcrumb{
     font-size:12px;
     background-color: #edf6fa;
@@ -149,6 +151,7 @@ button_link:hover,.button_link:link{
 .h1div .title{
     font-size:16px;   
 }
+
 .form-input {
     background:#fff url(../images/textinput_bk.png) repeat-x left top;
     height:25px;
@@ -164,7 +167,8 @@ button_link:hover,.button_link:link{
 .form-textarea{
     width:300px;
     height:100px;
-   
+    vertical-align: top;
+    line-height:normal;
 }
 .form-select{
     background:#fff url(../images/textinput_bk.png) repeat-x left top;
@@ -174,6 +178,7 @@ button_link:hover,.button_link:link{
     border-right:1px solid #cfdbdd;
     border-bottom:1px solid #cfdbdd;
 }
+.input-readonly{ background:#f1f1f1;}
 .table_edit{    
     width:100%;
 }
@@ -356,3 +361,22 @@ input.has-error{
 .td_tip{
     color:#d3d0cb;
 }
+.msg { color:#fff;padding:3px;border-radius: 5px;}
+.msg i {margin-right: 5px;}
+.msg_primary {background-color:#006dcc;}
+.msg_info{background-color:#2f96b4;}
+.msg_success {background-color:#51a351;}
+.msg_warning {background-color:#f89406;}
+.msg_danger {background-color:#bd362f;}
+.msg_inverse {background-color:#222;}
+
+.msg_ok { background-color:#00CC00;color:#fff;padding:3px; border-radius: 5px;}
+.msg_forbid { background-color: #da4f49;color:#fff;padding:3px;border-radius: 5px;}
+
+.m{
+    border: 1px solid #DADADA;
+    padding: 0 5px 10px;
+    background: #EDEDED;        
+}
+.mt{padding: 0 8px;  height: 30px;  line-height: 30px;  font-size: 14px;}
+.mc{padding: 5px 8px;  background: #fff;}

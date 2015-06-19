@@ -69,9 +69,9 @@ class ProductController extends MyController
         $model['create_user_id']=Yii::$app->user->identity->id;
         $model['update_date']= date('Y-m-d H:i:s',time());
         $model['update_user_id']=Yii::$app->user->identity->id;        
-        $model['code']=  substr(md5(time()),0,30);
         $post = Yii::$app->request->post();
         $c=$model->load($post);
+        $model['code']=$model['type_id'].time().rand(0,1000);
         
         $productPicNewModel=$this->getProductPic(0);        
         $typeName=Yii::$app->request->post('TypeName','');

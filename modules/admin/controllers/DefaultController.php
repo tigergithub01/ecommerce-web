@@ -74,4 +74,8 @@ class DefaultController extends Controller
         Yii::$app->user->logout();
         return $this->redirect(['default/login']);
     }
+    
+    public function actionWebPart(){
+        return $this->render('web_part');
+    }
 }

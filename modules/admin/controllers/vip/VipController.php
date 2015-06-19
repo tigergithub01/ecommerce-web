@@ -20,10 +20,24 @@ class VipController extends \app\modules\admin\controllers\MyController
      * Lists all Vip models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($name='',$vip_no='')
     {
+        $query=Vip::find();
+        if(!empty($name)){
+            $query->where("name like concat('%',:name,'%')",[':name'=>$name]);
+        }
+        if(!empty($vip_no)){
+            $query->andWhere(['vip_no'=>$vip_no]);
+        }
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => Vip::find(),
+            'query' => $query,
+             'sort'=>[
+                'defaultOrder'=>['id'=>SORT_DESC]
+            ],
+            'pagination'=>[
+                'pagesize'=>10,
+            ]
         ]);
 
         return $this->render('index', [
@@ -51,7 +65,9 @@ class VipController extends \app\modules\admin\controllers\MyController
     public function actionCreate()
     {
         $model = new Vip();
-
+        $model->register_date=date('YmdHms',time());
+        $model->password=md5(substr($model->vip_no,-6));
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -70,7 +86,7 @@ class VipController extends \app\modules\admin\controllers\MyController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

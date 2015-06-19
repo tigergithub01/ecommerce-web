@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use app\components\MydialogWidget;
+use app\models\basic\Parameter;
+$refundModel=Parameter::findAll(['type_id'=>8]);
+$refundList=yii\helpers\ArrayHelper::map($refundModel, 'id', 'pa_val');
 
 /* @var $this yii\web\View */
 /* @var $model app\models\product\Product */
@@ -54,13 +57,15 @@ function chooseType(){
     
   <div id="tabs1-html">
    <table class="table_edit">
+       <?php if(!$model->isNewRecord) { ?>
         <tr>
             <td class="td-column">产品编码</td>
             <td class="">
-                <?=Html::activeInput('text', $model, 'code',['class'=>'form-input','disabled'=>'disabled']) ?>
+                <?=Html::activeInput('text', $model, 'code',['class'=>'form-input input-readonly','disabled'=>'disabled']) ?>
                 <span class="input-tip">系统自动生成</span>
             </td>
         </tr>
+       <?php } ?>
         <tr>
             <td class="td-column">产品名称</td>
             <td class=""><?=Html::activeInput('text', $model, 'name',['maxlength' => 60,'class'=>'form-input']) ?></td>
@@ -76,11 +81,7 @@ function chooseType(){
         <tr>
             <td class="td-column">价格</td>
             <td class=""><?=Html::activeInput('text', $model, 'price',['maxlength' => 20,'class'=>'form-input']) ?></td>
-        </tr>
-        <tr>
-            <td class="td-column">产品描述</td>
-            <td class=""><?=Html::activeInput('textarea', $model, 'description',['class'=>'form-input form-textarea']) ?></td>
-        </tr>
+        </tr>        
         <tr>
             <td class="td-column">产品状态</td>
             <td class=""><?=Html::dropDownList('Product[status]',$model->status,['正常','下架'],['class'=>'form-select']) ?></td>
@@ -92,6 +93,10 @@ function chooseType(){
         <tr>
             <td class="td-column">安全库存</td>
             <td class=""><?=Html::activeInput('text', $model, 'safety_quantity',['class'=>'form-input']) ?></td>
+        </tr>
+        <tr>
+            <td class="td-column">产品描述</td>
+            <td class=""><?=Html::activeTextarea($model, 'description',['class'=>'form-input form-textarea','style'=>'width:80%;']) ?></td>
         </tr>
    </table>
   </div>
@@ -110,7 +115,7 @@ function chooseType(){
         </tr>
         <tr>
             <td class="td-column">退货规则描述</td>
-            <td class=""><?=Html::activeInput('textarea', $model, 'return_desc',['class'=>'form-input form-textarea']) ?></td>
+            <td class=""><?=Html::activeTextarea($model, 'return_desc',['class'=>'form-input form-textarea','style'=>'width:80%;']) ?></td>
         </tr>
       </table>
   </div>
@@ -119,7 +124,9 @@ function chooseType(){
       <table class="table_edit">
       <tr>
             <td class="td-column">结算规则类别</td>
-            <td class=""><?=Html::activeInput('text', $model, 'regular_type_id',['class'=>'form-input']) ?></td>
+            <td class="">
+                <?=Html::activeDropDownList($model, 'regular_type_id', $refundModel,['class'=>'form-select'])?>        
+            </td>
         </tr>
         <tr>
             <td class="td-column">产品分润单价</td>

@@ -40,8 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'type_id',
-            'price',
-            'description:ntext',
+            'price:decimal',            
             'status',            
             'stock_quantity:Integer',
             'safety_quantity:Integer',
@@ -49,7 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'创建信息',
                 'format'=>'raw',
                 'value'=>'创建人员：'.$model->CreateUserName.'('.$model['create_date'].')<br/>最后更新：'.$model->UpdateUserName."&nbsp;(".$model['update_date'].")"
-            ]           
+            ],
+            'description:ntext',          
         ],
     ]) ?>
     <h3>退货配置信息</h3>
@@ -62,9 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'can_return_flag',
                 'value'=>$model->can_return_flag?"可以":"不可以"
             ],
-            'return_days',
+            'return_days',           
             'return_desc:ntext',
-            'regular_type_id',            
         ],
     ]) ?>
     <h3>分润信息</h3>
@@ -72,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'=>['class'=>'table_view'],
         'template'=>'<tr><td class="td-column" style="width:180px;">{label}</td><td>{value}</td></tr>',
         'model' => $model,
-        'attributes' => [            
+        'attributes' => [           
             [
                 'attribute'=>'special_deduct_flag',
                 'value'=>$model->can_return_flag?"是":"否"

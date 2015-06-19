@@ -62,4 +62,44 @@ class ReturnSheet extends \yii\db\ActiveRecord
             'status' => '退货单状态（待退货、已完成）',
         ];
     }
+    
+    /***
+     * 获取退货单关联的发货单的货物清单
+     */
+    public function getReturnProducts(){
+        $sql="select a.order_id,product_id,c.name as productName, sum(out_quantity) as  out_quantity "
+                ." from t_out_stock_sheet a inner join t_out_stock_detail  b on a.id=b.out_id"
+                ." inner join t_product c on b.product_id=c.id"
+                ." where a.id=:out_id"
+                ." group by a.order_id,product_id,c.name";
+               
+        $conn=Yii::$app->db;
+        return $conn->createCommand($sql, [':out_id'=>$this->out_id])->queryAll();        
+    }
+    
+    public function getStatusData(){
+        $sql="select id,pa_val from t_parameter where id=:id";
+        $conn=Yii::$app->db;
+        return $conn->createCommand($sql, [':id'=>$this->status])->queryOne();  
+    }
+    
+    public function getStatusType(){
+        return $this->hasOne(\app\models\basic\Parameter::className(),['id'=>'status']); 
+    }
+    
+    /***
+     * 退货单货物清单
+     */
+    public function getDetial(){
+        $sql="select a.*,b.name as productName from t_return_detail a inner join t_product b on a.product_id=b.id"
+                ." where a.return_id=:return_id";
+        
+        $conn=Yii::$app->db;
+        return $conn->createCommand($sql, [':return_id'=>$this->id])->queryAll(); 
+    }
+    
+    public static function updateStatus($id,$status){
+        $sql="update t_return_sheet set status=:status where id=:id";
+        Yii::$app->db->createCommand($sql,[':status'=>$status,':id'=>$id])->execute();
+    }
 }

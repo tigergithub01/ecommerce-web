@@ -3,6 +3,9 @@
 namespace app\models\order;
 
 use Yii;
+use app\models\vip\Vip;
+use app\models\basic\PayType;
+use app\models\basic\DeliveryType;
 
 /**
  * This is the model class for table "t_so_sheet".
@@ -34,8 +37,7 @@ class SoSheet extends \yii\db\ActiveRecord
 {
     
 	//transient fields
-	public $soDetailList;
-	public $vip;
+	public $soDetailList;	
 	public $soContactPerson;
 	public $order_status;
 	
@@ -73,18 +75,18 @@ class SoSheet extends \yii\db\ActiveRecord
         return [
             'id' => '主键编号',
             'sheet_type_id' => '单据类型',
-            'code' => '订单编号(so-年月日-顺序号，根据单据设置进行生成)',
+            'code' => '订单编号',
             'vip_id' => '会员编号',
             'order_amt' => '订单金额',
             'order_quantity' => '产品数量',
             'deliver_fee' => '运费',
-            'status' => '订单状态（待支付、待发货、待收货、待评价、已完成、已关闭、待退货、待退款）',
-            'settle_flag' => '结算状态(1:已结算、0：未结算)',
+            'status' => '订单状态',
+            'settle_flag' => '结算状态',
             'order_date' => '订单提交日期',
             'delivery_date' => '发货日期',
             'delivery_type' => '配送方式',
             'delivery_no' => '快递单号',
-            'pay_type_id' => '支付方式（支付宝、微信）',
+            'pay_type_id' => '支付方式',
             'pay_amt' => '付款金额',
             'pay_date' => '付款日期',
             'return_amt' => '退款金额',
@@ -92,5 +94,42 @@ class SoSheet extends \yii\db\ActiveRecord
             'memo' => '备注',
             'message' => '买家留言',
         ];
+    }
+    
+    function getOrderStatus(){
+        return $this->hasOne(SoSheetStatus::className(), ['id'=>'status']);      
+    }
+    
+    function getVip(){        
+        return $this->hasOne(Vip::className(), ['id'=>'vip_id']);      
+    }
+    
+    function getSettleFlagText(){
+        $settle_flag=[1=>'已结算',0=>'未结算'];
+        return key_exists($this->settle_flag, $settle_flag)?$settle_flag[$this->settle_flag]:null;
+    }
+    
+    function getPayType(){
+       return $this->hasOne(PayType::className(), ['id'=>'pay_type_id']); 
+    }
+    
+    function getProductItems(){
+        return $this->hasMany(SoDetail::className(), ['order_id'=>'id']);
+    }
+    
+    function getDelivery(){
+        return $this->hasOne(DeliveryType::className(), ['id'=>'delivery_type']); 
+    }
+    
+    function getContactPerson(){
+        return $this->hasMany(SoContactPerson::className(), ['order_id'=>'id']);
+    }
+    
+    function getOutStockSheetList(){
+        return $this->hasMany(OutStockSheet::className(), ['order_id'=>'id']);
+    }
+    
+    function getReturnSheetList(){
+        return $this->hasMany(ReturnSheet::className(), ['order_id'=>'id']);
     }
 }

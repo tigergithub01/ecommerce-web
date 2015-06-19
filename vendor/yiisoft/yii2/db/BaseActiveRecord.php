@@ -583,7 +583,8 @@ abstract class BaseActiveRecord extends Model implements ActiveRecordInterface
         } else {
             return $this->update($runValidation, $attributeNames) !== false;
         }
-    }
+    }   
+   
 
     /**
      * Saves the changes to this active record into the associated database table.

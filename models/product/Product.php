@@ -79,7 +79,7 @@ class Product extends \yii\db\ActiveRecord
             'update_user_id' => '更新日期',
             'update_date' => '更新人',
             'can_return_flag' => '是否能退货',
-            'return_days' => '可退货天数(可以退货时才设置此字段)',
+            'return_days' => '可退货天数',
             'return_desc' => '退货规则描述',
             'regular_type_id' => '结算规则类别',
             'deduct_price' => '产品分润单价',

@@ -19,4 +19,8 @@ class JqueryAsset extends AssetBundle
     public $js = [
         'jquery.js',
     ];
+    
+    public $jsOptions=[
+        'position'=>View::POS_HEAD
+    ];
 }

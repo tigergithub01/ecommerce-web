@@ -134,7 +134,7 @@ class ActiveField extends Component
      * You normally do not need to set this property as the default selectors should work well for most cases.
      */
     public $selectors = [];
-    /**
+    /**errorOptions
      * @var array different parts of the field (e.g. input, label). This will be used together with
      * [[template]] to generate the final field HTML code. The keys are the token names in [[template]],
      * while the values are the corresponding HTML code. Valid tokens include `{input}`, `{label}` and `{error}`.

@@ -3,7 +3,8 @@
 namespace app\models\order;
 
 use Yii;
-
+use app\models\basic\Parameter;
+use app\models\order\ReturnSheet;
 /**
  * This is the model class for table "t_refund_sheet".
  *
@@ -28,6 +29,10 @@ class RefundSheet extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 't_refund_sheet';
+    }
+    
+    public static function settleFlagArray(){
+        return [0=>'未结算',1=>'已结算'];
     }
 
     /**
@@ -64,5 +69,25 @@ class RefundSheet extends \yii\db\ActiveRecord
             'status' => '退款单状态（待退款、已退款）',
             'settle_flag' => '结算状态（未结算、已结算）',
         ];
+    }
+    
+    public function getStatusData(){
+        return $this->hasOne(Parameter::className(), ['id'=>'status']);
+    }
+    
+    public function getSettleFlagTxt(){
+        $c= self::settleFlagArray();
+        if(key_exists($this->settle_flag, $c)){
+            return $c[$this->settle_flag];
+        }else{
+            return "";
+        }
+    }
+    
+    /***
+     * 关联的退货单
+     */
+    public function getAssociateReturnSheet(){
+        return ReturnSheet::find()->where(['order_id'=>$this->order_id])->all();
     }
 }

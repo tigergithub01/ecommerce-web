@@ -3,7 +3,7 @@
 namespace app\models\order;
 
 use Yii;
-
+use app\models\product\Product;
 /**
  * This is the model class for table "t_so_detail".
  *
@@ -17,7 +17,7 @@ use Yii;
 class SoDetail extends \yii\db\ActiveRecord
 {
     
-    public $product;
+   
     /**
      * @inheritdoc
      */
@@ -52,4 +52,8 @@ class SoDetail extends \yii\db\ActiveRecord
             'amount' => '金额',
         ];
     }
+    
+     public function getProduct(){
+         return $this->hasOne(Product::className(), ['id'=>'product_id']);
+     }
 }

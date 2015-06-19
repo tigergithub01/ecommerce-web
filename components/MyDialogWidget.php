@@ -3,13 +3,13 @@
 namespace app\components;
 
 use yii\base\Widget;
-use yii\helpers\Html;
 
 
 class MydialogWidget extends Widget
 {
     public $title;
     public $id='bi0';
+    public $options=[];
    
     public function init()
     {        
@@ -23,7 +23,8 @@ class MydialogWidget extends Widget
         return $this->render('Mydialog',[
             'title'=>$this->title,
             'id'=>$this->id,
-            'content'=>$content
+            'content'=>$content,
+            'options'=>$this->options,
                 ]);
     }
 }

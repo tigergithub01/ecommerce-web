@@ -3,7 +3,8 @@
 namespace app\models\vip;
 
 use Yii;
-
+use yii\helpers\Html;
+use yii\helpers\Url;
 /**
  * This is the model class for table "t_vip".
  *
@@ -68,7 +69,41 @@ class Vip extends \yii\db\ActiveRecord
             'email_verify_flag' => '安全邮箱是否已验证(1:是；0：否)',
             'status' => '会员状态(1:正常、0:停用)',
             'register_date' => '注册时间',
-        	'parent_vip_no' => '推荐人手机号码',
+            'parent_vip_no' => '推荐人手机号码',
         ];
     }
+    
+    public function getParentVip(){
+        if ($this->parent_id) {
+            return Vip::findOne($this->parent_id);
+        } else {
+            return null;
+        }
+    }
+    
+    public function getParentName(){
+        if ($this->parent_id) {
+            $row = (new \yii\db\Query())
+                    ->select('id,name')
+                    ->from(Vip::tableName())
+                    ->where(['id' => $this->parent_id])
+                    ->one();
+            return Html::a($row['name'], Url::to(['vip/vip/view','id'=>$row['id']]), ['target'=>'_blank']);
+        } else {
+            return null;
+        }
+    }
+    
+    public function getBankCard(){
+        return $this->hasMany(VipBankcard::className(), ['vip_id'=>'id']);
+    }
+    
+    public function getProductCollection(){
+        return $this->hasMany(VipProductCollect::className(), ['vip_id'=>'id']);
+    }
+    
+    public function getAddressInfo(){
+        return $this->hasMany(VipAddress::className(), ['vip_id'=>'id']);
+    }
+    
 }
