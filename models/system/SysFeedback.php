@@ -39,7 +39,8 @@ class SysFeedback extends \yii\db\ActiveRecord
             [['feedback_type', 'os_type','contact_method'], 'string', 'max' => 100],
             [['content'], 'string', 'max' => 500],
             [['ip_address'], 'string', 'max' => 30],
-            [['phone_model'], 'string', 'max' => 60]
+            [['phone_model'], 'string', 'max' => 60],
+        	[['contact_method'], 'string', 'max' => 100],
         ];
     }
 
