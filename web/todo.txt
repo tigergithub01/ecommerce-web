@@ -479,12 +479,7 @@ insert into t_delivery_type(code,name,status)values('shentong','申通快递',1)
 insert into t_delivery_type(code,name,status)values('yuantong','圆通速递',1);
 insert into t_delivery_type(code,name,status)values('yunda','韵达快运',1);
 
-http://localhost:8085/index.php?r=api/notify/index
-http://localhost:8085/index.php?r=api/ad-info/index
-http://localhost:8085/index.php?r=api/product/index
-http://localhost:8085/index.php?r=api/ad-info/ad-url&image_url=pos1.jpg
-http://localhost:8085/index.php?r=api/earn-guild/index
-http://localhost:8085/index.php?r=api/earn-guild/view&id=1
+
 
 
 http://192.168.1.100:8085/index.php?r=sale%2Fvip-order%2Fconfirm&orderId=9
@@ -505,22 +500,37 @@ http://localhost:8085/index.php?r=api/vip-register/ajax-index
 TODO:http://localhost:8085/index.php?r=api/vip-register/check-registered
 http://localhost:8085/index.php?r=api/vip-login/ajax-index
 http://localhost:8085/index.php?r=api/vip-login/update-pwd
+http://localhost:8085/images/sale/app_logo.png
 
+http://localhost:8085/index.php?r=api/sys-feedback/create
 
+http://localhost:8085/index.php?r=api/notify/index
+
+http://localhost:8085/index.php?r=api/ad-info/index
+http://localhost:8085/index.php?r=api/ad-info/ad-url&image_url=pos1.jpg
+
+http://localhost:8085/index.php?r=api/earn-guild/index
+http://localhost:8085/index.php?r=api/earn-guild/view&id=1
 
 http://localhost:8085/index.php?r=sale/vip-register/index&parent_vip_no=13724346621
 
 
 
 http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr.apk
-http://localhost:8085/index.php?r=api/Fdownload-app/ajax-view
+http://localhost:8085/index.php?r=api/download-app/ajax-view
 
 http://localhost:8085/index.php?r=api/product/view&id=4
 http://localhost:8085/index.php?r=api/product/index
 http://localhost:8085/index.php?r=api/product/index&product_name=
+http://localhost:8085/index.php?r=api/product-type/index
+
+http://localhost:8085/index.php?r=sale/product/view&id=4
+http://localhost:8085/index.php?r=sale/vip-order/add-contact&product_id=4
 
 http://localhost:8085/index.php?r=api/sale-agreement/view
 http://localhost:8085/index.php?r=api/sale-agreement/view-rights
+http://localhost:8085/index.php?r=sale/sale-agreement/view
+http://localhost:8085/index.php?r=sale/sale-agreement/view-rights
 
 http://localhost:8085/index.php?r=api/vip/view&id=4
 http://localhost:8085/index.php?r=api/vip-bank/view&vip_id=4
