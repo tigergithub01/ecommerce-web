@@ -95,6 +95,8 @@ class VipController extends BaseApiController {
 						'id',
 						'vip_no',
 						'name',
+						'id_card',
+						'email',
 						'parent_id',
 						'parent_vip_no',
 						'status',

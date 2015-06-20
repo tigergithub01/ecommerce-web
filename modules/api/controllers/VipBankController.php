@@ -32,7 +32,25 @@ class VipBankController extends BaseApiController {
 			echo (Json::encode ( new JsonObj ( - 1, '数据不存在。', null ) ));
 			return;
 		}
-		$json = new JsonObj ( 1, null, $model );
+		
+		// get bank_name
+		$bankInfo = BankInfo::findOne ( $model->bank_id );
+		$model->bank_name = $bankInfo->name;
+		
+		// output json result
+		$array = ArrayHelper::toArray ( $model, [ 
+				'app\models\vip\VipBankcard' => [ 
+						'id',
+						'vip_id',
+						'card_no',
+						'bank_id',
+						'branch_name',
+						'open_addr',
+						'bank_name' 
+				] 
+		] );
+		
+		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 	}
 	public function actionCreate() {

@@ -87,6 +87,21 @@ use yii\helpers\Url;
 	}
 
 
+	function testUpdateVipBankCard(){
+		$.post('<?php echo Url::toRoute(['/api/vip-bank/update'])?>', 
+                {
+					'id':'7',
+					'VipBankcard[vip_id]':'24',
+					'VipBankcard[card_no]':'123456',
+					'VipBankcard[bank_id]':'2',
+					'VipBankcard[branch_name]':'4444',
+					'VipBankcard[open_addr]':'666666',
+            }, function(data) {
+                console.debug(data);
+        });
+	}
+
+
     </script>
 </head>
 <body>
@@ -96,6 +111,7 @@ use yii\helpers\Url;
 	<input type="button" value="退出登录" onclick="testLoginOut()">
 	<input type="button" value="修改密码" onclick="testUpdatePwd()">
 	<input type="button" value="插入验证码" onclick="testPhoneVerifyCodeCreate()">
+	<input type="button" value="修改银行卡信息" onclick="testUpdateVipBankCard()">
 
 <?php $this->endBody() ?>
 </body>

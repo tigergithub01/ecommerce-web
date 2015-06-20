@@ -24,16 +24,16 @@ class SysFeedbackController extends BaseController {
 			$model->feedback_date = date ( SaleConstants::$date_format, time () );
 			$model->ip_address = \Yii::$app->request->userIP;
 			if ($model->save ()) {
-				$json = new JsonObj ( 1, '反馈成功。', $vip_db );
+				$json = new JsonObj ( 1, '反馈成功。', $model );
 				echo (Json::encode ( $json ));
 				return;
 			} else {
-				$json = new JsonObj ( - 1, '反馈失败。', $vip_db );
+				$json = new JsonObj ( - 1, '反馈失败。', null );
 				echo (Json::encode ( $json ));
 				return;
 			}
 		} else {
-			$json = new JsonObj ( - 1, '反馈失败。', $vip_db );
+			$json = new JsonObj ( - 1, '反馈失败。', null );
 			echo (Json::encode ( $json ));
 			return;
 		}

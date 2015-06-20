@@ -12,6 +12,7 @@ use app\components\controller\BaseController;
 use yii\db\ActiveQuery;
 
 class ProductController extends BaseController {
+	public $enableCsrfValidation = false;
 	
 	/**
 	 * product list
@@ -23,12 +24,12 @@ class ProductController extends BaseController {
 		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
 		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
 		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
-		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 2;
+		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
 		
-		//create query
+		// create query
 		$query = new \yii\db\ActiveQuery ( 'app\models\product\Product' );
 		
-		//add condition
+		// add condition
 		$query->where ( 'name like :name', [ 
 				':name' => '%' . $product_name . '%' 
 		] );
@@ -39,7 +40,7 @@ class ProductController extends BaseController {
 			] );
 		}
 		
-		//order
+		// order
 		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
 		if (! empty ( $order_column )) {
 			$query->orderBy ( [ 
@@ -47,7 +48,7 @@ class ProductController extends BaseController {
 			] );
 		}
 		
-		//add pager
+		// add pager
 		$query->offset ( $offset )->limit ( $limit );
 		
 		$productList = $query->all ();
@@ -63,14 +64,12 @@ class ProductController extends BaseController {
 		// $productList = Product::findAll(['id'=>1]);
 		// echo(Json::encode($productList[]));
 		
-
 		/* $connection = Yii::$app->db;
 		 $command = $connection->createCommand ( "select * from t_product" );
 		 $model = $command->query (); */
 		
 		// echo (Json::encode ( $productList ));
 		
-
 		$array = ArrayHelper::toArray ( $productList, [ 
 				'app\models\product\Product' => [ 
 						'id',
@@ -78,7 +77,10 @@ class ProductController extends BaseController {
 						'name',
 						'type_id',
 						'price',
-						'description' 
+						'description',
+						'status',
+						'stock_quantity',
+						'safety_quantity' 
 				] 
 		] );
 		$json = new JsonObj ( 1, null, $array );
@@ -88,11 +90,12 @@ class ProductController extends BaseController {
 	}
 	
 	/**
-	 * product detail 
-	 * @param string $id
+	 * product detail
+	 * 
+	 * @param string $id        	
 	 */
 	public function actionView() {
-		// 		header ( "Content-type:json/application;charset=utf-8" );
+		// header ( "Content-type:json/application;charset=utf-8" );
 		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		$model = Product::findOne ( $id );
 		if ($model === null) {
@@ -100,7 +103,22 @@ class ProductController extends BaseController {
 			echo (Json::encode ( new JsonObj ( - 1, '产品不存在。', null ) ));
 			return;
 		}
-		$json = new JsonObj ( 1, null, $model );
+		
+		$array = ArrayHelper::toArray ( $model, [
+				'app\models\product\Product' => [
+						'id',
+						'code',
+						'name',
+						'type_id',
+						'price',
+						'description',
+						'status',
+						'stock_quantity',
+						'safety_quantity'
+				]
+		] );
+		
+		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 		
 		// return $this->render('index');

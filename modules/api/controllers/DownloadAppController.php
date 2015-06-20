@@ -27,6 +27,8 @@ class DownloadAppController extends BaseController {
 			$json = new JsonObj ( 1, null, $appRelease );
 			echo (Json::encode ( $json ));
 			return;
+		}else{
+			echo (Json::encode ( new JsonObj ( - 1, '文件不存在。', null ) ));
 		}
 	}
 	public function actionViewApp() {

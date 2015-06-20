@@ -18,8 +18,13 @@ class NotifyController extends BaseController {
 		echo (Json::encode ( $json ));
 	}
 	public function actionView() {
-		$id = $_REQUEST ['id'];
+		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		$model = Notificatioin::findOne ( $id );
+		if ($model === null) {
+			// throw new NotFoundHttpException ();
+			echo (Json::encode ( new JsonObj ( - 1, '数据不存在。', null ) ));
+			return;
+		}
 		$json = new JsonObj ( 1, null, $model );
 		echo (Json::encode ( $json ));
 	}
