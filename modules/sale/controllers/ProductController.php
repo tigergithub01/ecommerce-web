@@ -15,8 +15,9 @@ use app\modules\sale\models\SaleConstants;
 use app\components\controller\BaseController;
 
 class ProductController extends BaseController {
+	
 	public function actionView() {
-		$product_id = $_REQUEST ['id'];
+		$product_id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		
 		$model = Product::findOne ( $product_id );
 		if (empty ( $model )) {
