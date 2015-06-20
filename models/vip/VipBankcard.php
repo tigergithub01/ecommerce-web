@@ -17,6 +17,10 @@ use app\models\basic\BankInfo;
  */
 class VipBankcard extends \yii\db\ActiveRecord
 {
+    
+    //transite fields;
+    public $bank_name;
+	
     /**
      * @inheritdoc
      */
