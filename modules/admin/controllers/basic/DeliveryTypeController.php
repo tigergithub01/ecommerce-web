@@ -4,36 +4,32 @@ namespace app\modules\admin\controllers\basic;
 
 use Yii;
 use app\models\basic\DeliveryType;
+use app\modules\admin\controllers\MyController;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * DeliveryTypeController implements the CRUD actions for DeliveryType model.
  */
-class DeliveryTypeController extends Controller
+class DeliveryTypeController extends MyController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all DeliveryType models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $query=DeliveryType::find()->orderBy('id desc');
+        if(!empty($name)){
+            $query->where(" name like concat('%',:name,'%')", [':name'=>$name]);
+        }
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => DeliveryType::find(),
+            'query' => $query,
+            'pagination'=>[
+                'pagesize'=>10,
+            ]
         ]);
 
         return $this->render('index', [

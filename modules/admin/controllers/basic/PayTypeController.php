@@ -4,36 +4,35 @@ namespace app\modules\admin\controllers\basic;
 
 use Yii;
 use app\models\basic\PayType;
+use app\modules\admin\controllers\MyController;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * PayTypeController implements the CRUD actions for PayType model.
  */
-class PayTypeController extends Controller
+class PayTypeController extends MyController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
+    
 
     /**
      * Lists all PayType models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($name=null)
     {
+        $query=PayType::find()->orderBy('id desc');
+        if(!empty($name)){
+            $query->where(" name like concat('%',:name,'%')", [':name'=>$name]);
+        }
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => PayType::find(),
+            'query' => $query,
+            'pagination'=>[
+                'pagesize'=>10,
+            ]
         ]);
 
         return $this->render('index', [

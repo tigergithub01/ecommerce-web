@@ -119,15 +119,15 @@ use yii\helpers\Url;
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['vip/so-sheet'])?>"><span class="m2">订单明细</span></a></li>                    
                 </ul>
-            </li>
+            </li>-->
             <li class='menu1'><a href=""><span class="m11">基础资料</span></a>
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['basic/pay-type'])?>"><span class="m2">支付信息</span></a></li>
                     <li><a href="<?=Url::to(['basic/delivery-type'])?>"><span class="m2">配送信息</span></a></li>
-                    <li><a href="<?=Url::to(['basic/area'])?>"><span class="m2">区域信息</span></a></li>                    
+                    <li><a href="<?=Url::to(['basic/province'])?>"><span class="m2">区域信息</span></a></li>                    
                 </ul>
             </li>
-            
+            <!--
             <li class='menu1'><a href=""><span class="m11">系统设置</span></a>
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">用户信息</span></a></li>

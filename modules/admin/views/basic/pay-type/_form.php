@@ -2,29 +2,71 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\basic\PayType;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\basic\PayType */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<script type="text/javascript">
+    $(function(){
+        $("#form1").validate({
+            debug: false,
+            onfocusout: function (element) {
+                $(element).valid();
+            },
+            errorElement: 'label',
+            errorClass: 'has-error',                     
+            messages:{
+                
+            }
+        });
+    });
+</script>
 <div class="pay-type-form">
+    
+    <?php
+    if ($model->errors) {
+        echo Html::errorSummary($model, ['header' => '输入有误，请检查：', 'class' => 'error-summary']);
+    }
+    ?>
+    
+    <?php $form = ActiveForm::begin([
+            'id'=>'form1',
+    ]);
+    ?>
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'code')->textInput(['maxlength' => 30]) ?>
-
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 60]) ?>
-
-    <?= $form->field($model, 'rate')->textInput(['maxlength' => 20]) ?>
-
-    <?= $form->field($model, 'description')->textInput(['maxlength' => 400]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+    <table class="table_edit">
+        <tr>
+            <td class="td-column" style="width:200px;">唯一编号</td>
+            <td class="">
+                <?= Html::activeInput('text', $model, 'code', ['class' => 'form-input required']) ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-column">支付名称</td>
+            <td class=""><?= Html::activeInput('text', $model, 'name', ['maxlength' => 60, 'class' => 'form-input required']) ?></td>
+        </tr>               
+        <tr>
+            <td class="td-column">费率</td>
+            <td class="">
+                <?= Html::activeInput('text', $model, 'rate', ['class' => 'form-input']) ?>                
+            </td>
+        </tr>
+        <tr>
+            <td class="td-column">状态</td>
+            <td class="">
+                <?= Html::activeDropDownList($model, 'status', PayType::StatusType(), ['class' => 'form-select']) ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-column">备注</td>
+            <td class=""><?= Html::activeTextarea($model, 'description', ['class' => 'form-input form-textarea']) ?></td>
+        </tr>        
+    </table>
+    <p class="center">
+        <?= Html::submitButton($model->isNewRecord ? '添加' : '修改', ['class' => $model->isNewRecord ? 'btn btn_large' : 'btn btn_large btn-primary ']) ?>
+    </p>
 
     <?php ActiveForm::end(); ?>
 
