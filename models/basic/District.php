@@ -43,5 +43,6 @@ class District extends \yii\db\ActiveRecord
             'name' => '片区名称',
             'city_id' => '关联城市编号',
         ];
-    }
+    }    
+    
 }

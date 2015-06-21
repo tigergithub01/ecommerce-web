@@ -23,6 +23,18 @@ class DeliveryType extends \yii\db\ActiveRecord
     {
         return 't_delivery_type';
     }
+    
+    public static function StatusType(){
+        return array(0=>'无效',1=>'有效');
+    }
+    
+    public function getStatusText(){
+        if(key_exists($this->status, self::StatusType())){
+            return self::StatusType()[$this->status];
+        }else{
+            return null;
+        }
+    }
 
     /**
      * @inheritdoc

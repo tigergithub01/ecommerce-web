@@ -44,4 +44,8 @@ class City extends \yii\db\ActiveRecord
             'province_id' => '关联省份编号',
         ];
     }
+    
+    public function getProvince(){
+        return $this->hasOne(Province::className(),['id'=>'province_id']);
+    }
 }
