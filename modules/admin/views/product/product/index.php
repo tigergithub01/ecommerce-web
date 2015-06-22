@@ -3,12 +3,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
-use app\components\MydialogWidget;
 use app\components\Action2Column;
-
+use app\components\MyDialogWidget;
 \app\assets\ZTreeAsset::register($this);
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '产品列表';
 $this->params['breadcrumbs'][] = $this->title;
@@ -76,13 +73,13 @@ function submitSearch(){
 
 </div>
 
-<?php MydialogWidget::begin(['id'=>'mw1','title'=>'选中产品类别']);?>
+<?php MyDialogWidget::begin(['id'=>'mw1','title'=>'选中产品类别']);?>
 <div id="treeDemo" class="ztree" style="height:300px;overflow:auto"></div>
 <div style="text-align:center;">
     <a href="javascript:getProductType();" class="btn">确 定</a>
     <a href="#" class="btn btn_gray unblockui-trigger">取 消</a>
 </div>
-<?php MydialogWidget::end();?>
+<?php MyDialogWidget::end();?>
 <script type="text/javascript">
     var treeobj=null;
     

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use app\components\MydialogWidget;
+use app\components\MyDialogWidget;
 
 \app\assets\ZTreeAsset::register($this);
 
@@ -70,13 +70,13 @@ use app\components\MydialogWidget;
 
 </div>
 
-<?php MydialogWidget::begin(['id'=>'mw1','title'=>'上一级']);?>
+<?php MyDialogWidget::begin(['id'=>'mw1','title'=>'上一级']);?>
 <div id="treeParent" class="ztree" style="height:300px;overflow:auto"></div>
 <div style="text-align:center;">
     <a href="javascript:getProductType();" class="btn">确 定</a>
     <a href="#" class="btn btn_gray unblockui-trigger">取 消</a>
 </div>
-<?php MydialogWidget::end();?>
+<?php MyDialogWidget::end();?>
 <script type="text/javascript">
     var treeobj=null;
     

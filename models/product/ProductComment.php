@@ -3,7 +3,7 @@
 namespace app\models\product;
 
 use Yii;
-
+ 
 /**
  * This is the model class for table "t_product_comment".
  *
@@ -53,5 +53,28 @@ class ProductComment extends \yii\db\ActiveRecord
             'comment_date' => '评价时间',
             'ip_addr' => '评价IP地址',
         ];
+    }
+    
+    public static function getList($parameter=array(),&$count=0){
+        $from=" from t_product_comment a inner join t_product b on a.product_id=b.id"
+                ." inner join t_vip c on a.vip_id=c.id";
+        $sql="select a.*,b.id as productID,b.name as productName,c.id as vipID,c.name,c.vip_no,c.id"
+               .$from ." order by a.id desc";
+        
+        $count=Yii::$app->db->createCommand("select count(a.id)".$from)->queryScalar();
+        
+        $dataProvider = new \yii\data\SqlDataProvider([
+            'sql' => $sql,
+            'params'=>$parameter,
+            'totalCount' => (int)$count,
+            'pagination'=>[
+                'pagesize'=>50,
+            ]
+        ]);
+        return $dataProvider;
+    }
+    
+    public function getProduct(){
+        return $this->hasOne(Product::className(), ['id'=>'product_id']);
     }
 }

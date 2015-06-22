@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use app\components\MydialogWidget;
+use app\components\MyDialogWidget;
 use app\models\basic\Parameter;
 $refundModel=Parameter::findAll(['type_id'=>8]);
 $refundList=yii\helpers\ArrayHelper::map($refundModel, 'id', 'pa_val');
@@ -230,11 +230,11 @@ function chooseType(){
             </div>
             <a href="#" data-mydialog-target="#picdialog" class="mydialog-trigger btn btn_large"><i class=" icon-folder-open"></i>&nbsp;上传图片</a>
             
-            <?php MydialogWidget::begin(['id'=>'picdialog','title'=>'上传产品图片']);?>
+            <?php MyDialogWidget::begin(['id'=>'picdialog','title'=>'上传产品图片']);?>
             <div style="height:450px;overflow:hidden">
                 <iframe id="frm_pic_dialog" style="border:0px solid #fff;width:100%;height:100%;" src="<?=Url::to(['/admin/upload'])?>" frameborder="0"></iframe>    
             </div>
-            <?php MydialogWidget::end();?>
+            <?php MyDialogWidget::end();?>
             
             <p>说明：</p>            
             <ul>
@@ -254,13 +254,13 @@ function chooseType(){
 </p>
  <?php ActiveForm::end(); ?>
 
-<?php MydialogWidget::begin(['id'=>'mw1','title'=>'选中产品类别']);?>
+<?php MyDialogWidget::begin(['id'=>'mw1','title'=>'选中产品类别']);?>
 <div id="treeDemo" class="ztree" style="height:300px;overflow:auto"></div>
 <div style="text-align:center;">
     <a href="javascript:getProductType();" class="btn">确 定</a>
     <a href="#" class="btn btn_gray unblockui-trigger">取 消</a>
 </div>
-<?php MydialogWidget::end();?>
+<?php MyDialogWidget::end();?>
 <script type="text/javascript">
     var treeobj=null;
     

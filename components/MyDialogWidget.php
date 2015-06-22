@@ -5,7 +5,7 @@ namespace app\components;
 use yii\base\Widget;
 
 
-class MydialogWidget extends Widget
+class MyDialogWidget extends Widget
 {
     public $title;
     public $id='bi0';

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\components\MydialogWidget;
+use app\components\MyDialogWidget;
 
 \app\assets\ZTreeAsset::register($this);
 $statusArray=  \app\models\basic\Parameter::find()->where(['type_id'=>4])->asArray()->all();
@@ -163,7 +163,7 @@ $statusArray=ArrayHelper::map($statusArray, 'id', 'pa_val');
 
 </div>
 
-<?php MydialogWidget::begin(['id' => 'mw1', 'title' => '添加发货商品', 'options' => ['style' => 'width:500px;']]); ?>
+<?php MyDialogWidget::begin(['id' => 'mw1', 'title' => '添加发货商品', 'options' => ['style' => 'width:500px;']]); ?>
 <div style="height:300px;overflow:auto">
     <table class='tpdetail' id="cycle_table">
         <thead>
@@ -188,4 +188,4 @@ $statusArray=ArrayHelper::map($statusArray, 'id', 'pa_val');
         <?php } ?>
     </table>
 </div>
-<?php MydialogWidget::end(); ?>
+<?php MyDialogWidget::end(); ?>
