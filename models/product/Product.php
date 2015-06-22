@@ -35,6 +35,7 @@ class Product extends \yii\db\ActiveRecord
 {    
     
     public $primaryPhoto;
+    public $primaryPhoto_url;
     /**
      * @inheritdoc
      */

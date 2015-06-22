@@ -14,40 +14,62 @@ use Yii;
  * @property integer $sub_vip_id
  * @property string $amount
  */
-class VipIncomeDetail extends \yii\db\ActiveRecord
-{
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 't_vip_income_detail';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['order_id', 'product_id', 'vip_id', 'sub_vip_id'], 'required'],
-            [['order_id', 'product_id', 'vip_id', 'sub_vip_id'], 'integer'],
-            [['amount'], 'number']
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => '主键编号',
-            'order_id' => '订单编号',
-            'product_id' => '关联产品编号',
-            'vip_id' => '会员编号',
-            'sub_vip_id' => '贡献分润会员编号',
-            'amount' => '贡献分润金额',
-        ];
-    }
+class VipIncomeDetail extends \yii\db\ActiveRecord {
+	// Transient fields
+	public $sub_vip_no;
+	public $order_code;
+	public $product_name;
+	
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName() {
+		return 't_vip_income_detail';
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function rules() {
+		return [ 
+				[ 
+						[ 
+								'order_id',
+								'product_id',
+								'vip_id',
+								'sub_vip_id' 
+						],
+						'required' 
+				],
+				[ 
+						[ 
+								'order_id',
+								'product_id',
+								'vip_id',
+								'sub_vip_id' 
+						],
+						'integer' 
+				],
+				[ 
+						[ 
+								'amount' 
+						],
+						'number' 
+				] 
+		];
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels() {
+		return [ 
+				'id' => '主键编号',
+				'order_id' => '订单编号',
+				'product_id' => '关联产品编号',
+				'vip_id' => '会员编号',
+				'sub_vip_id' => '贡献分润会员编号',
+				'amount' => '贡献分润金额' 
+		];
+	}
 }

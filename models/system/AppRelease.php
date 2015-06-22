@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $upgrade_desc
- * @property string $ver_no
+ * @property integer $ver_no
  * @property integer $force_upgrade
  * @property string $issue_date
  * @property integer $issue_user_id

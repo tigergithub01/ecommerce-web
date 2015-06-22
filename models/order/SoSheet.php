@@ -40,6 +40,8 @@ class SoSheet extends \yii\db\ActiveRecord
 	public $soDetailList;	
 	public $soContactPerson;
 	public $order_status;
+	public $vip_no;
+	public $order_status_val;
 	
     /**
      * @inheritdoc
@@ -93,6 +95,8 @@ class SoSheet extends \yii\db\ActiveRecord
             'return_date' => '退款日期',
             'memo' => '备注',
             'message' => '买家留言',
+        	'trade_no' => '支付宝交易号',
+        	'trade_status' => '支付宝交易状态',
         ];
     }
     
@@ -102,6 +106,10 @@ class SoSheet extends \yii\db\ActiveRecord
     
     function getVip(){        
         return $this->hasOne(Vip::className(), ['id'=>'vip_id']);      
+    }
+    
+    function setVip($vip){
+    	$this->vip = $vip;
     }
     
     function getSettleFlagText(){

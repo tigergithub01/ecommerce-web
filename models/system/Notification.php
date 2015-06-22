@@ -13,14 +13,14 @@ use Yii;
  * @property string $issue_date
  * @property string $content
  */
-class Notificatioin extends \yii\db\ActiveRecord
+class Notification extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 't_notificatioin';
+        return 't_notification';
     }
 
     /**

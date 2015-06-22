@@ -58,4 +58,8 @@ class VipWithdrawFlow extends \yii\db\ActiveRecord
             'status' => '提现申请状态（1:已结算、0：未结算）',
         ];
     }
+    
+    /* public function getStatusName(){
+    	return ($this->status==1)?'已结算':'未结算';
+    } */
 }
