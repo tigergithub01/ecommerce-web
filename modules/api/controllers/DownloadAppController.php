@@ -40,7 +40,7 @@ class DownloadAppController extends BaseController {
 		$file_name = iconv ( "utf-8", "gb2312", $file_name );
 		$file_sub_path = $_SERVER ['DOCUMENT_ROOT'] . '/' . SaleConstants::$app_path;
 		$file_path = $file_sub_path . $file_name;
-		echo $file_path;
+// 		echo $file_path;
 		// 首先要判断给定的文件存在与否
 		if (! file_exists ( $file_path )) {
 			echo "您要下载的文件不存在。";
