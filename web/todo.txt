@@ -505,6 +505,8 @@ http://localhost:8085/images/sale/app_logo.png
 http://localhost:8085/index.php?r=api/sys-feedback/create
 
 http://localhost:8085/index.php?r=api/notify/index
+http://localhost:8085/index.php?r=api/notify/view&id=10
+http://localhost:8085/index.php?r=sale/notify/view&id=10
 
 http://localhost:8085/index.php?r=api/ad-info/index
 http://localhost:8085/index.php?r=api/ad-info/ad-url&image_url=pos1.jpg
@@ -514,8 +516,6 @@ http://localhost:8085/index.php?r=api/earn-guild/view&id=1
 
 http://localhost:8085/index.php?r=sale/vip-register/index&parent_vip_no=13724346621
 
-
-
 http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr.apk
 http://localhost:8085/index.php?r=api/download-app/ajax-view
 
@@ -523,6 +523,7 @@ http://localhost:8085/index.php?r=api/product/view&id=4
 http://localhost:8085/index.php?r=api/product/index
 http://localhost:8085/index.php?r=api/product/index&product_name=
 http://localhost:8085/index.php?r=api/product-type/index
+http://localhost:8085/index.php?r=api/product/photo-view&url=/upload/product/20150613/pos1.jpg
 
 http://localhost:8085/index.php?r=sale/product/view&id=4
 http://localhost:8085/index.php?r=sale/vip-order/add-contact&product_id=4
@@ -544,14 +545,14 @@ http://localhost:8085/index.php?r=api/vip-income/view&vip_id=4
 http://localhost:8085/index.php?r=api/vip-income-detail/view&id=4
 http://localhost:8085/index.php?r=api/vip-income-detail/index&vip_id=4
 
-http://localhost:8085/index.php?r=api/vip-withdraw-flow/index&vip_id=4
+http://localhost:8085/index.php?r=api/vip-withdraw-flow/index&vip_id=1
 http://localhost:8085/index.php?r=api/vip-withdraw-flow/view&id=4
 http://localhost:8085/index.php?r=api/vip-withdraw-flow/create
 
 http://172.16.33.252:8085/index.php?r=api/vip/children&vip_id=1
 
-http://172.16.33.252:8085/index.php?r=api/vip-order/group-index&vip_id=1
-http://172.16.33.252:8085/index.php?r=api/vip-order/index&vip_id=18
+http://localhost:8085/index.php?r=api/vip-order/group-index&vip_id=1
+http://localhost:8085/index.php?r=api/vip-order/index&vip_id=18
 
 http://172.16.33.252:8085/index.php?r=/api/sms/create
 
