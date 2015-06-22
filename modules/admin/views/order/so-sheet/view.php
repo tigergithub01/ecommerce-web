@@ -119,7 +119,9 @@ $this->registerJsFile('@web/js/jquery.easytabs.min.js');
                         </tr>
                         <tr>
                             <td class="td-column">下单会员</td>
-                            <td><?= $model['vip']['name'] ?>(<?= $model['vip']['vip_no'] ?>)</td>
+                            <td>
+                                <?=Html::a($model['vip']['name']."(".$model['vip']['vip_no'].")",['vip/vip/view','id'=>$model['id']],['target'=>'_blank'])?>                                
+                            </td>
                         </tr>
                         <tr>
                             <td class="td-column">客户留言</td>

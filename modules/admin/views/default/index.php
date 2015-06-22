@@ -95,7 +95,7 @@ use yii\helpers\Url;
             <li class='menu1'><a href=""><span class="m11">会员管理</span></a>
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">会员列表</span></a></li>
-                    <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">会员反馈</span></a></li>
+                    <li><a href="<?=Url::to(['product/product-comment'])?>"><span class="m2">会员反馈</span></a></li>
                     
                 </ul>
             </li>
