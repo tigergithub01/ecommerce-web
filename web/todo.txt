@@ -558,4 +558,14 @@ http://172.16.33.252:8085/index.php?r=/api/sms/create
 
 &XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14346768324271
 
+chmod -R 777 zff
+
+http://120.24.245.164/index.php
+http://120.24.245.164/index.php?r=api/download-app/view-app&app_path=ecommerce-adr-20150622.apk
+http://120.24.245.164/upload/app/ecommerce-adr-20150622.apk
+http://localhost:8085/download-app.php?app_path=ecommerce-adr-20150622.apk
+http://120.24.245.164/download-app.php?app_path=ecommerce-adr-20150622.apk
+
+http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr-20150622.apk
+
 
