@@ -10,6 +10,8 @@ class SaleConstants
 {
 	public static $session_vip='current_vip';
 	public static $date_format='Y-m-d H:i:s';
+	
+	public static $decimal_format = '0.00';
     
     //product path
     public static $product_path='upload/product/';

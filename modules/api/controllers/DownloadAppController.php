@@ -53,6 +53,7 @@ class DownloadAppController extends BaseController {
 		Header ( "Accept-Ranges: bytes" );
 		Header ( "Accept-Length:" . $file_size );
 		Header ( "Content-Disposition: attachment; filename=" . $file_name );
+		Header ( "Content-Length:" . $file_size );
 		$buffer = 1024;
 		$file_count = 0;
 		// 向浏览器返回数据

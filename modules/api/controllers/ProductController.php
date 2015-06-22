@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 use app\models\common\JsonObj;
 use app\components\controller\BaseController;
 use yii\db\ActiveQuery;
+use app\models\product\ProductPhoto;
+use app\modules\sale\models\SaleConstants;
 
 class ProductController extends BaseController {
 	public $enableCsrfValidation = false;
@@ -53,6 +55,15 @@ class ProductController extends BaseController {
 		
 		$productList = $query->all ();
 		
+		foreach ($productList as $product) {
+			$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [ 
+						':product_id' => $product ['id'] 
+				] )->andWhere ( 'primary_flag=1' )->one ();
+			if(!empty($productPhoto)){
+				$product->primaryPhoto_url = $productPhoto->url;
+			}
+		}
+		
 		/* $productList = Product::find ()->where ( 'id=:product_id', [ 
 		 ":product_id" => $product_id 
 		 ] )->andWhere ( 'name like :name', [ 
@@ -80,7 +91,8 @@ class ProductController extends BaseController {
 						'description',
 						'status',
 						'stock_quantity',
-						'safety_quantity' 
+						'safety_quantity',
+						'primaryPhoto_url', 
 				] 
 		] );
 		$json = new JsonObj ( 1, null, $array );
@@ -91,7 +103,7 @@ class ProductController extends BaseController {
 	
 	/**
 	 * product detail
-	 * 
+	 *
 	 * @param string $id        	
 	 */
 	public function actionView() {
@@ -104,8 +116,8 @@ class ProductController extends BaseController {
 			return;
 		}
 		
-		$array = ArrayHelper::toArray ( $model, [
-				'app\models\product\Product' => [
+		$array = ArrayHelper::toArray ( $model, [ 
+				'app\models\product\Product' => [ 
 						'id',
 						'code',
 						'name',
@@ -114,13 +126,27 @@ class ProductController extends BaseController {
 						'description',
 						'status',
 						'stock_quantity',
-						'safety_quantity'
-				]
+						'safety_quantity' 
+				] 
 		] );
 		
 		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 		
 		// return $this->render('index');
+	}
+	
+	public function actionPhotoView() {
+		$url = $_REQUEST ['url'];
+		
+		// TODO:photo should be store in other directory
+// 		$path = SaleConstants::$product_path . $url;
+
+// 		echo Yii::getAlias( '@web');
+// 		echo Yii::$app->basePath;
+		$path = Yii::$app->basePath.'/web'. $url;
+// 		echo $path;
+		header ( 'Content-Type:image/jpeg' );
+		readfile ( $path );
 	}
 }

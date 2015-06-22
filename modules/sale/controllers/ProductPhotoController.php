@@ -12,12 +12,15 @@ use app\modules\sale\models\SaleConstants;
 use app\components\controller\BaseController;
 
 class ProductPhotoController extends BaseController {
+	
+	
 	public function actionView() {
 		$id = $_REQUEST ['id'];
 		$model = ProductPhoto::findOne ( $id );
 		
 		// TODO:photo should be store in other directory
-		$path = SaleConstants::$product_path . ($model->url);
+// 		$path = SaleConstants::$product_path . ($model->url);
+		$path = Yii::$app->basePath.'/web'. ($model->url);
 		
 		header ( 'Content-Type:image/jpeg' );
 		readfile ( $path );

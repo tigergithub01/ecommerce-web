@@ -14,55 +14,32 @@ use app\modules\api\controllers\BaseApiController;
 use app\models\vip\Vip;
 use app\modules\api\service\VipService;
 use app\models\order\SoSheet;
+use app\models\system\Parameter;
 
 class VipOrderController extends BaseApiController {
 	public $enableCsrfValidation = false;
 	public function actionIndex() {
 		$status = isset ( $_REQUEST ['status'] ) ? $_REQUEST ['status'] : null;
 		$vip_id = isset ( $_REQUEST ['vip_id'] ) ? $_REQUEST ['vip_id'] : null;
+		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
+		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
+		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
+		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
 		
-		// create query
-		$query = new \yii\db\ActiveQuery ( 'app\models\order\SoSheet' );
+		$vipList = array();
+		$vip = new Vip();
+		$vip->id = $vip_id;
+		$vipList[]=$vip;
 		
-		$query->where ( 'vip_id=:vip_id', [ 
-				':vip_id' => $vip_id 
-		] );
-		// add condition
-		if (! empty ( $status )) {
-			$query->andWhere ( 'status = :status', [ 
-					':status' => $status 
-			] );
-		}
-		
-		$orderList = $query->all ();
-		
-		/* $array = ArrayHelper::toArray ( $orderList, [
-		 'app\models\product\Product' => [
-		 'id',
-		 'code',
-		 'name',
-		 'type_id',
-		 'price',
-		 'description'
-		 ]
-		 ] ); */
-		
-		$json = new JsonObj ( 1, null, $orderList );
+		$array = $this->getVipList($vipList, $status, $vip_id, $offset, $limit, $order_column, $order_direction);
+		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 	}
-	public function actionGroupIndex() {
-		$status = isset ( $_REQUEST ['status'] ) ? $_REQUEST ['status'] : null;
-		$vip_id = isset ( $_REQUEST ['vip_id'] ) ? $_REQUEST ['vip_id'] : null;
-		$vipService = new VipService ();
-		$subVipList = $vipService->getChildern ( $vip_id );
-		if (empty ( $subVipList )) {
-			$json = new JsonObj ( 1, null, null );
-			echo (Json::encode ( $json ));
-			return;
-		}
-		
+	
+	
+	private function getVipList($vipList,$status,$vip_id,$offset,$limit,$order_column,$order_direction){
 		$vip_id_array = array ();
-		foreach ( $subVipList as $value ) {
+		foreach ( $vipList as $value ) {
 			$vip_id_array [] = $value->id;
 			// $vip_ids = $vip_ids.','.($value->id);
 		}
@@ -73,31 +50,84 @@ class VipOrderController extends BaseApiController {
 		 'app\models\vip\Vip' => [
 		 'id',
 		 ]
-		 ] ); */
+		] ); */
 		if (! empty ( $vip_id_array )) {
 			$query->where ( 'vip_id in (' . $vip_ids . ')' );
 		}
 		// add condition
 		if (! empty ( $status )) {
-			$query->andWhere ( 'status = :status', [ 
-					':status' => $status 
+			$query->andWhere ( 'status = :status', [
+					':status' => $status
 			] );
 		}
 		
+		// order
+		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
+		if (! empty ( $order_column )) {
+			$query->orderBy ( [
+					$order_direction => $yii_sql_order
+			] );
+		}
+		
+		// add pager
+		$query->offset ( $offset )->limit ( $limit );
+		
 		$orderList = $query->all ();
 		
-		/* $array = ArrayHelper::toArray ( $orderList, [
-		 'app\models\product\Product' => [
-		 'id',
-		 'code',
-		 'name',
-		 'type_id',
-		 'price',
-		 'description'
-		 ]
-		 ] ); */
+		foreach ( $orderList as $soSheet ) {
+				
+			// get vip information
+			$vip = Vip::findOne ( $soSheet ['vip_id'] );
+			$soSheet->vip_no = $vip->vip_no;
+				
+			// get order status for display
+			$order_status = Parameter::findOne ( $soSheet ['status'] );
+			$soSheet->order_status_val = $order_status->pa_val;
+		}
 		
-		$json = new JsonObj ( 1, null, $orderList );
+		$array = ArrayHelper::toArray ( $orderList, [
+				'app\models\order\SoSheet' => [
+						'id',
+						'code',
+						'vip_id',
+						'order_amt',
+						'order_quantity',
+						'deliver_fee',
+						'status',
+						'settle_flag',
+						'order_date',
+						'pay_type_id',
+						'pay_amt',
+						'pay_date',
+						'order_status_val',
+						'vip_no',
+				]
+		] );
+		return $array;
+	}
+	
+	public function actionGroupIndex() {
+		$status = isset ( $_REQUEST ['status'] ) ? $_REQUEST ['status'] : null;
+		$vip_id = isset ( $_REQUEST ['vip_id'] ) ? $_REQUEST ['vip_id'] : null;
+		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
+		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
+		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
+		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
+		
+		$vipService = new VipService ();
+		$subVipList = $vipService->getChildern ( $vip_id );
+		if (empty ( $subVipList )) {
+			$json = new JsonObj ( 1, null, null );
+			echo (Json::encode ( $json ));
+			return;
+		}
+		
+		
+		$array = $this->getVipList($subVipList, $status, $vip_id, $offset, $limit, $order_column, $order_direction);
+		
+		
+		
+		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 	}
 }

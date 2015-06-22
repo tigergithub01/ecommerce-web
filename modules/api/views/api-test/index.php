@@ -101,6 +101,15 @@ use yii\helpers\Url;
         });
 	}
 
+	function testCreateVipWithdrawFlow(){
+		$.post('<?php echo Url::toRoute(['/api/vip-withdraw-flow/create'])?>', 
+                {
+					'VipWithdrawFlow[amount]':'51',
+            }, function(data) {
+                console.debug(data);
+        });
+	}
+
 
     </script>
 </head>
@@ -112,6 +121,7 @@ use yii\helpers\Url;
 	<input type="button" value="修改密码" onclick="testUpdatePwd()">
 	<input type="button" value="插入验证码" onclick="testPhoneVerifyCodeCreate()">
 	<input type="button" value="修改银行卡信息" onclick="testUpdateVipBankCard()">
+	<input type="button" value="提现申请" onclick="testCreateVipWithdrawFlow()">
 
 <?php $this->endBody() ?>
 </body>

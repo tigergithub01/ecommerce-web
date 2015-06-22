@@ -11,6 +11,11 @@ use yii\filters\VerbFilter;
 use app\components\controller\BaseController;
 use app\models\common\JsonObj;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
+use app\models\finance\VipIncome;
+use app\modules\sale\models\SaleConstants;
+use app\modules\api\utils\SheetCodeGenUtil;
+use app\modules\api\service\VipIncomeService;
 
 /**
  * VipWithdrawFlowController implements the CRUD actions for VipWithdrawFlow model.
@@ -20,29 +25,61 @@ class VipWithdrawFlowController extends BaseApiController {
 	
 	/**
 	 * Lists all VipWithdrawFlow models.
+	 * 
 	 * @return mixed
 	 */
 	public function actionIndex() {
 		$vip_id = isset ( $_REQUEST ['vip_id'] ) ? $_REQUEST ['vip_id'] : null;
-		$dataList = VipWithdrawFlow::find ()->where ( 'vip_id=:vip_id', [ 
+		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
+		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
+		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
+		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
+		
+		$query = new \yii\db\ActiveQuery ( 'app\models\finance\VipWithdrawFlow' );
+		$query->where ( 'vip_id=:vip_id', [ 
 				':vip_id' => $vip_id 
-		] )->all ();
+		] );
+		// order
+		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
+		if (! empty ( $order_column )) {
+			$query->orderBy ( [ 
+					$order_direction => $yii_sql_order 
+			] );
+		}
+		
+		// add pager
+		$query->offset ( $offset )->limit ( $limit );
+		
+		$dataList = $query->all ();
+		
+		/* $dataList = VipWithdrawFlow::find ()->where ( 'vip_id=:vip_id', [ 
+		 ':vip_id' => $vip_id 
+		 ] )->all (); */
 		echo (Json::encode ( new JsonObj ( 1, null, $dataList ) ));
 		return;
 	}
 	
 	/**
 	 * Displays a single VipWithdrawFlow model.
-	 * @param integer $id
+	 * 
+	 * @param integer $id        	
 	 * @return mixed
 	 */
-	public function actionView($id) {
+	public function actionView() {
 		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		$model = VipWithdrawFlow::findOne ( $id );
 		if ($model === null) {
 			echo (Json::encode ( new JsonObj ( - 1, '数据不存在。', null ) ));
 			return;
 		}
+		
+		/* $array = ArrayHelper::toArray ( $model, [
+		 'app\models\finance\VipWithdrawFlow' => [
+		 'id',
+		 'statusName',
+		 ]
+		 ] ); */
+		
 		$json = new JsonObj ( 1, null, $model );
 		echo (Json::encode ( $json ));
 	}
@@ -50,19 +87,41 @@ class VipWithdrawFlowController extends BaseApiController {
 	/**
 	 * Creates a new VipWithdrawFlow model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * 
 	 * @return mixed
 	 */
 	public function actionCreate() {
 		$connection = Yii::$app->db;
 		$trans = $connection->beginTransaction ();
 		try {
-			// save withdraw flow
 			$vipWithdrawFlow = new VipWithdrawFlow ();
 			$vipWithdrawFlow->load ( Yii::$app->request->post () );
+			
+			// 提现申请金额不能大于可申请金额
+			$vipIncomeService = new VipIncomeService ();
+			$vip = $_SESSION [SaleConstants::$session_vip];
+			$vip_id = $vip->id;
+			$vipIncome = $vipIncomeService->getVipIncome ( $vip_id );
+			
+			$amount = $vipWithdrawFlow->amount;
+			if ($amount < 50) {
+				$json = new JsonObj ( - 1, '提现金额应大于50元。', null );
+				echo (Json::encode ( $json ));
+				return;
+			}
+			
+			$amount = $vipWithdrawFlow->amount;
+			if ($amount > ($vipIncome->can_settle_amt)) {
+				$json = new JsonObj ( - 1, '提现金额大于可提现金额。', null );
+				echo (Json::encode ( $json ));
+				return;
+			}
+			
+			// save withdraw flow
 			// 提现申请单
 			$vipWithdrawFlow->sheet_type_id = 5;
 			$vipWithdrawFlow->code = SheetCodeGenUtil::getCode ( $vipWithdrawFlow->sheet_type_id );
-			$vip = $_SESSION [SaleConstants::$session_vip];
+			
 			$vipWithdrawFlow->vip_id = $vip ['id'];
 			$vipWithdrawFlow->apply_date = date ( SaleConstants::$date_format, time () );
 			// 结算状态
@@ -70,26 +129,43 @@ class VipWithdrawFlowController extends BaseApiController {
 			$orderId = null;
 			if (! $vipWithdrawFlow->save ()) {
 				$trans->rollBack ();
-			}			
+			}
 			// commit
 			$trans->commit ();
-			$json = new JsonObj ( 1, '保存成功。', $vipWithdrawFlow );
+			
+			// $vipWithdrawFlow = VipWithdrawFlow::findOne($vipWithdrawFlow->primaryKey);
+			
+			$array = ArrayHelper::toArray ( $vipWithdrawFlow, [ 
+					'app\models\finance\VipWithdrawFlow' => [ 
+							'id',
+							'sheet_type_id',
+							'code',
+							'apply_date',
+							'vip_id',
+							'amount',
+							'settled_amt',
+							'settled_date',
+							'status' 
+					] 
+			] );
+			$json = new JsonObj ( 1, '保存成功。', $array );
 			echo (Json::encode ( $json ));
 			return;
 		} catch ( Exception $e ) {
 			$trans->rollBack ();
-			// 			throw $e;
+			// throw $e;
 			$json = new JsonObj ( - 1, '保存失败。', null );
 			echo (Json::encode ( $json ));
 			return;
 		}
-		//             return $this->redirect(['view', 'id' => $model->id]);
+		// return $this->redirect(['view', 'id' => $model->id]);
 	}
 	
 	/**
 	 * Updates an existing VipWithdrawFlow model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id
+	 * 
+	 * @param integer $id        	
 	 * @return mixed
 	 */
 	public function actionUpdate($id) {
@@ -110,7 +186,8 @@ class VipWithdrawFlowController extends BaseApiController {
 	/**
 	 * Deletes an existing VipWithdrawFlow model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
-	 * @param integer $id
+	 * 
+	 * @param integer $id        	
 	 * @return mixed
 	 */
 	public function actionDelete($id) {
@@ -124,7 +201,8 @@ class VipWithdrawFlowController extends BaseApiController {
 	/**
 	 * Finds the VipWithdrawFlow model based on its primary key value.
 	 * If the model is not found, a 404 HTTP exception will be thrown.
-	 * @param integer $id
+	 * 
+	 * @param integer $id        	
 	 * @return VipWithdrawFlow the loaded model
 	 * @throws NotFoundHttpException if the model cannot be found
 	 */

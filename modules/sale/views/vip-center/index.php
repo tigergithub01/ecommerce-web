@@ -43,11 +43,11 @@ header {
 		<div class="uc-notification">
 			<ul class="box">
 				<?php foreach ($orderCountList as $value) {
-					if($value['id']!=3007 && $value['id']!=3008){?>
+					/*if($value['id']!=3007 && $value['id']!=3008){*/?>
 					<li><a
 					href="<?php echo Url::toRoute(['/sale/vip-order/index','status' => $value['id']]) ?>"><i
 						class="icon-pay"></i><?php echo $value['pa_val']?></a><font color="red"><?php echo ($value['count']==0)?'':$value['count'] ?></font> </li>
-				<?php }}?>
+				<?php /*}*/}?>
 			</ul>
 			
 			<!-- 

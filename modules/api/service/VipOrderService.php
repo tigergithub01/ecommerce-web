@@ -34,12 +34,13 @@ class VipOrderService {
 				] )->andWhere ( 'primary_flag=1' )->one ();
 				$product->primaryPhoto = $productPhoto;
 				
-				$soDetail->product = $product;
+				$soDetail->setProduct($product);
 			}
 		}
 		$soSheet->soDetailList = $soDetailList;
 		
 		// get vip information
+		//TODO:  where is vip field
 		$vip = Vip::findOne ( $soSheet ['vip_id'] );
 		$soSheet->vip = $vip;
 		
@@ -104,8 +105,8 @@ class VipOrderService {
 				] )->all ();
 				if (! empty ( $soDetailList )) {
 					foreach ( $soDetailList as $soDetail ) {
-						$product = Product::findOne ( $soDetail->product_id );
-						$soDetail->product = $product;
+// 						$product = Product::findOne ( $soDetail->product_id );
+// 						$soDetail->product = $product;
 					}
 				}
 				$soSheet->soDetailList = $soDetailList;
