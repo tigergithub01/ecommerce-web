@@ -13,6 +13,7 @@ use Yii;
  * @property integer $vip_id
  * @property integer $sub_vip_id
  * @property string $amount
+ * @property string $deduct_price
  */
 class VipIncomeDetail extends \yii\db\ActiveRecord {
 	// Transient fields
@@ -52,7 +53,8 @@ class VipIncomeDetail extends \yii\db\ActiveRecord {
 				],
 				[ 
 						[ 
-								'amount' 
+								'amount',
+								'deduct_price' 
 						],
 						'number' 
 				] 
@@ -69,7 +71,8 @@ class VipIncomeDetail extends \yii\db\ActiveRecord {
 				'product_id' => '关联产品编号',
 				'vip_id' => '会员编号',
 				'sub_vip_id' => '贡献分润会员编号',
-				'amount' => '贡献分润金额' 
+				'amount' => '贡献分润金额',
+				'deduct_price' => '产品分润单价' 
 		];
 	}
 }
