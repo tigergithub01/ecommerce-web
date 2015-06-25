@@ -568,4 +568,6 @@ http://120.24.245.164/download-app.php?app_path=ecommerce-adr-20150622.apk
 
 http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-adr-20150622.apk
 
+出错页面优化，不能直接报错Not Found (#404)，如输入链接http://localhost:8085/index.php?r=sale/product/view时
+
 
