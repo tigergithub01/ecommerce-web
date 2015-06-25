@@ -55,6 +55,21 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		<div class="sale_info">
 			<span class="price">售价：<span class="value">￥<?php echo floor($model['price']*100)/100?></span></span>
 		</div>
+		<div class="number_bar">
+						<div class="calc" style="padding: 0 16px 8px">
+							<span class="buynber">数量：</span> <label class="tag"></label> <span
+								class="counter"> <a class="reduce" href="javascript:void(0)"><img
+									src="images/sale/icon_calc_reduce.png"></a>
+								<input class="num" value="1" name="num" id="number" type="text">
+								<a class="add" href="javascript:void(0)"><img
+									src="images/sale/icon_calc_add.png"></a>
+							<!-- 
+							</span> <span class="stock">(库存<span class="s_stock">200</span>件)
+							</span> <input value="12891" name="gid" id="gid" type="hidden"> <input
+								value="56765" name="usid" id="usid" type="hidden">
+							 -->	
+						</div>
+					</div>
 		<hr class="gray_solid">
 	</div>
 
@@ -194,11 +209,11 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		<a class="man_button"
 			href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
 			src="images/sale/icon_man.png"></a>
-		<!-- 
+		
 			<a class="cart_button"
 			href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
 			src="images/sale/icon_cart.png"></a> 
-			 -->
+			
 		<a class="buy_button1 buy"
 			href="<?=Url::toRoute(['/sale/vip-order/add-contact','product_id'=>$model['id']])?>">立即购买</a>
 	</div>

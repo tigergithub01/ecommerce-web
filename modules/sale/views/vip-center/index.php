@@ -76,6 +76,8 @@ header {
 			<ul class="list">
 				<li><a href="<?=Url::toRoute(['/sale/vip-order/index'])?>"><i
 						class="icon-order"></i>全部订单</a></li>
+				<li><a href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><i
+						class="icon-order"></i>购物车</a></li>
 						<!-- 
 				<li><a href="<?=Url::toRoute(['/sale/vip-collect/index'])?>"><i
 						class="icon-fav"></i>我的收藏</a></li>
