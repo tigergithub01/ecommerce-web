@@ -100,7 +100,7 @@ transform: rotate(45deg);
 .section-body i {
     position: relative;
     display: inline-block;
-    background: url(../images/w_2.png) no-repeat -50px;
+    /*background: url(../images/w_2.png) no-repeat -50px;*/
     -webkit-background-size: 50px auto; background-size:50px auto;
 }
 

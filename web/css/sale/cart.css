@@ -45,14 +45,14 @@
 	background-size: cover;
 	-webkit-background-size: cover;
 	-o-background-size: cover;
-	background-image: url("sale/images/icon_checkbox_no.png");
+	background-image: url("/images/sale/icon_checkbox_no.png");
 	position: absolute;
 	left: 4px;
 	vertical-align: middle;
 	top: 4px;
 }
 .cart_item_bar .checkbox_checked{
-	background-image: url("sale/images/icon_checkbox_ok.png");
+	background-image: url("/images/sale/icon_checkbox_ok.png");
 }
 .cart_item_bar .info_block{
 	margin: 6px 0px;
