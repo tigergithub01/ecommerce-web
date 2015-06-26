@@ -18,6 +18,10 @@ use Yii;
  */
 class ShoppingCart extends \yii\db\ActiveRecord
 {
+    
+	//transient fields
+    public $product;
+    
     /**
      * @inheritdoc
      */
@@ -54,5 +58,9 @@ class ShoppingCart extends \yii\db\ActiveRecord
             'create_date' => '创建日期',
             'update_date' => '修改日期',
         ];
+    }
+    
+    public function setProduct($product){
+    	$this->product = $product;
     }
 }
