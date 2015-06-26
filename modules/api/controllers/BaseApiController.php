@@ -23,7 +23,7 @@ class BaseApiController extends BaseController {
 		$session->open ();
 		$vip = $session->get ( SaleConstants::$session_vip );
 		if (empty ( $vip ) || !isset($vip)) {
-			echo (Json::encode ( new JsonObj ( - 1, '您没有权限访问。', null ) ));
+			echo (Json::encode ( new JsonObj ( - 100, '请先登录。', null ) ));
 			return false;
 		}
 		return parent::beforeAction ( $action );

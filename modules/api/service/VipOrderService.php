@@ -19,6 +19,9 @@ use app\modules\sale\models\SaleConstants;
 class VipOrderService {
 	public function getOrder($orderId) {
 		$soSheet = SoSheet::findOne ( $orderId );
+		if (empty ( $soSheet )) {
+			throw new NotFoundHttpException ();
+		}
 		
 		// get sale order detail list
 		$soDetailList = SoDetail::find ()->where ( 'order_id=:order_id', [ 
