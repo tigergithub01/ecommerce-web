@@ -25,6 +25,8 @@ use app\modules\api\utils\SheetCodeGenUtil;
 use app\models\order\SoContactPerson;
 use app\modules\api\service\VipOrderService;
 use app\modules\api\service\app\modules\api\service;
+use app\models\order\ShoppingCart;
+use app\models\product\ProductPhoto;
 
 class VipOrderController extends BaseSaleController {
 	public function beforeAction($action) {
@@ -45,13 +47,11 @@ class VipOrderController extends BaseSaleController {
 				'model' => $soSheet 
 		] );
 	}
-	public function actionAddContact() {
+	public function actionConfirm() {
 		// initiate product information
-		$product_id = $_REQUEST ['product_id'];
-		$product = Product::findOne ( $product_id );
-		if (empty ( $product )) {
-			throw new NotFoundHttpException ();
-		}
+		/* $product_id = isset ( $_REQUEST ['product_id'] ) ? $_REQUEST ['product_id'] : null;
+		$quantity = isset ( $_REQUEST ['quantity'] ) ? $_REQUEST ['quantity'] : 1; */
+		
 		
 		// province
 		$provinces = Province::find ()->orderBy ( [ 
@@ -66,34 +66,82 @@ class VipOrderController extends BaseSaleController {
 		// $districts = District::find ()->all ();
 		// $districts_map = ArrayHelper::map ( $districts, 'id', 'name' );
 		
+		
+		
+		
 		// create SoContactPersonForm information
-		$model = new SoContactPersonForm ();
+		$contactPersonForm = new SoContactPersonForm ();
 		
 		// TODO:buy one product,should be mutipy products
+		/* $price = $product->price;
 		$soDetail = new SoDetail ();
 		$soDetail->product_id = $product_id;
 		$soDetail->quantity = 1;
-		$soDetail->price = $product->price;
-		$soDetail->amount = ($soDetail->quantity) * ($soDetail->price);
+		//TODO:should get discount price
+		$soDetail->price = $price;
+		$soDetail->amount = $quantity * $price; */
 		
-		if ($model->load ( Yii::$app->request->post () ) && $model->validate ()) {
-			
-			// order must have product
-			$detailList = $_POST ['detailList'];
-			if (empty ( $detailList )) {
-				return $this->render ( 'contact', [ 
-						'model' => $model,
-						'provinces' => $provinces_map,
-						'cities' => [ ],
-						'districts' => [ ],
-						'soDetail' => $soDetail 
-				] );
+		//vip information
+		$vip = $_SESSION [SaleConstants::$session_vip];
+// 		$detailList = array();
+		$detailList = isset ( $_REQUEST ['detailList'] ) ? $_REQUEST ['detailList'] : null;
+		if (empty ( $detailList )) {
+			throw new NotFoundHttpException ('请选择要购买的产品');
+			/* return $this->render ( 'confirm', [
+					'contactPersonForm' => $contactPersonForm,
+					'provinces' => $provinces_map,
+					'cities' => [ ],
+					'districts' => [ ],
+					'detailList' => $detailList
+			] ); */
+		}else{
+			foreach ( $detailList as $i=>$soDetail ) {
+				$quantity = $soDetail['quantity'];
+				$product = Product::findOne ( $soDetail['product_id'] );
+				$soDetail['product_name'] = $product->name;
+				$soDetail['price'] = $product->price;
+				$soDetail['amount'] = $quantity * $soDetail['price'];
+				
+				// get main photo
+				$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [
+						':product_id' => $product ['id']
+				] )->andWhere ( 'primary_flag=1' )->one ();
+// 				$product->primaryPhoto = $productPhoto;
+				
+				if($productPhoto!=null){
+					$soDetail['primaryPhoto_id']=$productPhoto->id;
+				}
+				$detailList[$i]=$soDetail;
+// 				$soDetail->setProduct($product);
 			}
+		}
+		
+		/* $product = Product::findOne ( $product_id );
+		if (empty ( $product )) {
+			throw new NotFoundHttpException ();
+		} */
+		
+		//add product to cart
+		/* $shoppingCart = new ShoppingCart();
+		$shoppingCart->vip_id = $vip ['id'];
+		$shoppingCart->product_id=$product_id;
+		$shoppingCart->quantity = $quantity;
+		//TODO:should get discount price
+		$shoppingCart->price = $product->price;
+		$shoppingCart->amount = $quantity * $price;
+		$shoppingCart->create_date = date ( SaleConstants::$date_format, time () );
+		$shoppingCart->save(); */
+		
+		if ($contactPersonForm->load ( Yii::$app->request->post () ) && $contactPersonForm->validate ()) {
+			// order must have product
+			
 			
 			// save order in transation
 			$connection = Yii::$app->db;
 			$trans = $connection->beginTransaction ();
 			try {
+				
+							
 				
 				// pre process order detail list
 				$order_amt = 0;
@@ -108,7 +156,7 @@ class VipOrderController extends BaseSaleController {
 				// 销售订单
 				$soSheet->sheet_type_id = 1;
 				$soSheet->code = SheetCodeGenUtil::getCode ( $soSheet->sheet_type_id );
-				$vip = $_SESSION [SaleConstants::$session_vip];
+				
 				$soSheet->vip_id = $vip ['id'];
 				$soSheet->order_amt = $order_amt;
 				$soSheet->order_quantity = $order_quantity;
@@ -124,12 +172,12 @@ class VipOrderController extends BaseSaleController {
 				} else {
 					Yii::trace ( '$soSheet->save() errors' );
 					Yii::trace ( $soSheet->getErrors () );
-					return $this->render ( 'contact', [ 
-							'model' => $model,
+					return $this->render ( 'confirm', [ 
+							'contactPersonForm' => $contactPersonForm,
 							'provinces' => $provinces_map,
 							'cities' => [ ],
 							'districts' => [ ],
-							'soDetail' => $soDetail 
+							'detailList' => $detailList
 					] );
 				}
 				
@@ -148,31 +196,34 @@ class VipOrderController extends BaseSaleController {
 				// save order delivery information
 				$soContactPerson = new SoContactPerson ();
 				$soContactPerson->order_id = $orderId;
-				$soContactPerson->name = $model->name;
-				$soContactPerson->phone_number = $model->phone_number;
-				$soContactPerson->province_id = $model->province_id;
-				$soContactPerson->city_id = $model->city_id;
-				$soContactPerson->district_id = $model->district_id;
-				$soContactPerson->detail_address = $model->detail_address;
+				$soContactPerson->name = $contactPersonForm->name;
+				$soContactPerson->phone_number = $contactPersonForm->phone_number;
+				$soContactPerson->province_id = $contactPersonForm->province_id;
+				$soContactPerson->city_id = $contactPersonForm->city_id;
+				$soContactPerson->district_id = $contactPersonForm->district_id;
+				$soContactPerson->detail_address = $contactPersonForm->detail_address;
 				if (! $soContactPerson->save ()) {
 					Yii::trace ( '$soContactPerson->save() errors' );
 					Yii::trace ( $soContactPerson->getErrors () );
 					$trans->rollBack ();
-					return $this->render ( 'contact', [ 
-							'model' => $model,
+					return $this->render ( 'confirm', [ 
+							'contactPersonForm' => $contactPersonForm,
 							'provinces' => $provinces_map,
 							'cities' => [ ],
 							'districts' => [ ],
-							'soDetail' => $soDetail 
+							'detailList' => $detailList
 					] );
 				}
+				
+				//TODO:save invoice detail information
+				
 				
 				// commit
 				$trans->commit ();
 				
 				// TODO:should be render,not be redirect.
 				return $this->redirect ( [ 
-						'/sale/vip-order/confirm',
+						'/sale/vip-order/pay',
 						'orderId' => $orderId 
 				] );
 			} catch ( Exception $e ) {
@@ -180,16 +231,14 @@ class VipOrderController extends BaseSaleController {
 				throw $e;
 			}
 		} else {
-			return $this->render ( 'contact', [ 
-					'model' => $model,
+			return $this->render ( 'confirm', [ 
+					'contactPersonForm' => $contactPersonForm,
 					'provinces' => $provinces_map,
 					'cities' => [ ],
 					'districts' => [ ],
-					'soDetail' => $soDetail 
+					'detailList' => $detailList
 			] );
 		}
-	}
-	private function getSheetCode($sheetTypeId) {
 	}
 	
 	/**
@@ -225,7 +274,7 @@ class VipOrderController extends BaseSaleController {
 		$json = new JsonObj ( 1, null, $districts );
 		echo (Json::encode ( $json ));
 	}
-	public function actionConfirm() {
+	public function actionPay() {
 		// submit order
 		$orderId = $_REQUEST ['orderId'];
 		$vipOrderService = new VipOrderService ();
@@ -278,14 +327,14 @@ class VipOrderController extends BaseSaleController {
 			$soDetail = $soDetailList[0];
 			$product = $soDetail->product;
 			
-			return $this->render ( 'confirm', [ 
+			return $this->render ( 'pay', [ 
 					'model' => $soSheet,
 					'product'=>$product
 			] );
 		} else {
 			// post pay information to third paty system.
 			// $soSheet->pay_type_id=$pay_type_id;
-			return $this->render ( 'confirm', [ 
+			return $this->render ( 'pay', [ 
 					'model' => $soSheet 
 			] );
 			

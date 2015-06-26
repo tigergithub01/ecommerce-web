@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\modules\sale\models\SaleConstants;
 
+
 $this->title = "产品详情";
 $this->registerCssFile ( 'css/sale/header.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
@@ -23,10 +24,12 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 ] );
 ?>
 
-
+<form action="<?=Url::toRoute(['/sale/vip-order/confirm'])?>" id="product_detail_form" method="post">
+<input type="hidden" name="_csrf" value="<?= @Yii::$app->request->csrfToken ?>" /> 
+ 
 <div class="vip-center-form">
 
-	<div id="demo1" class="slideBox">
+	<div id="photo_slideBox" class="slideBox">
 		<ul class="items">
   <?php foreach ($photoList as $photo){?>
   		<li><a href="javascript:void(0)" title=""><img style="width: 100%"
@@ -42,8 +45,7 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 	<div class="goods_info_bar">
 		<div class="title">
 			<span class="btl"><?php echo $model['name']?></span> <span
-				class="scr">
-				<!-- 
+				class="scr"> <!-- 
 				<?php if(!isset($_SESSION[SaleConstants::$session_vip])){?>
 				<img src="images/sale/collect.png" class="fav_goods"
 				id="btn_collect">
@@ -53,26 +55,27 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		</div>
 
 		<div class="sale_info">
-			<span class="price">售价：<span class="value">￥<?php echo floor($model['price']*100)/100?></span></span>
+			<span class="price">售价：<span class="value">￥<?php echo round($model['price'],2)?></span></span>
 		</div>
 		<div class="number_bar">
-						<div class="calc" style="padding: 0 16px 8px">
-							<span class="buynber">数量：</span> <label class="tag"></label> <span
-								class="counter"> <a class="reduce" href="javascript:void(0)"><img
-									src="images/sale/icon_calc_reduce.png"></a>
-								<input class="num" value="1" name="num" id="number" type="text">
-								<a class="add" href="javascript:void(0)"><img
-									src="images/sale/icon_calc_add.png"></a>
-							<!-- 
+			<div class="calc" style="padding: 0 16px 8px">
+				<span class="buynber">数量：</span> <label class="tag"></label> <span
+					class="counter"> 
+					<a class="reduce" id="link_reduce_quantity" href="javascript:void(0)"><img
+						src="images/sale/icon_calc_reduce.png"></a> 
+					<input class="num" value="1" name="detailList[0][quantity]" id="buy_quantity" type="text"> 
+					<a class="add" id="link_add_quantity"	href="javascript:void(0)"><img src="images/sale/icon_calc_add.png"></a>
+					<!-- 
 							</span> <span class="stock">(库存<span class="s_stock">200</span>件)
 							</span> <input value="12891" name="gid" id="gid" type="hidden"> <input
 								value="56765" name="usid" id="usid" type="hidden">
-							 -->	
-						</div>
-					</div>
+							 -->
+			
+			</div>
+		</div>
 		<hr class="gray_solid">
 	</div>
-
+	<!-- 
 	<div class="standard_bar">
 
 		<div class="panel">
@@ -85,7 +88,7 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 					</div>
 					<div class="info">
 						<span class="price">￥<span class="s_price">368.00</span></span><span
-							class="gray"> <!--（库存<span class="s_stock">200</span>件）-->
+							class="gray"> 
 						</span><br> <span class="gray">请选择规格</span>
 					</div>
 					<div class="btn_close">
@@ -93,7 +96,6 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 							src="%E4%B8%BD%E7%93%A6%E4%B8%BD%E5%B9%B2%E7%BA%A2_files/icon_close.png"></a>
 					</div>
 				</div>
-				<!--规格类型-->
 				<div id="hqwznr">
 					<div class="shuxing">规格</div>
 					<div class="yansxz">
@@ -117,7 +119,7 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 						</div>
 					</div>
 				</div>
-				<!----------->
+				
 
 				<div class="size center">
 					<button class="button primary btn-sure" data-oper="buy">立刻购买</button>
@@ -126,7 +128,7 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		</div>
 		<div class="bg"></div>
 	</div>
-
+ -->
 
 
 
@@ -208,17 +210,16 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		<!-- 非供应商的商品 -->
 		<a class="man_button"
 			href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
-			src="images/sale/icon_man.png"></a>
-		
-			<a class="cart_button"
+			src="images/sale/icon_man.png"></a> <a class="cart_button"
 			href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
 			src="images/sale/icon_cart.png"></a> 
-			
-		<a class="buy_button1 buy"
-			href="<?=Url::toRoute(['/sale/vip-order/add-contact','product_id'=>$model['id']])?>">立即购买</a>
+			<input type="hidden" value="<?=$model['id']?>" name="detailList[0][product_id]">
+			<a class="buy_button1 buy" id="btn_buy"
+			href="javascript:void(0)">立即购买</a>
 	</div>
 
 </div>
+</form>
 
 <style type="text/css">
 /* ------------------------------------------------ 头部 ------------------------------------ */
@@ -233,7 +234,6 @@ header {
 }
 
 /* ------------------------------------------------ 头部 ------------------------------------ */
-
 </style>
 
 
@@ -259,11 +259,79 @@ $(function(){
 	});
 
 	$(".items img").width($(document.body).width());	
-	$('#demo1').slideBox({hideClickBar:false});
+	$('#photo_slideBox').slideBox({hideClickBar:false});
+	
+	$('#link_reduce_quantity').click(function(){
+		var buy_quantity = $('#buy_quantity').val();
+		var quantity = 1;
+		if(/^[0-9]*[1-9][0-9]*$/.test(buy_quantity) == false){
+			quantity = 1;
+		}else {
+			if(buy_quantity>1){
+				quantity = parseInt(buy_quantity) -1; 
+			}
+		}
+		$('#buy_quantity').val(quantity);
+	});
+
+	$('#link_add_quantity').click(function(){
+		var buy_quantity = $('#buy_quantity').val();
+		var quantity = 1;
+		if(/^[0-9]*[1-9][0-9]*$/.test(buy_quantity) == false){
+			quantity = 1;
+		}else{
+			quantity = parseInt(buy_quantity) +1; 
+		}
+		//console.debug(quantity);
+		$('#buy_quantity').val(quantity);
+	});
+
+	$('#buy_quantity').change(function(){
+		var buy_quantity = $('#buy_quantity').val();
+		if(/^[0-9]*[1-9][0-9]*$/.test(buy_quantity) == false){
+			quantity = 1;
+		}
+		$('#buy_quantity').val(quantity);
+	});
+		
+	$('#btn_buy').click(function(){
+		var buy_quantity = $('#buy_quantity').val();
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/api/vip-cart/create'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+		    	'ShoppingCart[product_id]':<?php echo $model['id']?>,
+		    	'ShoppingCart[quantity]':buy_quantity,
+		    	'ShoppingCart[price]':<?php echo $model['price']?>,
+		    	'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
+		    	},     
+		    	
+		    async :false, 
+		    error:function(){     
+		       //alert('获取数据失败');    
+		    },     
+		    success:function(data){ 
+			    console.debug(data);
+			    if(data.status==1){
+			    	//$('#btn_collect').prop('src','images/sale/collect-undo.png');
+			    	//alert('添加购物车成功'); 
+			    	//window.location.href="<?=Url::toRoute(['/sale/vip-order/confirm','product_id'=>$model['id']])?>&quantity="+buy_quantity;
+			    	$("#product_detail_form").submit();
+			    }else{
+				    alert('请先登录');
+				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
+			    }
+		    	
+		    }  
+		}); 
+		
+		//window.location.href="<?=Url::toRoute(['/sale/vip-order/confirm','product_id'=>$model['id']])?>&quantity="+buy_quantity;
+	});
 
 	$('#btn_collect').click(function(){
 		var src = $('#btn_collect').prop('src');
-		console.debug(src);
+		//console.debug(src);
 		if(src.indexOf('collect.png')>=0){
 			collect_add();	
 		}else{
@@ -318,6 +386,8 @@ $(function(){
 		    }  
 		}); 
 	}
+
+	
 		
 	
 });

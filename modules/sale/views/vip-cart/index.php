@@ -24,14 +24,18 @@ $this->registerCssFile ('css/sale/shopcart.css',['position' => \yii\web\View::PO
 								<div class="standard">规格：<span>×<span class="num_val">1</span></span></div>
 							<input name="cart_size[56765][12891_0]" value="" type="hidden">
 							<div class="price">￥<span class="price_val">368.00</span></div>
+							<!-- 
+							<a class="button delete_item" href="javascript:void(0)"><img src="images/sale/icon_delete_bg.png"></a>
+							 -->
 						</div>
+						
 						<div class="calc">
 							<a class="button reduce" href="javascript:void(0)">-</a>
 							<div class="input"><input value="1" name="cart_num[56765][12891_0]" id="num-56765-12891_0" data-stock="200" class="num_box" type="text"></div>
 							<a class="button add" href="javascript:void(0)">+</a>
 						</div>
 						<div class="del_bar">
-							<a class="button delete_item" href="javascript:void(0)"><img src="%E8%B4%AD%E7%89%A9%E8%BD%A6_files/icon_delete_bg.png"></a>
+							<a class="button delete_item" href="javascript:void(0)"><img src="images/sale/icon_delete_bg.png"></a>
 						</div>
 						<!-- <div class="info_price">
 							 
@@ -49,7 +53,6 @@ $this->registerCssFile ('css/sale/shopcart.css',['position' => \yii\web\View::PO
 			</div>
 		</div>	<div class="cart_btn_bar_placeholder"></div>
 	<div class="cart_btn_bar">
-		<?php echo Html::checkbox('select_all')?>
 		<a class="checkbox checkboxall checkboxvisible checkbox_checked" href="javascript:void(0)"></a><label>&nbsp;全选</label>
 		<a class="delete"><img src="images/sale/icon_delete.png"></a>
 		<button class="submit">结算</button>

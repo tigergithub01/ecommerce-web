@@ -10,17 +10,17 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\modules\sale\controllers\BaseSaleController;
 use app\models\order\ShoppingCart;
+use app\modules\api\service\VipCartService;
+use app\modules\sale\models\SaleConstants;
 
 class VipCartController extends BaseSaleController {
 	public function actionIndex() {
-		$vipOrderService = new VipOrderService ();
+		$vipCartService = new VipCartService ();
 		$vip = $_SESSION [SaleConstants::$session_vip];
-		
-		
-		
-		ShoppingCart::find()->all();
-		
-		return $this->render ( 'index' );
+		$detailList = $vipCartService->getShoppingCartList ( $vip->id );
+		return $this->render ( 'index', [ 
+				'detailList' => $detailList 
+		] );
 	}
 	public function actionView() {
 		return $this->render ( 'view' );

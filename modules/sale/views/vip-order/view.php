@@ -51,7 +51,7 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 				<div class="standard">
 					数量：<span><?php echo $soDetail['quantity']?></span>
 				</div>
-				<div class="price1">￥<?php echo floor($soDetail['amount']*100)/100?></div>
+				<div class="price1">￥<?php echo round($soDetail['amount'],2)?></div>
 			</div>
 			<!---------------
 				<div class="info_price">
