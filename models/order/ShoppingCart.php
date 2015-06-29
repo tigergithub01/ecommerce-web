@@ -21,6 +21,7 @@ class ShoppingCart extends \yii\db\ActiveRecord
     
 	//transient fields
     public $product;
+    public $checked;
     
     /**
      * @inheritdoc
