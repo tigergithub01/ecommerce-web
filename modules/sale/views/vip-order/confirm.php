@@ -17,6 +17,9 @@ $this->registerCssFile ( 'css/sale/bootstrap.css' );
 $this->registerCssFile ( 'css/sale/order.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
+$this->registerCssFile ( 'css/sale/goods.css', [
+		'position' => \yii\web\View::POS_HEAD
+] );
 
 ?>
 
@@ -25,8 +28,39 @@ $this->registerCssFile ( 'css/sale/order.css', [
 	
 
 	<?php $form = ActiveForm::begin(['options' => ['class' => 'form-vertical'],]); ?>
+	<section>
+	<div>
+		<input type="radio" name="contact_type">使用新收货地址 <input type="radio"
+			name="contact_type">使用已有收货地址
+	</div>
+	<div class="so_sheet_contact_person">
+	    <?= $form->field($contactPersonForm, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
+	    
+	    <?= $form->field($contactPersonForm, 'phone_number')->textInput(['maxlength' => 11,'placeholder'=>'请输入手机号码'])?>
+	    
+	    <?=$form->field ( $contactPersonForm, 'province_id' )->dropDownList ( $provinces, [ 'prompt' => '--请选择收货省份--','style' => 'width:100%' ] )?>
+	                                              
+	    <?=$form->field ( $contactPersonForm, 'city_id' )->dropDownList ( $cities, [ 'prompt' => '--请选择收货城市--','style' => 'width:100%' ] )?>   
+	                                              
+	    <?=$form->field ( $contactPersonForm, 'district_id' )->dropDownList ( $districts, [ 'prompt' => '--请选择所属片区--','style' => 'width:100%' ] )?>                                                                                   
+	    
+		<?= $form->field($contactPersonForm, 'detail_address')->textInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
+	</div>
+	<div>
+		<input type="checkbox" name="contact_type" checked="checked">添加到收货地址 <input
+			type="checkbox" name="contact_type" checked="checked">设为默认收货地址
+	</div>
+</section>
+	<div style="height: 10px;background-color:silver;">
+		
+	</div>
 	
-	<div class="so_sheet_detail">
+
+	<section>
+	<div>
+		订单总金额：<span style="color: red;font-size: 1.6rem;">￥2556.00</span>
+	</div>
+	<div class="so_sheet_detail" style="margin-top: 20px;">
 		<?php foreach ($detailList as $i=>$soDetail) {?>
 			<input type="hidden" name="detailList[<?=$i?>][product_id]"
 			value="<?php echo $soDetail['product_id']?>"> <input type="hidden"
@@ -38,14 +72,14 @@ $this->registerCssFile ( 'css/sale/order.css', [
 			value="<?php echo $soDetail['amount']?>">
 		<div class="order_item_bar">
 			<div class="info_block">
-				<div class="img">
+				<div class="img" style="width: 80px;">
 					<a
 						href="<?=Url::toRoute(['/sale/product/view','id'=>$soDetail['product_id']])?>">
 					<?php if(isset($soDetail['primaryPhoto_id'])){?>
-						<img
+						<img style="height: 70px; width: 70px;"
 						src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$soDetail['primaryPhoto_id']])?>">
 					<?php }else{?>
-						
+						<img style="height: 70px; width: 70px;" src="">
 					<?php }?>
 				</a>
 				</div>
@@ -67,25 +101,24 @@ $this->registerCssFile ( 'css/sale/order.css', [
 		
 		<?php }?>
 	</div>
+</section>
 
-	<div class="so_sheet_contact_person">
-	    <?= $form->field($contactPersonForm, 'name')->textInput(['maxlength' => 10,'placeholder'=>'请输入姓名'])?>
-	    
-	    <?= $form->field($contactPersonForm, 'phone_number')->textInput(['maxlength' => 11,'placeholder'=>'请输入手机号码'])?>
-	    
-	    <?=$form->field ( $contactPersonForm, 'province_id' )->dropDownList ( $provinces, [ 'prompt' => '--请选择收货省份--','style' => 'width:100%' ] )?>
-	                                              
-	    <?=$form->field ( $contactPersonForm, 'city_id' )->dropDownList ( $cities, [ 'prompt' => '--请选择收货城市--','style' => 'width:100%' ] )?>   
-	                                              
-	    <?=$form->field ( $contactPersonForm, 'district_id' )->dropDownList ( $districts, [ 'prompt' => '--请选择所属片区--','style' => 'width:100%' ] )?>                                                                                   
-	    
-		<?= $form->field($contactPersonForm, 'detail_address')->textInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
-	</div>
 
+
+	
 	<div class="form-group">
         <?php echo Html::submitButton('提交订单', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;'])?>
         <?php /*echo Html::button('下一步',['class' => 'btn btn-primary','id'=>'btn_submit_contact','style'=>'width:100%;margin-top:10px;height:60px;'])*/?>
     </div>
+    
+	<!-- 
+	<div class="goods_btn_bar" style="float: right;">
+		<div style="float: left;text-align: right;">订单金额￥<span>255</span></div>
+		
+		<input type="submit" class="buy_button1 buy" style="float: right;" value="提交订单">
+			
+	</div>
+	 -->
 
     <?php ActiveForm::end(); ?>
     

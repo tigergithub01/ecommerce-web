@@ -50,8 +50,7 @@ class VipOrderController extends BaseSaleController {
 	public function actionConfirm() {
 		// initiate product information
 		/* $product_id = isset ( $_REQUEST ['product_id'] ) ? $_REQUEST ['product_id'] : null;
-		$quantity = isset ( $_REQUEST ['quantity'] ) ? $_REQUEST ['quantity'] : 1; */
-		
+		 $quantity = isset ( $_REQUEST ['quantity'] ) ? $_REQUEST ['quantity'] : 1; */
 		
 		// province
 		$provinces = Province::find ()->orderBy ( [ 
@@ -66,82 +65,82 @@ class VipOrderController extends BaseSaleController {
 		// $districts = District::find ()->all ();
 		// $districts_map = ArrayHelper::map ( $districts, 'id', 'name' );
 		
-		
-		
-		
 		// create SoContactPersonForm information
 		$contactPersonForm = new SoContactPersonForm ();
 		
 		// TODO:buy one product,should be mutipy products
 		/* $price = $product->price;
-		$soDetail = new SoDetail ();
-		$soDetail->product_id = $product_id;
-		$soDetail->quantity = 1;
-		//TODO:should get discount price
-		$soDetail->price = $price;
-		$soDetail->amount = $quantity * $price; */
+		 $soDetail = new SoDetail ();
+		 $soDetail->product_id = $product_id;
+		 $soDetail->quantity = 1;
+		 //TODO:should get discount price
+		 $soDetail->price = $price;
+		 $soDetail->amount = $quantity * $price; */
 		
-		//vip information
+		// vip information
 		$vip = $_SESSION [SaleConstants::$session_vip];
-// 		$detailList = array();
+		// $detailList = array();
 		$detailList = isset ( $_REQUEST ['detailList'] ) ? $_REQUEST ['detailList'] : null;
-		if (empty ( $detailList )) {
-			throw new NotFoundHttpException ('请选择要购买的产品');
-			/* return $this->render ( 'confirm', [
-					'contactPersonForm' => $contactPersonForm,
-					'provinces' => $provinces_map,
-					'cities' => [ ],
-					'districts' => [ ],
-					'detailList' => $detailList
-			] ); */
-		}else{
-			foreach ( $detailList as $i=>$soDetail ) {
-				$quantity = $soDetail['quantity'];
-				$product = Product::findOne ( $soDetail['product_id'] );
-				$soDetail['product_name'] = $product->name;
-				$soDetail['price'] = $product->price;
-				$soDetail['amount'] = $quantity * $soDetail['price'];
-				
-				// get main photo
-				$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [
-						':product_id' => $product ['id']
-				] )->andWhere ( 'primary_flag=1' )->one ();
-// 				$product->primaryPhoto = $productPhoto;
-				
-				if($productPhoto!=null){
-					$soDetail['primaryPhoto_id']=$productPhoto->id;
+		
+		// empty throw error
+		if (! empty ( $detailList )) {
+			// pre process $detailList
+			foreach ( $detailList as $i => $soDetail ) {
+				$checked = $soDetail ['checked'];
+				if ($checked != 1) {
+					unset ( $detailList [$i] );
 				}
-				$detailList[$i]=$soDetail;
-// 				$soDetail->setProduct($product);
 			}
 		}
 		
-		/* $product = Product::findOne ( $product_id );
-		if (empty ( $product )) {
-			throw new NotFoundHttpException ();
-		} */
+		// empty throw error
+		if (empty ( $detailList )) {
+			throw new NotFoundHttpException ( '请选择要购买的产品' );
+		}
 		
-		//add product to cart
+		foreach ( $detailList as $i => $soDetail ) {
+			$quantity = $soDetail ['quantity'];
+			$product = Product::findOne ( $soDetail ['product_id'] );
+			$soDetail ['product_name'] = $product->name;
+			$soDetail ['price'] = $product->price;
+			$soDetail ['amount'] = $quantity * $soDetail ['price'];
+			
+			// get main photo
+			$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [ 
+					':product_id' => $product ['id'] 
+			] )->andWhere ( 'primary_flag=1' )->one ();
+			// $product->primaryPhoto = $productPhoto;
+			
+			if ($productPhoto != null) {
+				$soDetail ['primaryPhoto_id'] = $productPhoto->id;
+			}
+			$detailList [$i] = $soDetail;
+			// $soDetail->setProduct($product);
+		}
+		
+		/* $product = Product::findOne ( $product_id );
+		 if (empty ( $product )) {
+		 throw new NotFoundHttpException ();
+		 } */
+		
+		// add product to cart
 		/* $shoppingCart = new ShoppingCart();
-		$shoppingCart->vip_id = $vip ['id'];
-		$shoppingCart->product_id=$product_id;
-		$shoppingCart->quantity = $quantity;
-		//TODO:should get discount price
-		$shoppingCart->price = $product->price;
-		$shoppingCart->amount = $quantity * $price;
-		$shoppingCart->create_date = date ( SaleConstants::$date_format, time () );
-		$shoppingCart->save(); */
+		 $shoppingCart->vip_id = $vip ['id'];
+		 $shoppingCart->product_id=$product_id;
+		 $shoppingCart->quantity = $quantity;
+		 //TODO:should get discount price
+		 $shoppingCart->price = $product->price;
+		 $shoppingCart->amount = $quantity * $price;
+		 $shoppingCart->create_date = date ( SaleConstants::$date_format, time () );
+		 $shoppingCart->save(); */
 		
 		if ($contactPersonForm->load ( Yii::$app->request->post () ) && $contactPersonForm->validate ()) {
 			// order must have product
-			
 			
 			// save order in transation
 			$connection = Yii::$app->db;
 			$trans = $connection->beginTransaction ();
 			try {
-				
-							
 				
 				// pre process order detail list
 				$order_amt = 0;
@@ -177,7 +176,7 @@ class VipOrderController extends BaseSaleController {
 							'provinces' => $provinces_map,
 							'cities' => [ ],
 							'districts' => [ ],
-							'detailList' => $detailList
+							'detailList' => $detailList 
 					] );
 				}
 				
@@ -211,12 +210,11 @@ class VipOrderController extends BaseSaleController {
 							'provinces' => $provinces_map,
 							'cities' => [ ],
 							'districts' => [ ],
-							'detailList' => $detailList
+							'detailList' => $detailList 
 					] );
 				}
 				
-				//TODO:save invoice detail information
-				
+				// TODO:save invoice detail information
 				
 				// commit
 				$trans->commit ();
@@ -236,7 +234,7 @@ class VipOrderController extends BaseSaleController {
 					'provinces' => $provinces_map,
 					'cities' => [ ],
 					'districts' => [ ],
-					'detailList' => $detailList
+					'detailList' => $detailList 
 			] );
 		}
 	}
@@ -312,24 +310,24 @@ class VipOrderController extends BaseSaleController {
 		 }
 		 $soSheet->soContactPerson = $soContactPerson; */
 		
-// 		echo \Yii::$app->request->hostInfo;
-// 		echo $_SERVER['SERVER_NAME'];
-// 		echo $_SERVER['SERVER_PORT'];
-// 		echo $_SERVER['HTTP_HOST'];
-// 		echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-// 		echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		// echo \Yii::$app->request->hostInfo;
+		// echo $_SERVER['SERVER_NAME'];
+		// echo $_SERVER['SERVER_PORT'];
+		// echo $_SERVER['HTTP_HOST'];
+		// echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		// echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		
 		// confirm pay type
 		$pay_type_id = isset ( $_POST ['pay_type_id'] ) ? $_POST ['pay_type_id'] : null;
 		if (empty ( $pay_type_id )) {
 			
-			$soDetailList  = $soSheet->soDetailList;
-			$soDetail = $soDetailList[0];
+			$soDetailList = $soSheet->soDetailList;
+			$soDetail = $soDetailList [0];
 			$product = $soDetail->product;
 			
 			return $this->render ( 'pay', [ 
 					'model' => $soSheet,
-					'product'=>$product
+					'product' => $product 
 			] );
 		} else {
 			// post pay information to third paty system.
@@ -339,18 +337,15 @@ class VipOrderController extends BaseSaleController {
 			] );
 			
 			/* return $this->render ( 'sale/alipay-direct/index', [
-					'WIDout_trade_no'=>$soSheet->code,
-			] ); */
+			 'WIDout_trade_no'=>$soSheet->code,
+			 ] ); */
 			
-// 			Yii::$app->response->redirect($url)
+			// Yii::$app->response->redirect($url)
 			/* return $this->redirect( '/sale/alipay-direct/index', [
-					'WIDout_trade_no'=>$soSheet->code,
-			] ); */
-			
-			
+			 'WIDout_trade_no'=>$soSheet->code,
+			 ] ); */
 		}
 	}
 	function actionSubmit() {
-		
 	}
 }

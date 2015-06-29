@@ -4,7 +4,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use app\modules\sale\models\SaleConstants;
 
-
 $this->title = "产品详情";
 $this->registerCssFile ( 'css/sale/header.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
@@ -24,58 +23,61 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 ] );
 ?>
 
-<form action="<?=Url::toRoute(['/sale/vip-order/confirm'])?>" id="product_detail_form" method="post">
-<input type="hidden" name="_csrf" value="<?= @Yii::$app->request->csrfToken ?>" /> 
- 
-<div class="vip-center-form">
+<form action="<?=Url::toRoute(['/sale/vip-order/confirm'])?>"
+	id="product_detail_form" method="post">
+	<input type="hidden" name="_csrf"
+		value="<?= @Yii::$app->request->csrfToken ?>" />
 
-	<div id="photo_slideBox" class="slideBox">
-		<ul class="items">
+	<div class="vip-center-form">
+
+		<div id="photo_slideBox" class="slideBox">
+			<ul class="items">
   <?php foreach ($photoList as $photo){?>
   		<li><a href="javascript:void(0)" title=""><img style="width: 100%"
-					height="300px"
-					src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>"></a></li>
+						height="300px"
+						src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>"></a></li>
   <?php } ?>
   </ul>
-	</div>
+		</div>
 
 
 
 
-	<div class="goods_info_bar">
-		<div class="title">
-			<span class="btl"><?php echo $model['name']?></span> <span
-				class="scr"> <!-- 
+		<div class="goods_info_bar">
+			<div class="title">
+				<span class="btl"><?php echo $model['name']?></span> <span
+					class="scr"> <!-- 
 				<?php if(!isset($_SESSION[SaleConstants::$session_vip])){?>
 				<img src="images/sale/collect.png" class="fav_goods"
 				id="btn_collect">
 				<?php }?>
 				 -->
-		
-		</div>
+			
+			</div>
 
-		<div class="sale_info">
-			<span class="price">售价：<span class="value">￥<?php echo round($model['price'],2)?></span></span>
-		</div>
-		<div class="number_bar">
-			<div class="calc" style="padding: 0 16px 8px">
-				<span class="buynber">数量：</span> <label class="tag"></label> <span
-					class="counter"> 
-					<a class="reduce" id="link_reduce_quantity" href="javascript:void(0)"><img
-						src="images/sale/icon_calc_reduce.png"></a> 
-					<input class="num" value="1" name="detailList[0][quantity]" id="buy_quantity" type="text"> 
-					<a class="add" id="link_add_quantity"	href="javascript:void(0)"><img src="images/sale/icon_calc_add.png"></a>
+			<div class="sale_info">
+				<span class="price">售价：<span class="value">￥<?php echo round($model['price'],2)?></span></span>
+			</div>
+			<div class="number_bar">
+				<div class="calc" style="padding: 0 16px 8px">
+					<span class="buynber">数量：</span> <span class="counter"> <a
+						class="reduce" id="link_reduce_quantity" href="javascript:void(0)"><img
+							src="images/sale/icon_calc_reduce.png"></a> <input class="num"
+						value="1" name="detailList[0][quantity]" id="buy_quantity"
+						type="text"> <a class="add" id="link_add_quantity"
+						href="javascript:void(0)"><img src="images/sale/icon_calc_add.png"></a>
+					</span>
 					<!-- 
 							</span> <span class="stock">(库存<span class="s_stock">200</span>件)
 							</span> <input value="12891" name="gid" id="gid" type="hidden"> <input
 								value="56765" name="usid" id="usid" type="hidden">
 							 -->
-			
+
+				</div>
 			</div>
+			<hr class="gray_solid">
 		</div>
-		<hr class="gray_solid">
-	</div>
-	<!-- 
+		<!-- 
 	<div class="standard_bar">
 
 		<div class="panel">
@@ -132,31 +134,31 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 
 
 
-	<div class="goods_detail_bar">
-		<div class="tab">
-			<!----<a class="item_full left" data-target="detail_block" href="javascript:void(0)">图文详情</a>----->
+		<div class="goods_detail_bar">
+			<div class="tab">
+				<!----<a class="item_full left" data-target="detail_block" href="javascript:void(0)">图文详情</a>----->
 
-			<a class="item rborder active" data-target="detail_block"
-				href="javascript:void(0)">图文详情</a>
-			<!-- 
+				<a class="item rborder active" data-target="detail_block"
+					href="javascript:void(0)">图文详情</a>
+				<!-- 
 			<a class="item"
 				data-target="comment_block" href="javascript:void(0)">用户评价<span
 				class="danger">（0）</span></a>
 			 -->
 
-		</div>
-		<div class="detail_block">
-			<div class="detail_content"><?php echo $model['description']?></div>
-			<div class="img_block" id="aa2">
+			</div>
+			<div class="detail_block">
+				<div class="detail_content"><?php echo $model['description']?></div>
+				<div class="img_block" id="aa2">
 				 <?php foreach ($photoList as $photo){?>
 				  		<img
-					src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>">
+						src="<?php echo Url::toRoute(['/sale/product-photo/view','id'=>$photo['id']])?>">
 				  <?php } ?>
 			</div>
-		</div>
+			</div>
 
-		<!---------------------评价---------------------------->
-		<!-- 
+			<!---------------------评价---------------------------->
+			<!-- 
 		<div class="comment_block">
 			<div class="status" id="Menuaa">
 				<a class="btn active" href="javascript:void(0)"
@@ -178,13 +180,13 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 		 -->
 
 
-	</div>
-	<div class="open_bar">
-		<!-- 
+		</div>
+		<div class="open_bar">
+			<!-- 
 		<div class="content">平台自带强大的供应商系统，可以让你0库存、免发货，还可以发展连锁分店，收益多多，赶快来开免费微店吧！</div>
 		 -->
-		<!----------------------------开店star----------------------------------->
-		<!----<div class="bottom-nav">
+			<!----------------------------开店star----------------------------------->
+			<!----<div class="bottom-nav">
                     <ul>
                         <li><a href="/wap.php/web/index/usid/56765.html">店铺首页</a></li>
                         <li><a href="/wap.php/user/index/usid/56765.html">个人中心</a></li>
@@ -192,33 +194,34 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
                     </ul>
        </div>---->
 
-		<!-- 
+			<!-- 
       <div class="goods_btn_mfkysd"><a href="http://ysk.xmgapay.com/wap.php/reg/index/invite_mobile/13724346621" target="_blank">免费开云商微店</a></div>
        -->
-		<!----------------------------开店end----------------------------------->
-	</div>
-	<div id="img_view_bar" class="img_view_bar">
-		<div class="img_view_bar_bg"></div>
-		<div class="img_view_bar_container"></div>
-		<!-- 
+			<!----------------------------开店end----------------------------------->
+		</div>
+		<div id="img_view_bar" class="img_view_bar">
+			<div class="img_view_bar_bg"></div>
+			<div class="img_view_bar_container"></div>
+			<!-- 
 		<div class="img_view_bar_btn_left"><a href="javascript:void(0)"><img src="/static/wap/images/btn_left.png" /></a></div>
 		<div class="img_view_bar_btn_right"><a href="javascript:void(0)"><img src="/static/wap/images/btn_right.png" /></a></div>
 		 -->
-	</div>
-	<div class="goods_btn_placeholder_bar"></div>
-	<div class="goods_btn_bar">
-		<!-- 非供应商的商品 -->
-		<a class="man_button"
-			href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
-			src="images/sale/icon_man.png"></a> <a class="cart_button"
-			href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
-			src="images/sale/icon_cart.png"></a> 
-			<input type="hidden" value="<?=$model['id']?>" name="detailList[0][product_id]">
-			<a class="buy_button1 buy" id="btn_buy"
-			href="javascript:void(0)">立即购买</a>
-	</div>
+		</div>
+		<div class="goods_btn_placeholder_bar"></div>
+		<div class="goods_btn_bar">
+			<!-- 非供应商的商品 -->
+			<a class="man_button"
+				href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
+				src="images/sale/icon_man.png"></a> <a class="cart_button"
+				href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
+				src="images/sale/icon_cart.png"></a> <input type="hidden"
+				value="<?=$model['id']?>" name="detailList[0][product_id]">
+				<input type="hidden"
+				value="1" name="detailList[0][checked]"> <a
+				class="buy_button1 buy" id="btn_buy" href="javascript:void(0)">立即购买</a>
+		</div>
 
-</div>
+	</div>
 </form>
 
 <style type="text/css">

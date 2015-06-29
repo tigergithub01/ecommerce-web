@@ -56,7 +56,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 			<a class="default primary"
 				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
 			<a class="default primary"
-				href="<?=Url::toRoute(['/sale/vip-order/confirm','orderId'=>$order['id']])?>">付款</a>
+				href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$order['id']])?>">付款</a>
 		</div>
 		<?php }?>
 		<?php }?>
