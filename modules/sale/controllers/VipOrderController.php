@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use app\modules\sale\models\SoContactPersonForm;
 use yii\web\NotFoundHttpException;
+use yii\web\HttpException;
 use yii\filters\VerbFilter;
 use app\models\basic\Province;
 use app\models\basic\City;
@@ -27,6 +28,7 @@ use app\modules\api\service\VipOrderService;
 use app\modules\api\service\app\modules\api\service;
 use app\models\order\ShoppingCart;
 use app\models\product\ProductPhoto;
+use app\models\vip\VipAddress;
 
 class VipOrderController extends BaseSaleController {
 	public function beforeAction($action) {
@@ -347,5 +349,120 @@ class VipOrderController extends BaseSaleController {
 		}
 	}
 	function actionSubmit() {
+		$draft_order_id = isset ( $_POST ['draft_order_id'] ) ? $_POST ['draft_order_id'] : null;
+		// $order_draft_id = order_id
+		$vipOrderService = new VipOrderService ();
+		$soSheetDraft = $vipOrderService->getOrderDraft ( $draft_order_id );
+		
+		if (empty ( $soSheetDraft )) {
+			throw new NotFoundHttpException ( '非法订单' );
+		}
+		
+		// $detailList = array();
+		$detailList = $soSheetDraft->soDetailList;
+		
+		// empty throw error
+		// order must have product
+		if (empty ( $detailList )) {
+			throw new NotFoundHttpException ( '请选择要购买的产品' );
+		}
+		
+		//vipAddress
+		$vipAddress = VipAddress::findOne ( $soSheetDraft->address_id );
+		if (empty ( $vipAddress )) {
+			throw new NotFoundHttpException ( '收货地址不存在' );
+		}
+		
+		// vip information
+		$vip = $_SESSION [SaleConstants::$session_vip];
+		
+		// save order in transation
+		$connection = Yii::$app->db;
+		$trans = $connection->beginTransaction ();
+		try {
+			// pre process order detail list
+			$order_amt = 0;
+			$order_quantity = 0;
+			foreach ( $detailList as $value ) {
+				$order_quantity = ($order_quantity + $value ['quantity']);
+				$order_amt = ($order_amt + $value ['amount']);
+			}
+			
+			// save sale order
+			$soSheet = new SoSheet ();
+			// 销售订单
+			$soSheet->sheet_type_id = 1;
+			$soSheet->code = SheetCodeGenUtil::getCode ( $soSheet->sheet_type_id );
+			
+			$soSheet->vip_id = $vip ['id'];
+			$soSheet->order_amt = $order_amt;
+			$soSheet->order_quantity = $order_quantity;
+			// 待支付
+			$soSheet->status = 3001;
+			// not settled
+			$soSheet->settle_flag = 0;
+			$soSheet->order_date = date ( SaleConstants::$date_format, time () );
+			$orderId = null;
+			if ($soSheet->save ()) {
+				// $orderId = $soSheet->primaryKey;
+				$orderId = $soSheet->attributes ['id'];
+			} else {
+				Yii::trace ( '$soSheet->save() errors' );
+				Yii::trace ( $soSheet->getErrors () );
+				$trans->rollBack();
+				throw new Exception ( '订单提交不成功' );
+			}
+			
+			// save orderDetail
+			foreach ( $detailList as $value ) {
+				$soDetail = new SoDetail ();
+				$soDetail->product_id = $value ['product_id'];
+				$soDetail->quantity = $value ['quantity'];
+				$soDetail->price = $value ['price'];
+				$soDetail->amount = $value ['amount'];
+				$soDetail->order_id = $orderId;
+				// TODO:when save failed ,should show errors.
+				$soDetail->save ();
+			}
+			
+			// save order delivery information
+			
+			$soContactPerson = new SoContactPerson ();
+			$soContactPerson->order_id = $orderId;
+			$soContactPerson->name = $vipAddress->name;
+			$soContactPerson->phone_number = $vipAddress->phone_number;
+			$soContactPerson->province_id = $vipAddress->province_id;
+			$soContactPerson->city_id = $vipAddress->city_id;
+			$soContactPerson->district_id = $vipAddress->district_id;
+			$soContactPerson->detail_address = $vipAddress->detail_address;
+			if (! $soContactPerson->save ()) {
+				Yii::trace ( '$soContactPerson->save() errors' );
+				Yii::trace ( $soContactPerson->getErrors () );
+				$trans->rollBack ();
+				/* return $this->render ( 'confirm', [ 
+						'contactPersonForm' => $contactPersonForm,
+						'provinces' => $provinces_map,
+						'cities' => [ ],
+						'districts' => [ ],
+						'detailList' => $detailList 
+				] ); */
+				throw new HttpException ( '订单提交不成功' );
+				
+			}
+			
+			// TODO:save invoice detail information
+			
+			// commit
+			$trans->commit ();
+			
+			// TODO:should be render,not be redirect.
+			return $this->redirect ( [ 
+					'/sale/vip-order/pay',
+					'orderId' => $orderId 
+			] );
+		} catch ( Exception $e ) {
+			$trans->rollBack ();
+			throw $e;
+		}
 	}
 }

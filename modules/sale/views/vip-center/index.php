@@ -78,6 +78,8 @@ header {
 						class="icon-order"></i>全部订单</a></li>
 				<li><a href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><i
 						class="icon-order"></i>购物车</a></li>
+				<li><a href="<?=Url::toRoute(['/sale/vip-address/index'])?>"><i
+						class="icon-order"></i>收货地址</a></li>		
 						<!-- 
 				<li><a href="<?=Url::toRoute(['/sale/vip-collect/index'])?>"><i
 						class="icon-fav"></i>我的收藏</a></li>

@@ -19,7 +19,7 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 
 ?>
 
-<form action="<?=Url::toRoute(['/sale/vip-order/confirm'])?>"
+<form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>"
 	id="shopping_cart_form" method="post">
 	<input type="hidden" name="_csrf"
 		value="<?= @Yii::$app->request->csrfToken ?>" />

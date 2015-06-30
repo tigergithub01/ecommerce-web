@@ -15,6 +15,8 @@ use app\models\basic\District;
 use app\modules\api\models\OrderNumForm;
 use app\models\system\Parameter;
 use app\modules\sale\models\SaleConstants;
+use app\models\order\SoSheetDraft;
+use app\models\order\SoDetailDraft;
 
 class VipOrderService {
 	public function getOrder($orderId) {
@@ -37,13 +39,13 @@ class VipOrderService {
 				] )->andWhere ( 'primary_flag=1' )->one ();
 				$product->primaryPhoto = $productPhoto;
 				
-				$soDetail->setProduct($product);
+				$soDetail->setProduct ( $product );
 			}
 		}
 		$soSheet->soDetailList = $soDetailList;
 		
 		// get vip information
-		//TODO:  where is vip field
+		// TODO: where is vip field
 		$vip = Vip::findOne ( $soSheet ['vip_id'] );
 		$soSheet->vip = $vip;
 		
@@ -65,6 +67,38 @@ class VipOrderService {
 			$soContactPerson->district = $district;
 		}
 		$soSheet->soContactPerson = $soContactPerson;
+		
+		return $soSheet;
+	}
+	public function getOrderDraft($orderId) {
+		$soSheet = SoSheetDraft::findOne ( $orderId );
+		if (empty ( $soSheet )) {
+			throw new NotFoundHttpException ();
+		}
+		
+		// get sale order detail list
+		$soDetailList = SoDetailDraft::find ()->where ( 'order_id=:order_id', [ 
+				':order_id' => $orderId 
+		] )->all ();
+		if (! empty ( $soDetailList )) {
+			foreach ( $soDetailList as $soDetail ) {
+				$product = Product::findOne ( $soDetail->product_id );
+				
+				// get main photo
+				$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [ 
+						':product_id' => $product ['id'] 
+				] )->andWhere ( 'primary_flag=1' )->one ();
+				$product->primaryPhoto = $productPhoto;
+				
+				$soDetail->setProduct ( $product );
+			}
+		}
+		$soSheet->soDetailList = $soDetailList;
+		
+		// get vip information
+		// TODO: where is vip field
+		$vip = Vip::findOne ( $soSheet ['vip_id'] );
+		$soSheet->vip = $vip;
 		
 		return $soSheet;
 	}
@@ -108,8 +142,8 @@ class VipOrderService {
 				] )->all ();
 				if (! empty ( $soDetailList )) {
 					foreach ( $soDetailList as $soDetail ) {
-// 						$product = Product::findOne ( $soDetail->product_id );
-// 						$soDetail->product = $product;
+						// $product = Product::findOne ( $soDetail->product_id );
+						// $soDetail->product = $product;
 					}
 				}
 				$soSheet->soDetailList = $soDetailList;
@@ -137,18 +171,21 @@ class VipOrderService {
 	
 	/**
 	 * execute business logic after alipay successfully
-	 * @param unknown $order_no
-	 * @param unknown $trade_no
-	 * @param unknown $trade_status
+	 * 
+	 * @param unknown $order_no        	
+	 * @param unknown $trade_no        	
+	 * @param unknown $trade_status        	
 	 */
-	function executeOrderPayAlipay($order_no,$trade_no,$trade_status){
-		$soSheet = SoSheet::find()->where('code=:code',[':code'=>$order_no])->one();
-		if($soSheet==null){
+	function executeOrderPayAlipay($order_no, $trade_no, $trade_status) {
+		$soSheet = SoSheet::find ()->where ( 'code=:code', [ 
+				':code' => $order_no 
+		] )->one ();
+		if ($soSheet == null) {
 			throw new NotFoundHttpException ();
 		}
 		$trade_status = $soSheet->trade_status;
-		if($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
-			//record already updated.
+		if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+			// record already updated.
 			return;
 		}
 		$pay_date = date ( SaleConstants::$date_format, time () );
@@ -158,55 +195,52 @@ class VipOrderService {
 				'pay_date' => $pay_date,
 				'status' => 3002 
 		], 'id=:id', [ 
-				":id" => $soSheet->id
-		]);
+				":id" => $soSheet->id 
+		] );
 	}
 	
 	/**
 	 * apply pay in Alipay
-	 * @param unknown $order_no
-	 * @param unknown $pay_amt
+	 * 
+	 * @param unknown $order_no        	
+	 * @param unknown $pay_amt        	
 	 */
-	function executeOrderPayApplyAlipay($order_no,$pay_amt){
-		SoSheet::updateAll ( [
+	function executeOrderPayApplyAlipay($order_no, $pay_amt) {
+		SoSheet::updateAll ( [ 
 				'pay_amt' => $pay_amt,
-				'pay_type_id' => 1
-		], 'code=:code', [
-				":code" => $order_no
-		]);
+				'pay_type_id' => 1 
+		], 'code=:code', [ 
+				":code" => $order_no 
+		] );
 	}
-	
-	
-	function executeOrderPayApplyWx($order_no,$pay_amt){
-		SoSheet::updateAll ( [
+	function executeOrderPayApplyWx($order_no, $pay_amt) {
+		SoSheet::updateAll ( [ 
 				'pay_amt' => $pay_amt,
-				'pay_type_id' => 2
-		], 'code=:code', [
-				":code" => $order_no
-		]);
+				'pay_type_id' => 2 
+		], 'code=:code', [ 
+				":code" => $order_no 
+		] );
 	}
-	
-	function executeOrderPayWx($order_no,$trade_no,$trade_status){
-		$soSheet = SoSheet::find()->where('code=:code',[':code'=>$order_no])->one();
-		if($soSheet==null){
+	function executeOrderPayWx($order_no, $trade_no, $trade_status) {
+		$soSheet = SoSheet::find ()->where ( 'code=:code', [ 
+				':code' => $order_no 
+		] )->one ();
+		if ($soSheet == null) {
 			throw new NotFoundHttpException ();
 		}
 		$trade_status = $soSheet->trade_status;
-		if($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
-			//record already updated.
+		if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+			// record already updated.
 			return;
 		}
 		$pay_date = date ( SaleConstants::$date_format, time () );
-		SoSheet::updateAll ( [
+		SoSheet::updateAll ( [ 
 				'trade_no' => $trade_no,
 				'trade_status' => $trade_status,
 				'pay_date' => $pay_date,
-				'status' => 3002
-		], 'id=:id', [
-				":id" => $soSheet->id
-		]);
+				'status' => 3002 
+		], 'id=:id', [ 
+				":id" => $soSheet->id 
+		] );
 	}
-	
-	
-	
 }

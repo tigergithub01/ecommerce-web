@@ -44,7 +44,7 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 	                                              
 	    <?=$form->field ( $contactPersonForm, 'district_id' )->dropDownList ( $districts, [ 'prompt' => '--请选择所属片区--','style' => 'width:100%' ] )?>                                                                                   
 	    
-		<?= $form->field($contactPersonForm, 'detail_address')->textInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
+		<?=$form->field($contactPersonForm, 'detail_address')->textInput(['maxlength' => 200,'placeholder'=>'请输入详细地址'])?>
 	</div>
 	<div>
 		<input type="checkbox" name="contact_type" checked="checked">添加到收货地址 <input
