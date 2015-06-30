@@ -12,6 +12,7 @@ use Yii;
  * @property string $name
  * @property integer $type_id
  * @property string $price
+ * @property string $cost_price
  * @property string $description
  * @property integer $status
  * @property string $stock_quantity
@@ -52,7 +53,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['code', 'name', 'type_id', 'status', 'can_return_flag'], 'required'],
             [['type_id', 'status', 'create_user_id', 'update_user_id', 'can_return_flag', 'return_days', 'regular_type_id', 'special_deduct_flag'], 'integer'],
-            [['price', 'stock_quantity', 'safety_quantity', 'deduct_price', 'deduct_level1', 'deduct_level2', 'deduct_level3', 'deduct_level4'], 'number'],
+            [['price', 'cost_price', 'stock_quantity', 'safety_quantity', 'deduct_price', 'deduct_level1', 'deduct_level2', 'deduct_level3', 'deduct_level4'], 'number'],
             [['description', 'return_desc'], 'string'],
             [['create_date', 'update_date'], 'safe'],
             [['code'], 'string', 'max' => 30],
@@ -71,6 +72,7 @@ class Product extends \yii\db\ActiveRecord
             'name' => '产品名称',
             'type_id' => '产品所属分类',
             'price' => '价格',
+        	'cost_price' => '成本价',
             'description' => '产品描述',
             'status' => '产品状态',
             'stock_quantity' => '库存数量',
