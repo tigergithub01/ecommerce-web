@@ -16,6 +16,7 @@ use Yii;
  * @property integer $district_id
  * @property string $detail_address
  * @property integer $default_flag
+ * @property integer $status
  */
 class VipAddress extends \yii\db\ActiveRecord
 {
@@ -33,11 +34,12 @@ class VipAddress extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vip_id', 'name', 'phone_number', 'province_id', 'city_id', 'district_id', 'default_flag'], 'required'],
+            [['vip_id', 'name', 'phone_number', 'province_id', 'city_id', 'district_id', 'default_flag','status'], 'required'],
             [['vip_id', 'province_id', 'city_id', 'district_id', 'default_flag'], 'integer'],
             [['name'], 'string', 'max' => 30],
             [['phone_number'], 'string', 'max' => 20],
-            [['detail_address'], 'string', 'max' => 150]
+            [['detail_address'], 'string', 'max' => 150],
+        	[['phone_number'],'match','pattern'=>'/^1[0-9]{10}$/','message'=>'{attribute}必须为1开头的11位纯数字'],
         ];
     }
 
@@ -56,6 +58,7 @@ class VipAddress extends \yii\db\ActiveRecord
             'district_id' => '所属片区',
             'detail_address' => '收货详细地址',
             'default_flag' => '是否设置为默认收货地址(1：是；0：否)',
+        	'status' => '收货地址状态（1：有效;0:无效)',
         ];
     }
     
