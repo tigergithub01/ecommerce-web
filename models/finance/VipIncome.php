@@ -12,6 +12,7 @@ use Yii;
  * @property string $amount
  * @property string $can_settle_amt
  * @property string $settled_amt
+ * @property string $can_withdraw_amt
  */
 class VipIncome extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class VipIncome extends \yii\db\ActiveRecord
         return [
             [['vip_id'], 'required'],
             [['vip_id'], 'integer'],
-            [['amount', 'can_settle_amt', 'settled_amt'], 'number']
+            [['amount', 'can_settle_amt', 'settled_amt', 'can_withdraw_amt'], 'number']
         ];
     }
 
@@ -46,6 +47,7 @@ class VipIncome extends \yii\db\ActiveRecord
             'amount' => '累计收入金额',
             'can_settle_amt' => '可结算金额',
             'settled_amt' => '已结算金额',
+        	'can_withdraw_amt' => '可提现金额',
         ];
     }
 }
