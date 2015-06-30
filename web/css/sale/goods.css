@@ -805,3 +805,17 @@ display: table-cell;
 div.flicking_con{  height:21px;position: absolute; float:left; left:50%; top:180px; z-index:2; text-align:center;  }
 div.flicking_con a{position: relative; float:left; right:50%;width:21px;height:21px;margin:0;padding:0;background:url('../images/btn_main_img.png') 0 0 no-repeat;display:block;text-indent:-1000px}
 div.flicking_con a.on{background-position:0 -21px}
+
+.gray_solid{
+	
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	border-bottom: 1px solid #e1e1e1;
+	height: 0px;
+}
+
+.page_go{
+	background: rgba(0, 0, 0, 0) url(/images/sale/page_go_pressed.png) no-repeat scroll 0 0 / 0.5625em 1em;
+}
+
