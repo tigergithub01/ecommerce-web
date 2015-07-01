@@ -110,7 +110,7 @@
 	height: auto;
 }
 .number_bar .calc .counter .add{
-	padding: 0px 2px 0px 2px;
+	/*padding: 0px 2px 0px 2px;*/
 }
 .number_bar .calc .counter .add img{
 	width: 1rem;

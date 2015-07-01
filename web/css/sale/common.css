@@ -142,6 +142,7 @@ a{ text-decoration:none;}
 }
 
 .box {
+	padding:0;
 	width: 100%;
 	display: -webkit-box;
 	display: -moz-box;
