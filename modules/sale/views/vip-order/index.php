@@ -4,12 +4,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = "订单列表";
-$this->registerCssFile ( 'css/sale/common.css', [ 
-		'position' => \yii\web\View::POS_HEAD 
-] );
-$this->registerCssFile ( 'css/sale/orderlb.css', [ 
-		'position' => \yii\web\View::POS_HEAD 
-] );
 $this->registerCssFile ( 'css/sale/header.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
@@ -44,24 +38,60 @@ $this->registerCssFile ( 'css/sale/order.css', [
 	<section id="0" style="display: block;">
 		<?php foreach ($orderList as $order) {?>
 		<div class="order_item_bar">
+			<div class="img"
+						style="width: 80px; height: 80px; margin-right: 5px;float: left;">
+						<a
+							href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">
+							<img style="width: 70px; height: 70px;"
+							src="<?php
+			if (isset ( $order->soDetailList[0]->product->primaryPhoto )) {
+				echo Url::toRoute ( [ 
+						'/sale/product-photo/view',
+						'id' => $order->soDetailList[0]->product ['primaryPhoto'] ['id'] 
+				] );
+			}
+			?>">
+						</a>
+					</div>
+					<div>
+						<div>
+							￥<?= round($order['order_amt'],2)?>
+						</div>
+						<div>
+							<?php if (isset ( $order->soDetailList[0]->product )) {
+								echo $order->soDetailList[0]->product['name'];
+}?>
+						</div>
+						<div>
+							<?= $order['order_date']?>
+						</div>
+					</div>
+					
+		
+		<div class="detail_btn_bar" style="text-align: center;">
+			<a class="default primary"
+				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
+				<?php if ($order['status']==3001){?>
+					<a class="default primary" style="background-color: #c00000"
+						href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$order['id']])?>">付款</a>
+				<?php }?>
+				
+		</div>
+		
+			
+			<!-- 
 			订单编号：<?php echo $order['code']?>&nbsp; </br>
 			订单金额：<?php echo $order['order_amt']?>&nbsp; </br>
 			订购数量：<?php echo $order['order_quantity']?></br>
 			订单状态: <?php echo $order['order_status']['pa_val']?></br>
 			订单提交日期：<?php echo $order['order_date']?>
+			 -->		
 		</div>
-		<hr class="gray_solid" style="margin-left: 12px;">
-		<?php if ($order['status']==3001){?>
-		<div class="detail_btn_bar">
-			<a class="default primary"
-				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
-			<a class="default primary"
-				href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$order['id']])?>">付款</a>
-		</div>
-		<?php }?>
+		
 		<?php }?>
 		
 	</section>
+	<!-- 
 	<footer data-role="footer">
 		<div class="home-menu" id="container">
 			<div class="widget_wrap">
@@ -74,7 +104,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 		</div>
 
 	</footer>
-
+	 -->
 </div>
 
 <style type="text/css">

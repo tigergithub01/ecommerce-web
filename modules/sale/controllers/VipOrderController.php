@@ -367,7 +367,7 @@ class VipOrderController extends BaseSaleController {
 			throw new NotFoundHttpException ( '请选择要购买的产品' );
 		}
 		
-		//vipAddress
+		// vipAddress
 		$vipAddress = VipAddress::findOne ( $soSheetDraft->address_id );
 		if (empty ( $vipAddress )) {
 			throw new NotFoundHttpException ( '收货地址不存在' );
@@ -409,7 +409,7 @@ class VipOrderController extends BaseSaleController {
 			} else {
 				Yii::trace ( '$soSheet->save() errors' );
 				Yii::trace ( $soSheet->getErrors () );
-				$trans->rollBack();
+				$trans->rollBack ();
 				throw new Exception ( '订单提交不成功' );
 			}
 			
@@ -426,7 +426,6 @@ class VipOrderController extends BaseSaleController {
 			}
 			
 			// save order delivery information
-			
 			$soContactPerson = new SoContactPerson ();
 			$soContactPerson->order_id = $orderId;
 			$soContactPerson->name = $vipAddress->name;
@@ -440,16 +439,24 @@ class VipOrderController extends BaseSaleController {
 				Yii::trace ( $soContactPerson->getErrors () );
 				$trans->rollBack ();
 				/* return $this->render ( 'confirm', [ 
-						'contactPersonForm' => $contactPersonForm,
-						'provinces' => $provinces_map,
-						'cities' => [ ],
-						'districts' => [ ],
-						'detailList' => $detailList 
-				] ); */
+				 'contactPersonForm' => $contactPersonForm,
+				 'provinces' => $provinces_map,
+				 'cities' => [ ],
+				 'districts' => [ ],
+				 'detailList' => $detailList 
+				 ] ); */
 				throw new HttpException ( '订单提交不成功' );
-				
 			}
 			
+			// remove shopping cart
+			foreach ( $detailList as $value ) {
+				ShoppingCart::deleteAll ( 
+						'vip_id=:vip_id and	product_id=:product_id'
+				, [ 
+						':vip_id' => $vip ['id'],
+						':product_id' => $value ['product_id'] 
+				] );
+			}
 			// TODO:save invoice detail information
 			
 			// commit

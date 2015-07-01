@@ -10,6 +10,9 @@ $this->registerCssFile ( 'css/sale/header.css', [
 $this->registerCssFile ( 'css/sale/payment.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
+$this->registerJsFile('js/sale/jquery.blockUI.js', [
+		'position' => \yii\web\View::POS_END
+]);
 
 ?>
 
@@ -93,6 +96,7 @@ $(function(){
 				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/wxpay/jsapi')?>');
 			}
 		}
+		//$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
 	});
 	
 });

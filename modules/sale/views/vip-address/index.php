@@ -13,9 +13,9 @@ $this->params ['breadcrumbs'] [] = $this->title;
 $this->registerCssFile ( 'css/sale/bootstrap.css' );
 ?>
 <div class="vip-address-index" style="padding: 2px;">
-	<a href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a>-><a href="<?= Url::toRoute(['/sale/vip-address/index'])?>">收货地址列表</a>
+	<a style="margin-top: 5px;"  href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a>-><a href="<?= Url::toRoute(['/sale/vip-address/index'])?>">收货地址列表</a>
 	<hr>
-	<p>
+	<p style="text-align: center;">
         <?= Html::a('新建收货地址', ['create','orderId' => $orderId], ['class' => 'btn btn-success']) ?>
     </p>
     <hr>

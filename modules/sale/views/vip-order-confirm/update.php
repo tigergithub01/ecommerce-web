@@ -12,6 +12,9 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 		'position' => \yii\web\View::POS_HEAD 
 ] );
 $this->registerCssFile ( 'css/sale/bootstrap.css' );
+$this->registerJsFile('js/sale/jquery.blockUI.js', [
+		'position' => \yii\web\View::POS_END
+]);
 
 ?>
 
@@ -25,7 +28,7 @@ $this->registerCssFile ( 'css/sale/bootstrap.css' );
 			<hr class="gray_solid">			
 		<?php if($address_count==0){?>
 			<div style="text-align:center;">
-				你还没收收货地址<input type="button" value="新建收货地址">
+				您还没收收货地址<input type="button" value="新建收货地址">
 				 <?= Html::a('新建收货地址', ['/sale/vip-address/create', 'orderId' => $soSheet->id], ['class' => 'btn btn-primary']) ?>
 				 <?= Html::a('请选择收货地址', ['/sale/vip-address/index', 'orderId' => $soSheet->id], ['class' => 'btn btn-primary']) ?>
 			</div>
@@ -142,6 +145,11 @@ $this->registerCssFile ( 'css/sale/bootstrap.css' );
 $(function(){
 	$("#btn_submit_contact").click(function(){
 		window.location.href='<?=Url::toRoute(['/sale/vip-order/confirm'])?>';	
+	});
+
+	$("form").submit(function(){
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		return true;
 	});
 });	
 </script>

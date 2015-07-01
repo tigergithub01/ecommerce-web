@@ -66,13 +66,15 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		
 		<div class="statistic_block">
 			<span>共<?php echo $model['order_quantity']?>件 </span>  <span>实付：</span> <span
-				class="price">￥<?php echo floor($model['order_amt']*100)/100?></span>
+				class="price">￥<?php echo round($model['order_amt'],2)?></span>
 		</div>
 		<hr class="gray_solid">
 		<div class="trade_block">
 			<div>下单时间：<?php echo $model['order_date']?></div>
 			<div>付款时间：-</div>
+			<!-- 
 			<div>成交时间：-</div>
+			 -->
 		</div>
 	</div>
 	<div class="detail_btn_bar">

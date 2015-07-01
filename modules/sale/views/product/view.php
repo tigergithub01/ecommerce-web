@@ -14,13 +14,13 @@ $this->registerCssFile ( 'css/sale/goods.css', [
 $this->registerCssFile ( 'js/sale/slidebox/jquery.slideBox.css', [ 
 		'position' => \yii\web\View::POS_END 
 ] );
-$this->registerJsFile ( "js/jquery/jquery-1.8.2.min.js", [ 
-		'position' => \yii\web\View::POS_HEAD 
-] );
 
 $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [ 
-		'position' => \yii\web\View::POS_HEAD 
+		'position' => \yii\web\View::POS_END 
 ] );
+$this->registerJsFile('js/sale/jquery.blockUI.js', [
+		'position' => \yii\web\View::POS_END
+]);
 ?>
 
 <form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>"
@@ -216,9 +216,12 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 				href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><img
 				src="images/sale/icon_cart.png"></a> <input type="hidden"
 				value="<?=$model['id']?>" name="detailList[0][product_id]">
+				
 				<input type="hidden"
-				value="1" name="detailList[0][checked]"> <a
-				class="buy_button1 buy" id="btn_buy" href="javascript:void(0)">立即购买</a>
+				value="1" name="detailList[0][checked]">
+				<a
+				class="buy_button1 buy" id="btn_add_to_cart" href="javascript:void(0)" style="width: 30%">添加到购物车</a> <a
+				class="buy_button1 buy" id="btn_buy" href="javascript:void(0)" style="width: 30%">立即购买</a>
 		</div>
 
 	</div>
@@ -291,14 +294,17 @@ $(function(){
 
 	$('#buy_quantity').change(function(){
 		var buy_quantity = $('#buy_quantity').val();
+		var quantity = buy_quantity;
 		if(/^[0-9]*[1-9][0-9]*$/.test(buy_quantity) == false){
 			quantity = 1;
 		}
 		$('#buy_quantity').val(quantity);
+// 		$('#buy_quantity').val(quantity);
 	});
 		
 	$('#btn_buy').click(function(){
 		var buy_quantity = $('#buy_quantity').val();
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
 		$.ajax({     
 		    url:'<?=Url::toRoute(['/api/vip-cart/create'])?>',     
 		    type:'post',  
@@ -310,9 +316,10 @@ $(function(){
 		    	'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
 		    	},     
 		    	
-		    async :false, 
+		    async :true, 
 		    error:function(){     
 		       //alert('获取数据失败');    
+		    	$.unblockUI();  
 		    },     
 		    success:function(data){ 
 			    console.debug(data);
@@ -325,7 +332,43 @@ $(function(){
 				    alert('请先登录');
 				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
 			    }
+			    $.unblockUI();
+		    }  
+		}); 
+		
+		//window.location.href="<?=Url::toRoute(['/sale/vip-order/confirm','product_id'=>$model['id']])?>&quantity="+buy_quantity;
+	});
+
+
+	$('#btn_add_to_cart').click(function(){
+		var buy_quantity = $('#buy_quantity').val();
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		$.ajax({     
+		    url:'<?=Url::toRoute(['/api/vip-cart/create'])?>',     
+		    type:'post',  
+		    dataType:'json', 
+		    data:{
+		    	'ShoppingCart[product_id]':<?php echo $model['id']?>,
+		    	'ShoppingCart[quantity]':buy_quantity,
+		    	'ShoppingCart[price]':<?php echo $model['price']?>,
+		    	'_csrf':'<?= @Yii::$app->request->csrfToken ?>'
+		    	},     
 		    	
+		    async :true, 
+		    error:function(){     
+		       //alert('获取数据失败');    
+		    	$.unblockUI();  
+		    },     
+		    success:function(data){ 
+			    console.debug(data);
+			    if(data.status==1){
+			    	//$('#btn_collect').prop('src','images/sale/collect-undo.png');
+			    	alert('添加购物车成功'); 
+			    }else{
+				    alert('请先登录');
+				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
+			    }
+			    $.unblockUI();
 		    }  
 		}); 
 		
