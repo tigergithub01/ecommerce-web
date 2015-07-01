@@ -10,9 +10,7 @@ $this->registerCssFile ( 'css/sale/header.css', [
 $this->registerCssFile ( 'css/sale/cart.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
-$this->registerCssFile ( 'css/sale/shopcart.css', [ 
-		'position' => \yii\web\View::POS_HEAD 
-] );
+
 $this->registerCssFile ( 'css/sale/goods.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
