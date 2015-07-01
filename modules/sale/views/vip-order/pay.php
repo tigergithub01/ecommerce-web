@@ -35,7 +35,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 			</div>
 			<hr class="gray_solid">
 			<div class="item">
-				<span class="tag">交易金额</span><span class="content price"><?php echo round($model['order_amt'],2) /*floor($model['order_amt']*100)/100*/ ?>元</span>
+				<span class="tag">交易金额</span><span class="content price">￥<?php echo round($model['order_amt'],2) /*floor($model['order_amt']*100)/100*/ ?></span>
 			</div>
 		</div>
 		<div class="payment_info_bar">

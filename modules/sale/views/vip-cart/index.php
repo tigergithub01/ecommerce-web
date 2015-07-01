@@ -105,7 +105,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 			<a class="checkbox checkboxall checkboxvisible checkbox_checked"
 				href="javascript:void(0)"></a><label>&nbsp;全选</label> 共<span id="total_order_quantity"><?= $total_quantity ?></span>件
 			<a href="javascript:void(0)"><button class="submit" id="btn_buy" style="">结算</button></a>
-			<span class="total"><font color="#e4393c">总计：￥<span class="all_total" id="total_order_amt"><?= round($total_amt,2)?></span></font>
+			<span class="total" style="padding-right: 2px;"><font color="#e4393c">总计：￥<span class="all_total" id="total_order_amt"><?= round($total_amt,2)?></span></font>
 			</span>
 		</div>
 
@@ -133,7 +133,7 @@ $(function(){
 			alert('请选择需要购买的商品。');
 			return false;
 		}
-		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 		$("#shopping_cart_form").submit();
 	});	
 
@@ -257,7 +257,7 @@ $(function(){
 });
 
 function deleteShoppingCart(cart_id){
-	$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+	$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 	$.ajax({     
 	    url:'<?=Url::toRoute(['/sale/vip-cart/ajax-delete'])?>',     
 	    type:'post',  
@@ -283,7 +283,7 @@ function deleteShoppingCart(cart_id){
 
 function updateShoppingCart(cart_id,product_id,quantity){
 // 	$.blockUI();
-	$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+	$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 	$.ajax({     
 	    url:'<?=Url::toRoute(['/sale/vip-cart/ajax-update'])?>',     
 	    type:'post',  

@@ -148,7 +148,7 @@ $(function(){
 	});
 
 	$("form").submit(function(){
-		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 		return true;
 	});
 });	

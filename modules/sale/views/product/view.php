@@ -246,6 +246,7 @@ header {
 
 <script type="text/javascript">
 $(function(){
+	
 	// 详情页tab按钮
 	$(document).on("click", ".tab .item", function(e){
 		$(".tab .item").removeClass("active");
@@ -304,7 +305,7 @@ $(function(){
 		
 	$('#btn_buy').click(function(){
 		var buy_quantity = $('#buy_quantity').val();
-		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 		$.ajax({     
 		    url:'<?=Url::toRoute(['/api/vip-cart/create'])?>',     
 		    type:'post',  
@@ -342,7 +343,7 @@ $(function(){
 
 	$('#btn_add_to_cart').click(function(){
 		var buy_quantity = $('#buy_quantity').val();
-		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+		$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /><div>处理中,请稍等...</div></span>' });
 		$.ajax({     
 		    url:'<?=Url::toRoute(['/api/vip-cart/create'])?>',     
 		    type:'post',  
