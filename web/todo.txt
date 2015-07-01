@@ -581,5 +581,51 @@ http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-a
 循环出现空指针异常的问题。异常问题可以发送通过提示页面发送到供应商进行处理。
 php定时任务
 
+CREATE EVENT [IF NOT EXISTS] event_name
+ON SCHEDULE schedule
+[ON COMPLETION [NOT] PRESERVE]
+[ENABLE | DISABLE]
+[COMMENT 'comment']
+DO sql_statement;
 
+
+
+show variables like '%sche%'; 
+SHOW VARIABLES LIKE 'event_scheduler';
+/***execute with user root*/
+set global event_scheduler =1; 
+
+CREATE EVENT IF NOT EXISTS EVENT_AUTO_CANCEL_ORDER
+ON SCHEDULE every 1 minute
+ON COMPLETION  PRESERVE
+COMMENT '订单提交24小时未支付，自动取消订单'
+DO call pr_auto_cancel_order();
+
+/**pr_auto_cancel_order***/
+DROP procedure pr_auto_cancel_order;
+DELIMITER $$
+CREATE PROCEDURE `pr_auto_cancel_order` ()
+/***
+call pr_auto_cancel_order();
+*/
+BEGIN
+	DECLARE  no_more_data,v_order_id INT DEFAULT 0;
+	DECLARE v_order_date datetime ;
+	DECLARE cursor_order CURSOR FOR select id,order_date from t_so_sheet WHERE STATUS=3001 /*AND ID=?*/; 
+	DECLARE CONTINUE HANDLER FOR NOT FOUND  SET  no_more_data = 1;
+    OPEN cursor_order;
+	FETCH cursor_order INTO v_order_id,v_order_date;  
+	REPEAT  
+	if(timestampdiff(hour,v_order_date,now())>=24) THEN
+		UPDATE t_so_sheet SET status= 3006,memo='订单提交24小时未支付，自动取消订单' WHERE ID=v_order_id;
+	END if;
+	FETCH  cursor_order INTO v_order_id,v_order_date;  	
+  
+	UNTIL  no_more_data = 1  
+	END REPEAT;  
+
+	CLOSE cursor_order;  
+
+END $$
+DELIMITER ; 
 
