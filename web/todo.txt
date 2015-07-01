@@ -579,5 +579,7 @@ http://localhost:8085/index.php?r=api/download-app/view-app&app_path=ecommerce-a
 
 微信分享后，速度特别慢
 循环出现空指针异常的问题。异常问题可以发送通过提示页面发送到供应商进行处理。
+php定时任务
+
 
 
