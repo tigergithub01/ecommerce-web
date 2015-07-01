@@ -21,10 +21,10 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 $this->registerJsFile('js/sale/jquery.blockUI.js', [
 		'position' => \yii\web\View::POS_END
 ]);
-$this->registerCssFile ( 'js/sale/jNotify/jNotify.jquery.css', [ 
+$this->registerCssFile ( 'js/sale/jNotify/core/jNotify.jquery.css', [ 
 		'position' => \yii\web\View::POS_END 
 ] );
-$this->registerJsFile ( "js/sale/jNotify/jNotify.jquery.min.js", [
+$this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 		'position' => \yii\web\View::POS_END
 ] );
 
