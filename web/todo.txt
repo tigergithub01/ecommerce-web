@@ -629,3 +629,8 @@ BEGIN
 END $$
 DELIMITER ; 
 
+select * from information_schema.events;
+insert into t_sys_config(code,value,description)values('widthdraw_default_day',7,'可提现延迟天数，默认为7天');
+
+
+
