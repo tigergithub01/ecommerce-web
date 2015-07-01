@@ -142,8 +142,16 @@ class VipOrderService {
 				] )->all ();
 				if (! empty ( $soDetailList )) {
 					foreach ( $soDetailList as $soDetail ) {
-						// $product = Product::findOne ( $soDetail->product_id );
-						// $soDetail->product = $product;
+						$product = Product::findOne ( $soDetail->product_id );
+						
+						// get main photo
+						$productPhoto = ProductPhoto::find ()->where ( 'product_id=:product_id', [
+								':product_id' => $product ['id']
+						] )->andWhere ( 'primary_flag=1' )->one ();
+						$product->primaryPhoto = $productPhoto;
+						
+						$soDetail->setProduct ( $product );
+// 						$soDetail->product = $product;
 					}
 				}
 				$soSheet->soDetailList = $soDetailList;
