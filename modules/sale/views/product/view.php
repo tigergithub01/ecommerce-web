@@ -21,6 +21,14 @@ $this->registerJsFile ( "js/sale/slidebox/jquery.slideBox.js", [
 $this->registerJsFile('js/sale/jquery.blockUI.js', [
 		'position' => \yii\web\View::POS_END
 ]);
+$this->registerCssFile ( 'js/sale/jNotify/jNotify.jquery.css', [ 
+		'position' => \yii\web\View::POS_END 
+] );
+$this->registerJsFile ( "js/sale/jNotify/jNotify.jquery.min.js", [
+		'position' => \yii\web\View::POS_END
+] );
+
+
 ?>
 
 <form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>"
@@ -364,7 +372,8 @@ $(function(){
 			    console.debug(data);
 			    if(data.status==1){
 			    	//$('#btn_collect').prop('src','images/sale/collect-undo.png');
-			    	alert('添加购物车成功'); 
+// 			    	alert('添加购物车成功'); 
+			    	jNotify('添加购物车成功');
 			    }else{
 				    alert('请先登录');
 				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
