@@ -110,6 +110,16 @@ use yii\helpers\Url;
         });
 	}
 
+	function validateIdcard(){
+		var value = $('#test_value').val();
+		if(/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/.test(value) == false){
+			alert('验证不合法');
+		}else{
+			alert('成功');
+		}
+		
+	}
+
 
     </script>
 </head>
@@ -122,6 +132,8 @@ use yii\helpers\Url;
 	<input type="button" value="插入验证码" onclick="testPhoneVerifyCodeCreate()">
 	<input type="button" value="修改银行卡信息" onclick="testUpdateVipBankCard()">
 	<input type="button" value="提现申请" onclick="testCreateVipWithdrawFlow()">
+	<input type="text" id="test_value" />
+	<input type="button" value="验证" onclick="validateIdcard()">
 
 <?php $this->endBody() ?>
 </body>

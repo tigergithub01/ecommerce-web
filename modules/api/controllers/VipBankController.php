@@ -29,7 +29,7 @@ class VipBankController extends BaseApiController {
 		] )->one ();
 		if ($model === null) {
 			// throw new NotFoundHttpException ();
-			echo (Json::encode ( new JsonObj ( - 1, '数据不存在。', null ) ));
+			echo (Json::encode ( new JsonObj ( - 1, '您还未填写银行卡信息。', null ) ));
 			return;
 		}
 		
