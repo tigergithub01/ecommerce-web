@@ -38,7 +38,8 @@ class VipBankcard extends \yii\db\ActiveRecord
             [['vip_id', 'card_no', 'bank_id', 'branch_name', 'open_addr'], 'required'],
             [['vip_id', 'bank_id'], 'integer'],
             [['card_no'], 'string', 'max' => 60],
-            [['branch_name', 'open_addr'], 'string', 'max' => 100]
+            [['branch_name', 'open_addr'], 'string', 'max' => 100],
+        	[['card_no'],'match','pattern'=>'/^(\d{16}|\d{19})$/','message'=>'{attribute}是16位或者19位数字'],
         ];
     }
 

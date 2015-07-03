@@ -48,7 +48,8 @@ class Vip extends \yii\db\ActiveRecord
             [['vip_no', 'id_card'], 'string', 'max' => 30],
             [['name', 'password'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 60],
-            [['vip_no'], 'unique','message'=>'{value}已经被注册过了']
+            [['vip_no'], 'unique','message'=>'{value}已经被注册过了'],
+        	[['id_card'],'match','pattern'=>'/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/','message'=>'请输入15位或18位{attribute}'],
         ];
     }
 
