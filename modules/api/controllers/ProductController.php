@@ -24,7 +24,7 @@ class ProductController extends BaseController {
 		$product_name = isset ( $_REQUEST ['product_name'] ) ? $_REQUEST ['product_name'] : '';
 		$product_type_id = isset ( $_REQUEST ['product_type_id'] ) ? $_REQUEST ['product_type_id'] : null;
 		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
-		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
+		$order_direction = isset ( $_REQUEST ['order_direction'] ) ? $_REQUEST ['order_direction'] : null;
 		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
 		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
 		
@@ -46,7 +46,7 @@ class ProductController extends BaseController {
 		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
 		if (! empty ( $order_column )) {
 			$query->orderBy ( [ 
-					$order_direction => $yii_sql_order 
+					$order_column => $yii_sql_order 
 			] );
 		}
 		
