@@ -11,8 +11,8 @@ use Yii;
  * @property integer $vip_id
  * @property string $amount
  * @property string $can_settle_amt
- * @property string $settled_amt
  * @property string $can_withdraw_amt
+ * @property string $settled_amt
  */
 class VipIncome extends \yii\db\ActiveRecord
 {
