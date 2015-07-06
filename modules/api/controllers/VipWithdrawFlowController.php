@@ -102,6 +102,11 @@ class VipWithdrawFlowController extends BaseApiController {
 			$vip = $_SESSION [SaleConstants::$session_vip];
 			$vip_id = $vip->id;
 			$vipIncome = $vipIncomeService->getVipIncome ( $vip_id );
+			if(empty($vipIncome)){
+				$json = new JsonObj ( - 1, '可提现金额为零。', null );
+				echo (Json::encode ( $json ));
+				return;
+			}
 			
 			$amount = $vipWithdrawFlow->amount;
 			if ($amount < 50) {
@@ -111,7 +116,7 @@ class VipWithdrawFlowController extends BaseApiController {
 			}
 			
 			$amount = $vipWithdrawFlow->amount;
-			if ($amount > ($vipIncome->can_settle_amt)) {
+			if ($amount > ($vipIncome->can_withdraw_amt)) {
 				$json = new JsonObj ( - 1, '提现金额大于可提现金额。', null );
 				echo (Json::encode ( $json ));
 				return;
@@ -130,6 +135,16 @@ class VipWithdrawFlowController extends BaseApiController {
 			if (! $vipWithdrawFlow->save ()) {
 				$trans->rollBack ();
 			}
+			
+			//update $vipIncome
+// 			$vipIncome->can_settle_amt = 
+			/* $vipIncomeDB = $vipIncomeService->getVipIncomeDB($vip_id);
+			$vipIncomeDB->can_settle_amt = $vipIncomeDB->can_settle_amt - $amount;
+			$vipIncomeDB->can_withdraw_amt = $vipIncomeDB->can_withdraw_amt - $amount;
+			$vipIncomeDB->settled_amt = $vipIncomeDB->settled_amt + $amount; 
+			$vipIncomeDB->update();
+			*/
+			
 			// commit
 			$trans->commit ();
 			

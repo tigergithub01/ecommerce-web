@@ -26,8 +26,19 @@ class VipIncomeService {
 				':vip_id' => $vip_id 
 		] )->andWhere ( 'status=0' )->one ();
 		
-		$model->can_settle_amt = ($model->amount) - $approving_amt ['amount'] - ($model->settled_amt);
-		
+// 		$model->can_settle_amt = ($model->amount) - $approving_amt ['amount'] - ($model->settled_amt);
+		$model->can_settle_amt = ($model->can_settle_amt) - $approving_amt ['amount'];
+		$model->can_withdraw_amt = ($model->can_withdraw_amt) - $approving_amt ['amount'];
+		return $model;
+	}
+	
+	public function getVipIncomeDB($vip_id) {
+		$model = VipIncome::find ()->where ( 'vip_id=:vip_id', [
+				':vip_id' => $vip_id
+		] )->one ();
+		if ($model === null) {
+			return null;
+		}
 		return $model;
 	}
 }
