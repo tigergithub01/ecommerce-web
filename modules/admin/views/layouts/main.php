@@ -24,7 +24,7 @@ app\assets\Ie7Asset::register($this);
 
 <?php $this->beginBody() ?>
     <?= Breadcrumbs::widget([       
-        'homeLink'=>['label'=>'后台管理','url'=>['/admin']],
+        'homeLink'=>['label'=>'','url'=>'#'],
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ]) ?>
     
