@@ -91,6 +91,7 @@ class Product extends \yii\db\ActiveRecord
             'deduct_level2' => '二级分润比例',
             'deduct_level3' => '三级分润比例',
             'deduct_level4' => '四级分润比例',
+            'cost_price'=>'成本价格',
         ];
     }
     
@@ -185,5 +186,14 @@ class Product extends \yii\db\ActiveRecord
         
         $db->createCommand()->delete('t_product_photo',$deleteCondition)
                 ->execute();
+    }
+    
+    public function getStatusText(){
+        $statusText=array(0=>'下架',1=>'正常');
+        if(key_exists($this->status, $statusText)){
+            return $statusText[$this->status];
+        }else{
+            return "";
+        }
     }
 }

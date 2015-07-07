@@ -40,8 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'code',
             'name',
             'type_id',
-            'price:decimal',            
-            'status',            
+            'price:decimal',
+            'cost_price:decimal',
+            [
+                'label'=>'产品状态',
+                'value'=>$model->getStatusText()
+            ],                      
             'stock_quantity:Integer',
             'safety_quantity:Integer',
             [
@@ -74,12 +78,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [           
             [
                 'attribute'=>'special_deduct_flag',
-                'value'=>$model->can_return_flag?"是":"否"
+                'value'=>$model->special_deduct_flag?"是":"否"
             ],
-            'deduct_level1',
-            'deduct_level2',
-            'deduct_level3',      
-            'deduct_level4',      
+            [
+                'attribute'=>'deduct_level1',
+                'format'=>'percent',
+                'value'=>$model->deduct_level1/100.0,
+            ], 
+            [
+                'attribute'=>'deduct_level2',
+                'format'=>'percent',
+                'value'=>$model->deduct_level2/100.0,
+            ], 
+            [
+                'attribute'=>'deduct_level3',
+                'format'=>'percent',
+                'value'=>$model->deduct_level3/100.0,
+            ], 
+             [
+                'attribute'=>'deduct_level4',
+                'format'=>'percent',
+                'value'=>$model->deduct_level4/100.0,
+            ],                
         ],
     ]) ?>
     <style type="text/css">

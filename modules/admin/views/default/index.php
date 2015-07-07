@@ -127,17 +127,16 @@ use yii\helpers\Url;
                     <li><a href="<?=Url::to(['basic/province'])?>"><span class="m2">区域信息</span></a></li>                    
                 </ul>
             </li>
-            <!--
+            
             <li class='menu1'><a href=""><span class="m11">系统设置</span></a>
                 <ul class="submenu">                   
-                    <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">用户信息</span></a></li>
-                    <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">角色信息</span></a></li>
-                    <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">密码修改</span></a></li>
+                    <li><a href="<?=Url::to(['basic/user'])?>"><span class="m2">用户信息</span></a></li>
+                    <li><a href="<?=Url::to(['basic/role'])?>"><span class="m2">角色信息</span></a></li>
+                    <li><a href="<?=Url::to(['basic/user/change-my-password'])?>"><span class="m2">密码修改</span></a></li>
                     <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">操作日志</span></a></li>
                     
                 </ul>
-            </li>
-            -->
+            </li>           
         </ul>
     </div>
 

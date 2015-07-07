@@ -19,13 +19,41 @@ $this->registerJsFile('@web/js/jquery.easytabs.min.js');
 <script type="text/javascript">
 $(function(){
     $('#tab-container').easytabs({'animate':false});
+    
+    $.validator.addMethod("special_deduct_flag", function(value, element) {        
+        var s=0;
+        
+        if(!$("#product-special_deduct_flag").val()){return true;}
+        $("#tbodyDeductFlag input:text").each(function(i,n){
+            s+=parseFloat($(this).val());
+        });
+       return s==100;
+
+    }, "分级分润比例加起来需要等于100");
+
+    $("#form1").validate({
+            debug: false,
+            onfocusout: function (element) {
+                $(element).valid();
+            },
+            errorElement: 'label',
+            errorClass: 'has-error',                     
+            messages:{
+                
+            }
+        });
 })
 
 function chooseType(){
     
 }
+
+function changeDeductFlag(sender){
+    $("#tbodyDeductFlag").css("display",(sender.checked?"":"none"));
+}
 </script>
   <?php $form = ActiveForm::begin([
+        'id'=>'form1',
         'options' => ['enctype' => 'multipart/form-data'],
         'fieldConfig'=>[ 
            
@@ -81,10 +109,16 @@ function chooseType(){
         <tr>
             <td class="td-column">价格</td>
             <td class=""><?=Html::activeInput('text', $model, 'price',['maxlength' => 20,'class'=>'form-input']) ?></td>
-        </tr>        
+        </tr>
+         <tr>
+            <td class="td-column">成本价</td>
+            <td class=""><?=Html::activeInput('text', $model, 'cost_price',['maxlength' => 20,'class'=>'form-input']) ?></td>
+        </tr>
         <tr>
             <td class="td-column">产品状态</td>
-            <td class=""><?=Html::dropDownList('Product[status]',$model->status,['正常','下架'],['class'=>'form-select']) ?></td>
+            <td class="">
+               <?=Html::activeDropDownList($model,'status', [1=>'正常',0=>'下架'],['class'=>'form-select'])?>               
+            </td>
         </tr>
         <tr>
             <td class="td-column">库存数量</td>
@@ -122,6 +156,7 @@ function chooseType(){
     
   <div id="tabs1-css">
       <table class="table_edit">
+          <tbody>
       <tr>
             <td class="td-column">结算规则类别</td>
             <td class="">
@@ -133,27 +168,30 @@ function chooseType(){
             <td class=""><?=Html::activeInput('text', $model, 'deduct_price',['class'=>'form-input']) ?></td>
         </tr>
         <tr>
-            <td class="td-column"></td>
+            <td class="td-column">单独设置分润比例:</td>
             <td class="">
-                <?=Html::activeCheckbox($model, 'special_deduct_flag') ?>
+                <?=Html::activeCheckbox($model, 'special_deduct_flag',['onchange'=>'changeDeductFlag(this)','class'=>'special_deduct_flag']) ?><strong class="red">(分级分润比例加起来需要等于100)</strong>
             </td>
         </tr>
+        </tbody>
+        <tbody id="tbodyDeductFlag" style="display:<?=$model->special_deduct_flag?'':'none'?> ">
         <tr>
             <td class="td-column">一级分润比例</td>
-            <td class=""><?=Html::activeInput('text', $model, 'deduct_level1',['class'=>'form-input']) ?></td>
+            <td class=""><?=Html::activeInput('text', $model, 'deduct_level1',['class'=>'form-input special_deduct_flag']) ?>%</td>
         </tr>
         <tr>
             <td class="td-column">二级分润比例</td>
-            <td class=""><?=Html::activeInput('text', $model, 'deduct_level2',['class'=>'form-input']) ?></td>
+            <td class=""><?=Html::activeInput('text', $model, 'deduct_level2',['class'=>'form-input special_deduct_flag']) ?>%</td>
         </tr>
         <tr>
             <td class="td-column">三级分润比例</td>
-            <td class=""><?=Html::activeInput('text', $model, 'deduct_level3',['class'=>'form-input']) ?></td>
+            <td class=""><?=Html::activeInput('text', $model, 'deduct_level3',['class'=>'form-input special_deduct_flag']) ?>%</td>
         </tr>
         <tr>
             <td class="td-column">四级分润比例</td>
-            <td class=""><?=Html::activeInput('text', $model, 'deduct_level4',['class'=>'form-input']) ?></td>
+            <td class=""><?=Html::activeInput('text', $model, 'deduct_level4',['class'=>'form-input special_deduct_flag']) ?>%</td>
         </tr>
+        </tbody>
     </table>
   </div>
     

@@ -7,6 +7,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'authManager'=>['class'=>'yii\rbac\PhpManager'],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'tiger',
@@ -120,8 +121,7 @@ $config = [
 	},
 	'on afterAction' => function ($event) {
 		Yii::trace('afterAction.');
-	},
-                
+	},        
 ];
 
 if (YII_ENV_DEV) {
