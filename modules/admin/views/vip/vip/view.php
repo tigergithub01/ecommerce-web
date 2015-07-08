@@ -38,7 +38,10 @@ $(function(){
     
     <div id="tab-container" class="tab-container">
         <ul class='etabs'>
-            <li class='tab'><a href="#tab_main">基本信息</a></li><li class='tab'><a href="#tab_bank">信行卡信息</a></li><li class='tab'><a href="#tab_sc">收藏信息</a></li><li class='tab'><a href="#tab_addr">收货地址</a></li>
+            <li class='tab'><a href="#tab_main">基本信息</a></li>
+            <li class='tab'><a href="#tab_bank">信行卡信息</a></li>
+            <!--<li class='tab'><a href="#tab_sc">收藏信息</a></li>-->
+            <li class='tab'><a href="#tab_addr">收货地址</a></li>
         </ul>
         <div id="tab_main">
             <p></p>
@@ -56,8 +59,7 @@ $(function(){
                         'label'=>'上级会员',
                         'format'=>'raw',
                         'value'=>$model->getParentName()
-                    ],
-                    'email:email',
+                    ],                   
                     [
                         'label'=>'安全邮箱是否已验证',
                         'format'=>'raw',
@@ -94,6 +96,7 @@ $(function(){
                 </table>            
             <?php }?>
         </div>
+        <!--
         <div id="tab_sc">
             <p></p>           
             <?php if(isset($model['productCollection'])) { ?>
@@ -111,6 +114,7 @@ $(function(){
                 </table>            
             <?php }?>
         </div>
+        -->
         <div id="tab_addr">
             <p></p>           
             <?php if(isset($model['addressInfo'])) { ?>

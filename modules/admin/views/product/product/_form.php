@@ -156,13 +156,7 @@ function changeDeductFlag(sender){
     
   <div id="tabs1-css">
       <table class="table_edit">
-          <tbody>
-      <tr>
-            <td class="td-column">结算规则类别</td>
-            <td class="">
-                <?=Html::activeDropDownList($model, 'regular_type_id', $refundModel,['class'=>'form-select'])?>        
-            </td>
-        </tr>
+          <tbody>     
         <tr>
             <td class="td-column">产品分润单价</td>
             <td class=""><?=Html::activeInput('text', $model, 'deduct_price',['class'=>'form-input']) ?></td>

@@ -43,7 +43,7 @@ class UploadController extends Controller {
 
     public function actionUpload() {
         
-        // 5 minutes execution time
+        // 1 minutes execution time
         @set_time_limit(1 * 60);
 
         //Uncomment this one to fake upload time
@@ -74,17 +74,15 @@ class UploadController extends Controller {
         $targetfile=$targetDir.DIRECTORY_SEPARATOR .$file;               
 
         if(move_uploaded_file($_FILES["file"]["tmp_name"],$targetfile)){
-            $webpath=$webDir.'/'.$file; 
+            //生成缩略图
+            $th=new \app\components\Thumb();
+            $th->scaleImage($targetfile,$targetfile,220);            
+            $webpath=$webDir.'/'.$file;            
             echo json_encode(array('data'=>$webpath));            
         }else{
             die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
         }
         
-    }
-    
-    public function actionTest(){
-        //$this->layout=false;
-        return $this->render("test");
     }
 
 }

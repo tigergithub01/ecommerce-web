@@ -63,11 +63,7 @@ function submitSearch(){
                 'enableSorting'=>false,
             ],           
             'last_login_date',
-            [
-                'attribute'=>'email',
-                'format'=>'email',
-                'enableSorting'=>false,
-            ],
+            
             [
                 'label'=>'状态',
                 'attribute'=>'status',

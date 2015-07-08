@@ -47,11 +47,7 @@ use yii\widgets\ActiveForm;
             <td class="">
                 <?=Html::activeInput('text', $model, 'id_card',['class'=>'form-input']) ?>                
             </td>
-        </tr>
-        <tr>
-            <td class="td-column">安全邮箱</td>
-            <td class=""><?=Html::activeInput('text', $model, 'email',['maxlength' => 20,'class'=>'form-input']) ?></td>
-        </tr>
+        </tr>        
         <tr>
             <td class="td-column">会员状态</td>
             <td class=""><?=Html::activeDropDownList($model, 'status',[1=>'正常',0=>'停用'],['class'=>'form-select']) ?></td>
