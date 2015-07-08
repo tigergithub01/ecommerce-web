@@ -36,10 +36,10 @@ use yii\helpers\Url;
 	function testRegister(){
 		$.post('<?php echo Url::toRoute(['/api/vip-register/ajax-index'])?>', 
                 {
-					'VipForm[vip_no]':'13724346629',
+					'VipForm[vip_no]':'13724346640',
 					'VipForm[password]':'123456',
-					'VipForm[parent_vip_no]':'13724346624',
-					'VipForm[verifyCode]':'2344',
+					'VipForm[parent_vip_no]':'13724346621',
+					'VipForm[verifyCode]':'111111',
             }, function(data) {
                 console.debug(data);
         });
@@ -48,7 +48,7 @@ use yii\helpers\Url;
 	function testLogin(){
 		$.post('<?php echo Url::toRoute(['/api/vip-login/ajax-index'])?>', 
                 {
-					'VipForm[vip_no]':'13724346621',
+					'VipForm[vip_no]':'13724346640',
 					'VipForm[password]':'123456',
             }, function(data) {
                 console.debug(data);
@@ -67,7 +67,7 @@ use yii\helpers\Url;
 	function testPhoneVerifyCodeCreate(){
 		$.post('<?php echo Url::toRoute(['/api/sms/create'])?>', 
                 {
-					'PhoneVerifyCode[phone_number]':'13724346621',
+					'PhoneVerifyCode[phone_number]':'13724346640',
 					'PhoneVerifyCode[verify_code]':'111111',
 					'PhoneVerifyCode[sms_content]':'test',
             }, function(data) {

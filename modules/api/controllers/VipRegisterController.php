@@ -14,6 +14,7 @@ use app\models\system\PhoneVerifyCode;
 use app\components\controller\BaseController;
 use app\models\common\JsonObj;
 use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 class VipRegisterController extends BaseController {
 	public $enableCsrfValidation = false;
@@ -96,8 +97,7 @@ class VipRegisterController extends BaseController {
 				$session->set ( SaleConstants::$session_vip, $vip );
 				$session->timeout=1*24*60;
 				
-
-				$array = ArrayHelper::toArray ( $vip_db, [
+				$array = ArrayHelper::toArray ( $vip, [
 						'app\models\vip\Vip' => [
 								'id',
 								'vip_no',
