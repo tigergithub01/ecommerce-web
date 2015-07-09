@@ -16,6 +16,8 @@ use Yii;
  * @property string $op_phone_model
  * @property string $op_url
  * @property string $op_desc
+ * @property string $op_action
+ * @property string $op_os_type
  */
 class VipOperationLog extends \yii\db\ActiveRecord
 {
@@ -33,13 +35,14 @@ class VipOperationLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vip_id', 'module_id', 'op_date'], 'required'],
+            /* [['vip_id', 'module_id', 'op_date'], 'required'], */
+        	[['op_date'], 'required'],
             [['vip_id', 'module_id'], 'integer'],
             [['op_date'], 'safe'],
             [['op_desc'], 'string'],
             [['op_ip_addr'], 'string', 'max' => 30],
-            [['op_browser_type'], 'string', 'max' => 100],
-            [['op_phone_model'], 'string', 'max' => 60],
+            [['op_browser_type','op_os_type'], 'string', 'max' => 100],
+            [['op_phone_model','op_action'], 'string', 'max' => 60],
             [['op_url'], 'string', 'max' => 400]
         ];
     }
@@ -59,6 +62,8 @@ class VipOperationLog extends \yii\db\ActiveRecord
             'op_phone_model' => '手机型号',
             'op_url' => '操作对应完整URL',
             'op_desc' => '操作描述',
+        	'op_action' => '操作对应的action',
+        	'op_os_type' => '操作系统',
         ];
     }
 }
