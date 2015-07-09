@@ -64,6 +64,10 @@ class BaseController extends Controller {
 		// os_type
 		$op_os_type = isset ( $_REQUEST ['os_type'] ) ? $_REQUEST ['os_type'] : null;
 		$model->op_os_type = $op_os_type;
+		$model->op_method = Yii::$app->request->method;
+		$model->op_module=$action->controller->module->id;
+		$model->op_controller=$action->controller->id;
+		
 		$model->save ();
 		
 		// var_dump ( $action );
