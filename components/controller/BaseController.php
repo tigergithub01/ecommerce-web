@@ -53,6 +53,8 @@ class BaseController extends Controller {
 		
 		// op_browser_type
 		$model->op_browser_type = Yii::$app->request->userAgent;
+		
+		//phone_model
 		$op_phone_model = isset ( $_REQUEST ['phone_model'] ) ? $_REQUEST ['phone_model'] : null;
 		$model->op_phone_model = $op_phone_model;
 		$model->op_url = Yii::$app->request->absoluteUrl;
@@ -67,6 +69,11 @@ class BaseController extends Controller {
 		$model->op_method = Yii::$app->request->method;
 		$model->op_module=$action->controller->module->id;
 		$model->op_controller=$action->controller->id;
+		$model->op_view = $action->id;
+		
+		//app_ver
+		$op_app_ver = isset ( $_REQUEST ['app_ver'] ) ? $_REQUEST ['app_ver'] : null;
+		$model->op_app_ver = $op_app_ver;
 		
 		$model->save ();
 		
