@@ -21,6 +21,8 @@ use Yii;
  * @property string $op_method
  * @property string $op_module
  * @property string $op_controller
+ * @property string $op_view
+ * @property string $op_app_ver
  */
 class VipOperationLog extends \yii\db\ActiveRecord {
 	/**
@@ -84,7 +86,8 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 				],
 				[ 
 						[ 
-								'op_controller' 
+								'op_controller',
+								'op_view' 
 						],
 						'string',
 						'max' => 50 
@@ -133,7 +136,9 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 				'op_os_type' => '操作系统',
 				'op_method' => '数据提交方式(POST,GET)',
 				'op_module' => 'Yii模块',
-				'op_controller' => 'Yii控制器' 
+				'op_controller' => 'Yii控制器',
+				'op_view' => 'Yii视图',
+				'op_app_ver' => 'app版本号'
 		];
 	}
 }
