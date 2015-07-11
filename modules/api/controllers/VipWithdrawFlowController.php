@@ -16,6 +16,7 @@ use app\models\finance\VipIncome;
 use app\modules\sale\models\SaleConstants;
 use app\modules\api\utils\SheetCodeGenUtil;
 use app\modules\api\service\VipIncomeService;
+use app\models\vip\VipBankcard;
 
 /**
  * VipWithdrawFlowController implements the CRUD actions for VipWithdrawFlow model.
@@ -101,6 +102,15 @@ class VipWithdrawFlowController extends BaseApiController {
 			$vipIncomeService = new VipIncomeService ();
 			$vip = $_SESSION [SaleConstants::$session_vip];
 			$vip_id = $vip->id;
+			
+			//必须先完善银行卡信息
+			$vipBankcard  =  VipBankcard::findOne(['vip_id'=>$vip_id]);
+			if(empty($vipBankcard)){
+				$json = new JsonObj ( - 1, '请先完善银行卡信息。', null );
+				echo (Json::encode ( $json ));
+				return;
+			}
+			
 			$vipIncome = $vipIncomeService->getVipIncome ( $vip_id );
 			if(empty($vipIncome)){
 				$json = new JsonObj ( - 1, '可提现金额为零。', null );
@@ -110,14 +120,14 @@ class VipWithdrawFlowController extends BaseApiController {
 			
 			$amount = $vipWithdrawFlow->amount;
 			if ($amount < 50) {
-				$json = new JsonObj ( - 1, '提现金额应大于50元。', null );
+				$json = new JsonObj ( - 1, '提现金额应大于等于50元。', null );
 				echo (Json::encode ( $json ));
 				return;
 			}
 			
 			$amount = $vipWithdrawFlow->amount;
 			if ($amount > ($vipIncome->can_withdraw_amt)) {
-				$json = new JsonObj ( - 1, '提现金额大于可提现金额。', null );
+				$json = new JsonObj ( - 1, '最大可提现金额为'.round($vipIncome->can_withdraw_amt,2)+'元。', null );
 				echo (Json::encode ( $json ));
 				return;
 			}
