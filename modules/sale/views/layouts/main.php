@@ -31,7 +31,7 @@ $this->registerCssFile ('css/sale/common.css' );
 <?php if (isset($this->params['hidden_header']) && $this->params['hidden_header']==1){?>
 
 <?php }else{ ?>
-<header>
+<header style="display: none;">
 	<div class="button"><a class="back" href="javascript:window.history.back();"><img src="images/sale/btn_back.png"></a></div>
 	<div class="title"><?= Html::encode($this->title) ?></div>
 	<?php if (isset($_SESSION['current_vip'])){?>
