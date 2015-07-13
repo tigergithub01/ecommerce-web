@@ -13,6 +13,12 @@ $this->registerCssFile ( 'css/sale/payment.css', [
 $this->registerJsFile('js/sale/jquery.blockUI.js', [
 		'position' => \yii\web\View::POS_END
 ]);
+$this->registerCssFile ( 'js/sale/jNotify/core/jNotify.jquery.css', [
+		'position' => \yii\web\View::POS_END
+] );
+$this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
+		'position' => \yii\web\View::POS_END
+] );
 
 ?>
 
@@ -82,7 +88,8 @@ $(function(){
 
 	$('#order_pay_form').submit(function(){
 		if($('a.checkbox_checked').length==0){
-			alert('请选择支付方式.');	
+			jNotify('请选择支付方式.');
+			//alert('请选择支付方式.');	
 			return false;
 		}else{
 			if($('#pay_type_id').val()==1){

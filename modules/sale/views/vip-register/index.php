@@ -6,14 +6,12 @@ use yii\helpers\Url;
 $this->title = "注册";
 
 $this->registerCssFile('css/sale/bootstrap.css');
-$this->registerCssFile('css/sale/headerBar.css');
+
+$this->params['show_nav']=0;
+
 ?>
 
-<header>
-	<div class="button"><a class="back" href="javascript:window.history.back();"><img src="images/sale/btn_back.png">返回</a></div>
-	<div class="title">注册</div>
-	<div class="button"></div>
-</header>
+
 <div class="vip-login-form" style="margin: 5px;">
     <?php $form = ActiveForm::begin(); ?>
 	

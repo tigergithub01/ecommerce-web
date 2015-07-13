@@ -11,9 +11,11 @@ $this->registerCssFile ( 'css/sale/bootstrap.css' );
 
 
 <div class="vip-address-form" style="padding: 2px;">
+<!-- 
 	<a href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a>-><a
 		href="<?= Url::toRoute(['/sale/vip-address/index'])?>">收货地址列表</a>
 	<hr>
+	--!>
     <?php $form = ActiveForm::begin(); ?>
     
 	

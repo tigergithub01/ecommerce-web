@@ -36,6 +36,9 @@ $this->registerCssFile ( 'css/sale/order.css', [
 	</header>
 	 -->
 	<section id="0" style="display: block;">
+		<?php if (empty($orderList)){?>
+			没有符和条件的订单!
+		<?php }?>
 		<?php foreach ($orderList as $order) {?>
 		<div class="order_item_bar">
 			<div class="img"
@@ -68,7 +71,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 					</div>
 					
 		
-		<div class="detail_btn_bar" style="text-align: center;">
+		<div class="detail_btn_bar" style="text-align: right: ;">
 			<a class="default primary"
 				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
 				<?php if ($order['status']==3001){?>

@@ -5,27 +5,19 @@ use yii\helpers\Url;
 
 $this->title = "个人中心";
 $this->registerCssFile ( 'css/sale/userCenter.css' );
-$this->registerCssFile ( 'css/sale/common.css' );
+$this->registerCssFile ( 'css/sale/header.css' );
+$this->params['show_nav']=1;
+$this->params['hidden_header']=0;
 ?>
 <style type="text/css">
-/* ------------------------------------------------ 头部 ------------------------------------ */
-header {
-	background: #337ab7;
-	color: white;
-	text-align: center;
-	margin: 0px;
-	padding: 0px;
-	display: table;
-	width: 100%;
-}
 
-/* ------------------------------------------------ 头部 ------------------------------------ */
 </style>
 
 <div class="vip-center-form">
-	<header data-role="header">
+<!-- 
+	<header>
 		<div class="uc-user">
-			<a href="<?=Url::toRoute(['/sale/vip-center/view'])?>" class="box">
+			<a href="<?=Url::toRoute(['/sale/vip-center/view'])?>" class="box" style="text-align: center;">
 				<div class="" >
 					<p></p>
 					<p>已绑定：<?php echo $_SESSION['current_vip']['vip_no']?></p>
@@ -37,6 +29,7 @@ header {
 			</a>
 		</div>
 	</header>
+	 -->
 	<section data-role="body" class="section-body on"
 		style="min-height: 402px;">
 		<!--通知-->
@@ -44,8 +37,8 @@ header {
 			<ul class="box">
 				<?php foreach ($orderCountList as $value) {
 					/*if($value['id']!=3007 && $value['id']!=3008){*/?>
-					<li><a
-					href="<?php echo Url::toRoute(['/sale/vip-order/index','status' => $value['id']]) ?>"><i
+					<li>
+					<a href="<?php echo Url::toRoute(['/sale/vip-order/index','status' => $value['id']]) ?>"><i
 						class="icon-pay"></i><?php echo $value['pa_val']?></a><font color="red"><?php echo ($value['count']==0)?'':$value['count'] ?></font> </li>
 				<?php /*}*/}?>
 			</ul>
@@ -79,7 +72,9 @@ header {
 				<li><a href="<?=Url::toRoute(['/sale/vip-cart/index'])?>"><i
 						class="icon-order"></i>购物车</a></li>
 				<li><a href="<?=Url::toRoute(['/sale/vip-address/index'])?>"><i
-						class="icon-order"></i>收货地址</a></li>		
+						class="icon-order"></i>收货地址</a></li>	
+				<li><a href="<?=Url::toRoute(['/sale/vip-center/view'])?>"><i
+						class="icon-order"></i>我的资料</a></li>			
 						<!-- 
 				<li><a href="<?=Url::toRoute(['/sale/vip-collect/index'])?>"><i
 						class="icon-fav"></i>我的收藏</a></li>

@@ -16,12 +16,6 @@ table.detail-view th{
 
 </style>
 
-<header>
-	<div class="button"><a class="back" href="javascript:window.history.back();"><img src="images/sale/btn_back.png">返回</a></div>
-	<div class="title">会员详细信息</div>
-	<div class="button"></div>
-</header>
-
 <div class="vip-info-form">
 	<?= DetailView::widget([
         'model' => $model,
@@ -43,7 +37,6 @@ table.detail-view th{
     
 <?php echo Html::button('退出登录',['class' => 'btn btn-primary','id'=>'btn_exit','style'=>'width:100%;margin-top:10px;height:60px;'])?>
 </div>
-
 
 
 
