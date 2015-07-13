@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-header{
+header {
 	background: #337ab7;
 	color: white;
 	text-align: center;
@@ -9,7 +9,8 @@ header{
 	display: table;
 	width: 100%;
 }
-header .button, .title{
+
+header .button, .title {
 	display: table-cell;
 	height: 50px;
 	overflow: hidden;
@@ -17,17 +18,20 @@ header .button, .title{
 	padding: 0px;
 	vertical-align: middle;
 }
-header .button{
+
+header .button {
 	width: 27%;
 	height: 50px;
 }
-header .title{
+
+header .title {
 	width: 46%;
 	font-size: 1.8rem;
 	margin-top: 0px;
 	line-height: 50px;
 }
-header .button .back{
+
+header .button .back {
 	overflow: hidden;
 	display: table-cell;
 	text-decoration: none;
@@ -35,10 +39,24 @@ header .button .back{
 	font-size: 1.6rem;
 	padding: 2px 0px 0px 0px;
 }
-header .button .back img{
+
+header .button .back img {
 	border: none;
 	width: 26px;
 	height: auto;
 	padding: 0px 0px 0px 10px;
 	vertical-align: middle;
+}
+
+header .button .nav {
+	overflow: hidden;
+	display: table-cell;
+	text-decoration: none;
+	color: white;
+	font-size: 1.6rem;
+	padding: 2px 0px 0px 0px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 60px;
 }
