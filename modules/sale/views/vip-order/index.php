@@ -46,7 +46,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 			<div class="img"
 						style="width: 80px; height: 80px; margin-right: 5px;float: left;">
 						<a
-							href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">
+							href="javascript:void(0)">
 							<img style="width: 70px; height: 70px;"
 							src="<?php
 			if (isset ( $order->soDetailList[0]->product->primaryPhoto )) {
