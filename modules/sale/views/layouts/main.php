@@ -50,7 +50,7 @@ $this->registerCssFile ('css/sale/common.css' );
 
 <?php }else{ ?>
 <footer style="background: #f8f8f8;color: #848689;font-size: 12px;">
-	<hr>
+	<hr class="gray_solid">
 	<?php if (isset($_SESSION['current_vip'])){?>
 	<div class="nav" style="text-align: center;">
 		<a href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a> | <a href="<?=Url::toRoute(['/sale/vip-cart/index'])?>">购物车</a>
