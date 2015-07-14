@@ -8,7 +8,7 @@ $this->title = "订单确认";
  'position' => \yii\web\View::POS_HEAD 
  ] ); */
 
-$this->registerCssFile ( 'css/sale/goods.css', [ 
+$this->registerCssFile ( 'css/sale/product.css', [ 
 		'position' => \yii\web\View::POS_HEAD 
 ] );
 $this->registerCssFile ( 'css/sale/bootstrap.css' );
