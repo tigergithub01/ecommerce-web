@@ -513,6 +513,7 @@ http://localhost:8085/index.php?r=api/ad-info/ad-url&image_url=pos1.jpg
 
 http://localhost:8085/index.php?r=api/earn-guild/index
 http://localhost:8085/index.php?r=api/earn-guild/view&id=1
+http://localhost:8085/index.php?r=sale/earn-guild/view&id=1
 
 http://localhost:8085/index.php?r=sale/vip-register/index&parent_vip_no=13724346621
 
@@ -633,4 +634,64 @@ select * from information_schema.events;
 insert into t_sys_config(code,value,description)values('widthdraw_default_day',7,'可提现延迟天数，默认为7天');
 
 
+支付接入、物流接入
+根据状态，会员可以提交退货与取消订单的申请
+退款单确认退款时，应该可以根据支付方式，将款项退还到相应的支付账户
+提现与退款时，应该先修改提现申请单与退款单的状态，然后执行银行转账操作
+android 产品购买的时候，对于特殊类别的商品，需要上传证件
+团队订单中浏览订单的时候，滑动tab页的时候，订单数据丢失
+数据加载过程中，应该提示数据正在加载的数据框
+微信与QQ中内嵌的浏览器不能下载附件的问题，可以根据判断浏览器类型，然后弹出一个遮挡窗口，提示在手机浏览器中打开
+微信分享后，选择返回app时不能返回，只能按返回键进行返回。按返回键后，再次点击分享的时候，提示不能分享。
+出现系统没有捕获的异常后，循环出现空指针异常的问题。异常问题可以通过提示页面发送到供应商进行处理。
+出现系统异常后，不能正常退出应用；出现循环退出的情况。
+申请网站域名并备案
+快递查询API授权key申请
+微信支付申请
+支付宝支付申请
+分享到微信、QQ、短信、朋友圈的内容格式确定
+分润计算算法详细说明
+首页优化：首页增加底部导航，导航页内容待定
+提现申请的时候，需要完善个人资料包括银行卡信息->ok
+打开微信再回个人中心-我的资料里面报空指针异常->ok
+增加结算退货门槛，具体内容待定
+我的收入中“结算”按钮的名字改为“提现”，建议修改“结算”按钮的背景色->背景色未修改，文字已经修改。
+我的收入中，“可结算金额”与“可提现金额”分开；增加“可提现金额”显示项，“可提现金额”根据“订单完成日期”与“提现延迟天数”来进行计算，“提现延迟天数”可配置。->ok
+后台主页logo更换
+销售页面日志记录 ->异常与出错日期未记录到数据库
+移动端日志记录 ->ok
+提示系统崩溃的页面要友好一点。
+PullToRefreshListView分隔线条要细一点，底部没有分隔条，看起来不美观。->ok
+WEB销售模块要增加顶部导航与底部导航
+订单列表页面无数据要提示，不能显示空白页面。
+收货地址列表与选择页面不美观，建议修改按钮样式。
+横竖屏幕切换的时候，页面自动返回到个人中心。
+页面统一增加返回按钮
+等待效果美化，白色的等待页面不好看。
+团队订单显示数据格式优化->ok
+收入明细数据显示格式优化->ok
+我的账单显示效果优化->ok
+我的团队显示效果优化->ok
+意见反馈提交后加入等待效果。->ok
+联系我们内容居中显示，显示当前的app版本。->居中未实现，增加了版本号显示。
+修改密码提交加入等待效果->ok
+系统出现退出多次才能退出的情况
+首页广告栏切换不平滑，不能循环滚动
+我的消息中加入发布时间，PullToRefreshListView行号要加大。
+二维码可以保存为本地图片，通过发送二维码发展下级会员。
+订单状态跟踪推送、会员升级消息推送（短信与app冒泡提醒）
+订单取消与确认收货处理，订单退货退款处理。
+web浏览器横竖屏切换时，不能改变当前浏览的URL。
 
+提现申请审核后，修改表t_vip_income：
+表t_vip_withdraw_flow.status中0->1时；
+t_vip_income.can_settle_amt = t_vip_income.can_settle_amt - t_vip_withdraw_flow.settled_amt;
+t_vip_income.scan_withdraw_amt = t_vip_income.can_withdraw_amt - t_vip_withdraw_flow.settled_amt;
+t_vip_income.settled_amt = t_vip_income.settled_amt + t_vip_withdraw_flow.settled_amt;
+
+表t_vip_withdraw_flow.status中1->0时；
+t_vip_income.can_settle_amt = t_vip_income.can_settle_amt + t_vip_withdraw_flow.settled_amt;
+t_vip_income.scan_withdraw_amt = t_vip_income.can_withdraw_amt + t_vip_withdraw_flow.settled_amt;
+t_vip_income.settled_amt = t_vip_income.settled_amt - t_vip_withdraw_flow.settled_amt;
+
+<?php require '../layouts/footer.php';?>
