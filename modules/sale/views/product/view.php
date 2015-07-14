@@ -31,8 +31,9 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 
 ?>
 
+<div class="product-view wrapper">
 <form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>"
-	id="product_detail_form" method="post">
+	id="product_detail_form" method="post"
 	<input type="hidden" name="_csrf"
 		value="<?= @Yii::$app->request->csrfToken ?>" />
 
@@ -114,26 +115,11 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 
 
 		</div>
-		<div class="open_bar">
-		</div>
-		<div id="img_view_bar" class="img_view_bar">
-			<div class="img_view_bar_bg"></div>
-			<div class="img_view_bar_container"></div>
-			<!-- 
-		<div class="img_view_bar_btn_left"><a href="javascript:void(0)"><img src="/static/wap/images/btn_left.png" /></a></div>
-		<div class="img_view_bar_btn_right"><a href="javascript:void(0)"><img src="/static/wap/images/btn_right.png" /></a></div>
-		 -->
-		</div>
 		
 		
-		<footer style="background: #f8f8f8;color: #848689;font-size: 12px;">
-			<hr>
-			<div class="copyright" style="text-align: center;">Copyright @2015深圳智富坊实业有限公司 版权所有</div>
-			
-		</footer>
+		
 
 
-		<div class="goods_btn_placeholder_bar"></div>
 		<div class="goods_btn_bar bottom_bar">
 			<a class="man_button"
 				href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
@@ -151,6 +137,7 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 
 	</div>
 </form>
+</div>
 
 <style type="text/css">
 /* ------------------------------------------------ 头部 ------------------------------------ */
