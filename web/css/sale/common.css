@@ -250,4 +250,12 @@ footer .nav a{
 	font-size: 17px;
 }
 
+.gray_solid{
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	border-bottom: 1px solid #e1e1e1;
+	height: 0px;
+}
+
 
