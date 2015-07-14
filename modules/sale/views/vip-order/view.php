@@ -84,6 +84,8 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		 -->
 		 <?php if ($model['status']==3001){?>
 		 <a
+			class="default primary" onclick="return cancelOrder('<?=Url::toRoute(['/sale/vip-order/cancel','orderId'=>$model['id']])?>');" href="javascript:void(0)">取消订单</a>
+		 <a
 			class="default primary" href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$model['id']])?>">付款</a>
 		<?php }?>	
 	</div>
@@ -95,11 +97,20 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 
 <script type="text/javascript">
 $(function(){
-	$(".info_block").click(function(){
-		//var product_id = $(this).attr('product_id');
-		//window.location.href='<?=Url::toRoute(['/sale/product/view'])?>';	
-	});		
+		
 });
+
+function cancelOrder(url){
+	if(!confirm('是否取消订单')){
+		return false;
+	}
+	window.location.href=url;
+	
+	
+
+
+	
+}
 
 
 </script>

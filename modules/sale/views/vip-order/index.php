@@ -42,7 +42,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 			</div>
 		<?php }?>
 		<?php foreach ($orderList as $order) {?>
-		<div class="order_item_bar">
+		<div class="order_item_bar" style="cursor: pointer;" order_id="<?=$order['id']?>">
 			<div class="img"
 						style="width: 80px; height: 80px; margin-right: 5px;float: left;">
 						<a
@@ -74,8 +74,10 @@ $this->registerCssFile ( 'css/sale/order.css', [
 					
 		
 		<div class="detail_btn_bar" style="text-align: right: ;">
+			<!-- 
 			<a class="default primary"
 				href="<?=Url::toRoute(['/sale/vip-order/view','orderId'=>$order['id']])?>">查看订单</a>
+			 -->	
 				<?php if ($order['status']==3001){?>
 					<a class="default primary" style="background-color: #c00000"
 						href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$order['id']])?>">付款</a>
@@ -121,8 +123,9 @@ $this->registerCssFile ( 'css/sale/order.css', [
 
 <script type="text/javascript">
 $(function(){
-	$(".info_block").click(function(){
-		window.location.href='<?=Url::toRoute(['/sale/vip-order/view'])?>';	
+	$(".order_item_bar").click(function(){
+		var order_id = $(this).attr("order_id");
+		window.location.href='<?=Url::toRoute(['/sale/vip-order/view'])?>&orderId='+order_id;	
 	});	
 });
 
