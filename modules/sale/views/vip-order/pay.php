@@ -23,7 +23,7 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 ?>
 
 
-<div class="vip-center-form" style="margin: 10px;">
+<div class="vip-center-form wrapper" style="margin: 10px;">
 	<div class="payment_info_bar">
 		<div class="item">
 			<span class="tag">收货人</span><span class="content"><?php echo $model['soContactPerson']['name']?> <?php echo $model['soContactPerson']['phone_number']?></span>

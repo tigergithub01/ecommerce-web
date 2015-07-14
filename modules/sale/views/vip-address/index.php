@@ -18,7 +18,7 @@ header{
 }
 
 </style>
-<div class="vip-address-index" style="padding: 2px;">
+<div class="vip-address-index wrapper" style="padding: 2px;">
 	<!-- 
 	<a style="margin-top: 5px;"  href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a>-><a href="<?= Url::toRoute(['/sale/vip-address/index'])?>">收货地址列表</a>
 	<hr>

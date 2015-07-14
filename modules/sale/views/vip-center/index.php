@@ -13,8 +13,8 @@ $this->params['hidden_header']=0;
 
 </style>
 
-<div class="vip-center-form">
-<!-- 
+<div class="vip-center-form wrapper">
+
 	<header>
 		<div class="uc-user">
 			<a href="<?=Url::toRoute(['/sale/vip-center/view'])?>" class="box" style="text-align: center;">
@@ -29,7 +29,7 @@ $this->params['hidden_header']=0;
 			</a>
 		</div>
 	</header>
-	 -->
+	 
 	<section data-role="body" class="section-body on"
 		style="min-height: 402px;">
 		<!--通知-->

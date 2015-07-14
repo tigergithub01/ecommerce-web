@@ -8,7 +8,7 @@ $this->title = '创建收货地址';
 // $this->params['breadcrumbs'][] = ['label' => 'Vip Addresses', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="vip-address-create">
+<div class="vip-address-create wrapper">
 
 
     <?=$this->render ( '_form', [ 'model' => $model,'provinces' => $provinces,'cities' => [ ],'districts' => [ ],'orderId'=>$orderId ] )?>

@@ -51,9 +51,20 @@ $this->registerCssFile ('css/sale/common.css' );
 <?php }else{ ?>
 <footer style="background: #f8f8f8;color: #848689;font-size: 12px;">
 	<hr>
+	<?php if (isset($_SESSION['current_vip'])){?>
+	<div class="nav" style="text-align: center;">
+		<a href="<?= Url::toRoute(['/sale/vip-center/index'])?>">个人中心</a> | <a href="<?=Url::toRoute(['/sale/vip-cart/index'])?>">购物车</a>
+	</div>
+	<?php }?>
 	<div class="copyright" style="text-align: center;">Copyright @2015深圳智富坊实业有限公司 版权所有</div>
 </footer>
 <?php }?>
 </body>
 </html>
 <?php $this->endPage() ?>
+
+<script type="text/javascript">
+	$(function(){
+		$(".wrapper").css({'min-height':($(window).height() - 100 - $(".bottom_bar").height())});
+	});
+</script>

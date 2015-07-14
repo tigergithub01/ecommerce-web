@@ -13,7 +13,7 @@ $this->registerCssFile ( 'css/sale/order.css', [
 ?>
 
 
-<div class="vip-order-form" style="margin: 2px;">
+<div class="vip-order-form wrapper" style="margin: 2px;">
 	<!-- 
 	<header data-role="header" class="nav">
 		<ul class="box" id="Menu">
@@ -37,7 +37,9 @@ $this->registerCssFile ( 'css/sale/order.css', [
 	 -->
 	<section id="0" style="display: block;">
 		<?php if (empty($orderList)){?>
+			<div style="text-align: center;">
 			没有符和条件的订单!
+			</div>
 		<?php }?>
 		<?php foreach ($orderList as $order) {?>
 		<div class="order_item_bar">

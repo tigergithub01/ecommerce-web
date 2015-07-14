@@ -16,7 +16,7 @@ table.detail-view th{
 
 </style>
 
-<div class="vip-info-form">
+<div class="vip-info-form wrapper">
 	<?= DetailView::widget([
         'model' => $model,
         'attributes' => [

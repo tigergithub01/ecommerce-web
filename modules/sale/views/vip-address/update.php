@@ -11,7 +11,7 @@ $this->title = '编辑收货地址';
 // $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 // $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="vip-address-update">
+<div class="vip-address-update wrapper">
 
    
 

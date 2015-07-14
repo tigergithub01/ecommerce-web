@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Vip Addresses', 'url' => ['index']
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile ( 'css/sale/bootstrap.css' );
 ?>
-<div class="vip-address-view">
+<div class="vip-address-view wrapper">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

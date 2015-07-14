@@ -9,7 +9,7 @@ $this->registerCssFile('css/sale/bootstrap.css');
 ?>
 
 
-<div class="vip-login-form" style="margin: 10px;">
+<div class="vip-login-form wrapper" style="margin: 10px;">
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'vip_no')->textInput(['type'=>'number','maxlength' => 11,'placeholder'=>'请输入手机号'])?>

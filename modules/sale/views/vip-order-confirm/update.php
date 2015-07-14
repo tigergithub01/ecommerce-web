@@ -19,7 +19,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 ?>
 
 
-<div class="vip-order-contact-form" style="margin: 10px;">
+<div class="vip-order-contact-form wrapper" style="margin: 10px;">
 	
 
 	<?php $form = ActiveForm::begin(['action'=>['/sale/vip-order/submit'],'options' => ['class' => 'form-vertical'],]); ?>
@@ -118,7 +118,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
     </div>
     -->
 
-	<div class="goods_btn_bar" style="float: right;">
+	<div class="goods_btn_bar bottom_bar" style="float: right;">
 		<input type="hidden" name="draft_order_id" value="<?=  $soSheet['id']?>">
 		<input type="submit" class="buy_button1 buy"
 			style="float: right; margin: 0" value="提交订单">

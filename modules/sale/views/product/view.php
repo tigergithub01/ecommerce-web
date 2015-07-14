@@ -134,7 +134,7 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 
 
 		<div class="goods_btn_placeholder_bar"></div>
-		<div class="goods_btn_bar">
+		<div class="goods_btn_bar bottom_bar">
 			<a class="man_button"
 				href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img
 				src="images/sale/icon_p_center.png"></a> <a class="cart_button"

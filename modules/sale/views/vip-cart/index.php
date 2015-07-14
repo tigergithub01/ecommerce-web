@@ -23,7 +23,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 	id="shopping_cart_form" method="post">
 	<input type="hidden" name="_csrf"
 		value="<?= @Yii::$app->request->csrfToken ?>" />
-	<div class="vip-cart-form" style="margin: 10px;">
+	<div class="vip-cart-form wrapper" style="margin: 10px;">
 		<div class="cart_item_bar">
 			<div class="title"></div>
 			<hr class="gray_solid">
@@ -99,7 +99,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 		 -->
 		</div>
 		<div class="cart_btn_bar_placeholder"></div>
-		<div class="cart_btn_bar" style="padding: 0">
+		<div class="cart_btn_bar bottom_bar" style="padding: 0">
 			<a class="checkbox checkboxall checkboxvisible checkbox_checked"
 				href="javascript:void(0)"></a><label>&nbsp;全选</label> 共<span id="total_order_quantity"><?= $total_quantity ?></span>件
 			<a href="javascript:void(0)"><button class="submit" id="btn_buy" style="">结算</button></a>
@@ -116,6 +116,7 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 	<script type="text/javascript">
 $(function(){
 // 	$(document).ajaxStart($.blockUI({ css: { backgroundColor: '#f00', color: '#fff'} })).ajaxStop($.unblockUI);
+	
 	
 	$('#btn_buy').click(function(){
 		var total_quantity = 0;

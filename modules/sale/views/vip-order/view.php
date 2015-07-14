@@ -10,7 +10,7 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 ?>
 
 
-<div class="vip-order-detail-form" style="margin: 10px;">
+<div class="vip-order-detail-form wrapper" style="margin: 10px;">
 	<div class="order_detail_status">
 		<div class="item">
 			<div class="title"><?php echo $model['order_status']['pa_val']?></div>
