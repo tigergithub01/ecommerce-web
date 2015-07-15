@@ -602,6 +602,7 @@ ON COMPLETION  PRESERVE
 COMMENT '订单提交24小时未支付，自动取消订单'
 DO call pr_auto_cancel_order();
 
+
 /**pr_auto_cancel_order***/
 DROP procedure pr_auto_cancel_order;
 DELIMITER $$
@@ -612,12 +613,16 @@ call pr_auto_cancel_order();
 BEGIN
 	DECLARE  no_more_data,v_order_id INT DEFAULT 0;
 	DECLARE v_order_date datetime ;
+	
+	DECLARE v_hours int;
 	DECLARE cursor_order CURSOR FOR select id,order_date from t_so_sheet WHERE STATUS=3001 /*AND ID=?*/; 
 	DECLARE CONTINUE HANDLER FOR NOT FOUND  SET  no_more_data = 1;
+
+	select value into v_hours from t_sys_config where code = 'auto_cancel_order_hours';
     OPEN cursor_order;
 	FETCH cursor_order INTO v_order_id,v_order_date;  
 	REPEAT  
-	if(timestampdiff(hour,v_order_date,now())>=24) THEN
+	if(timestampdiff(hour,v_order_date,now())>=v_hours) THEN
 		UPDATE t_so_sheet SET status= 3006,memo='订单提交24小时未支付，自动取消订单' WHERE ID=v_order_id;
 	END if;
 	FETCH  cursor_order INTO v_order_id,v_order_date;  	
@@ -699,4 +704,80 @@ crontab -h
 crontab -e
 https://www.centos.bz/2011/07/php-cron-job-linux-crontab/
 
+/***grant create trigger auth**/
+SET GLOBAL log_bin_trust_function_creators = 1;
+/**tr_so_sheet_update_status**/
+DROP trigger tr_so_sheet_update_status;
+DELIMITER $$
+create trigger tr_so_sheet_update_status after update on t_so_sheet for each row  
+/***
+	update t_so_sheet.status
+*/
+begin
+	declare v_so_status int;
+	if (new.status=	3005 and old.status<>3005) then
+		update t_vip_operation_log set op_os_type=CONCAT(old.status,'=>',new.status)  where id = 54;
+	elseif (new.status<> 3005 and old.status=3005) then
+		update t_vip_operation_log set op_os_type=CONCAT(old.status,'=>',new.status)  where id = 54;
+	end if;
+end;
+$$
+DELIMITER ; 
+
+
+
+/**pr_recompute_vip_income***/
+DROP procedure pr_recompute_vip_income;
+DELIMITER $$
+CREATE PROCEDURE `pr_recompute_vip_income` (in p_order_id int,in p_add_minus int)
+/***
+p_order_id:订单编号
+p_add_minus: 1:增加可提现金额；0:减少可提现金额
+call pr_recompute_vip_income();
+*/
+BEGIN
+	DECLARE  no_more_data,v_order_id,v_product_id,v_vip_id,v_special_deduct_flag INT DEFAULT 0;
+	declare v_quantity decimal(6,0);
+	declare v_price,v_amount decimal(20,6);
+	DECLARE v_order_date datetime ;
+	/**t_deduct_regular,订单表中要增加订单完成日期**/	
+	declare v_deduct_level1,v_deduct_level2,v_deduct_level3,v_deduct_level4 decimal(14,2);		
+	
+	DECLARE cursor_order CURSOR FOR select so.id,so.vip_id,so.order_date,detail.product_id,detail.quantity,detail.price,detail.amount 
+	from t_so_sheet so,t_so_detail detail WHERE so.id= detail.order_id and so.id=p_order_id; 
+	DECLARE CONTINUE HANDLER FOR NOT FOUND  SET  no_more_data = 1;
+	
+	/***get deduct values*/
+	select deduct_level1,deduct_level2,deduct_level3,deduct_level4  
+	into v_deduct_level1,v_deduct_level2,v_deduct_level3,v_deduct_level4 
+	from t_deduct_regular limit 0,1;
+
+    OPEN cursor_order;
+	FETCH cursor_order INTO v_order_id,v_vip_id,v_order_date,v_product_id,v_quantity,v_price,v_amount;  
+	REPEAT  	
+	
+		/* select * from t_product***/
+		select special_deduct_flag into v_special_deduct_flag 	from t_product where id = v_product_id;
+		if(special_deduct_flag=1)then
+			select deduct_level1,deduct_level2,deduct_level3,deduct_level4  
+			into v_deduct_level1,v_deduct_level2,v_deduct_level3,v_deduct_level4 
+			from t_product where id = v_product_id;
+		end if;
+		
+		/***get vip levels**/
+
+		if(timestampdiff(hour,v_order_date,now())>=v_hours) THEN
+			/*** t_vip_income_detail,t_vip_income*/	
+			select 'a';
+
+		END if;
+		FETCH cursor_order INTO v_order_id,v_vip_id,v_order_date,v_product_id,v_quantity,v_price,v_amount;  
+	  
+		UNTIL  no_more_data = 1  
+	END REPEAT;  
+
+	CLOSE cursor_order;  
+
+END $$
+DELIMITER ; 
 
