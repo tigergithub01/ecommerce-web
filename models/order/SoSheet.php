@@ -43,6 +43,21 @@ class SoSheet extends \yii\db\ActiveRecord
 	public $vip_no;
 	public $order_status_val;
 	
+	//static 
+	//待支付
+	public static $so_status_need_pay=3001;
+	//待发货
+	public static $so_status_need_delivery=3002;
+	//待收货
+	public static $so_status_need_receive=3003;
+	//已完成
+	public static $so_status_completed=3005;
+	//已关闭
+	public static $so_status_closed=3006;
+	//待退货
+	public static $so_status_need_return=3007;
+	//待退款
+	public static $so_status_need_refund=3008;
     /**
      * @inheritdoc
      */
