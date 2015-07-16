@@ -7,8 +7,8 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\system\AdInfo */
 
-$this->title = '添加广告';
-$this->params['breadcrumbs'][] = ['label' => '广告列表', 'url' => ['index']];
+$this->title = '添加消息通知';
+$this->params['breadcrumbs'][] = ['label' => '消息通知', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ad-info-create">

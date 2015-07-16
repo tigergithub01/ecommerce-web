@@ -5,35 +5,27 @@ namespace app\modules\admin\controllers\finance;
 use Yii;
 use app\models\finance\VipWithdrawFlow;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use app\modules\admin\controllers\MyController;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * VipWithdrawFlowController implements the CRUD actions for VipWithdrawFlow model.
  */
-class VipWithdrawFlowController extends Controller
+class VipWithdrawFlowController extends MyController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
+    
     /**
      * Lists all VipWithdrawFlow models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $query=VipWithdrawFlow::find()->joinWith('vip')->orderBy(['id'=>SORT_DESC]);
+        
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => VipWithdrawFlow::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -52,56 +44,17 @@ class VipWithdrawFlowController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-
-    /**
-     * Creates a new VipWithdrawFlow model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new VipWithdrawFlow();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+    
+    public function actionWithdraw(){
+        $id=Yii::$app->request->post('id');
+        $redirectUrl=Yii::$app->request->post('redirectUrl');
+        $model=$this->findModel($id);
+        $model->withdraw();
+        
+        $this->ShowMessage('结算成功，已经改变了状态。', $redirectUrl);
+        
     }
 
-    /**
-     * Updates an existing VipWithdrawFlow model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing VipWithdrawFlow model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
 
     /**
      * Finds the VipWithdrawFlow model based on its primary key value.

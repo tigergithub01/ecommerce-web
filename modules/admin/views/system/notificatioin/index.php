@@ -8,7 +8,7 @@ use app\components\Action2Column;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '广告列表';
+$this->title = '消息通知';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </script>
     <div class='clearfix h1div'>
         <div class='float-right'>
-            <a href='<?= Url::to(['create']) ?>' class='button_link'><i class='icon-plus-sign-alt icon-large'></i>添加新广告</a>
+            <a href='<?= Url::to(['create']) ?>' class='button_link'><i class='icon-plus-sign-alt icon-large'></i>添加记录</a>
         </div>
         <strong class='title'><?= Html::encode($this->title) ?></strong>
     </div> 
@@ -52,26 +52,34 @@ $this->params['breadcrumbs'][] = $this->title;
                  'headerOptions'=>[
                     'style'=>'width:50px;'
                 ],
-            ],
+            ],           
             [
-                'label'=>'图片',
-                'format'=>'raw',
+                'label'=>'发布范围',
+                'value'=>function($m){
+                    return $m->scopeType->pa_val;
+                },
+                'headerOptions'=>[
+                    'style'=>'width:80px;'
+                ],
+            ], 
+            [
+                'label'=>'标题',
+                'value'=>'title',
                 'headerOptions'=>[
                     'style'=>'width:250px;'
                 ],
-                'contentOptions'=>['style'=>'text-align:center;'],
-                'value'=>function($m){
-                    return Html::img(Yii::getAlias('@web/upload/ad/').$m->image_url,['class'=>'adImage']);
-                },
             ],
             [
-                'label'=>'排序',
-                'value'=>'sequence_id'
-            ],           
+                'label'=>'内容',
+                'value'=>'content'
+            ],  
             [
-                'label'=>'跳转地址',
-                'value'=>'redirect_url'
-            ],          
+                'label'=>'发布日期',
+                'value'=>'issue_date',
+                'headerOptions'=>[
+                    'style'=>'width:120px;'
+                ],
+            ],           
             ['class' => Action2Column::className(),
                 'header'=>'操作',
                 'headerOptions'=>['style'=>"text-align:center;width:100px;"],

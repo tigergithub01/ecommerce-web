@@ -3,15 +3,15 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\system\AdInfo */
 
-$this->title = '添加广告';
-$this->params['breadcrumbs'][] = ['label' => '广告列表', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '修改记录: ' . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => '我要赚钱列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = '更新';
 ?>
-<div class="ad-info-create">
+<div class="ad-info-update">
 
     <div class='clearfix h1div'>
         <div class='float-right'>

@@ -7,8 +7,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\system\AdInfo */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => '广告列表', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => '我要赚钱列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ad-info-view">
@@ -38,20 +38,22 @@ $this->params['breadcrumbs'][] = $this->title;
             </td>
         </tr>
         <tr>
-            <td class="td-column" style="width:150px;">图片地址</td>
+            <td class="td-column" style="width:150px;">标题</td>
             <td >
-                <div style="width:220px;overflow:hidden;">
-                    <img src="<?=Yii::getAlias('@web/upload/ad/').html::encode($model->image_url)?>" style="max-width: 100%;">         
-                </div>        
+               <?=html::encode($model->title) ?>
             </td>
         </tr>
         <tr>
-            <td class="td-column" style="width:150px;">排序</td>
-            <td ><?=html::encode($model->sequence_id) ?></td>
+            <td class="td-column" style="width:150px;">内容</td>
+            <td ><?=html::encode($model->content) ?></td>
         </tr>
         <tr>
-            <td class="td-column" style="width:150px;">跳转URL</td>
-            <td ><?=html::encode($model->redirect_url) ?></td>
+            <td class="td-column" style="width:150px;">创建</td>
+            <td ><?=html::encode($model->getCreaterName()) ?>&nbsp;&nbsp;<?=html::encode($model->create_date) ?></td>
+        </tr>
+        <tr>
+            <td class="td-column" style="width:150px;">最后更新</td>
+            <td ><?=html::encode($model->getUpdaterName()) ?>&nbsp;&nbsp;<?=html::encode($model->update_date) ?></td>
         </tr>
     </table>
 

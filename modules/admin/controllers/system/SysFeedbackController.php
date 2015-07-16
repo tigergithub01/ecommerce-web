@@ -3,24 +3,25 @@
 namespace app\modules\admin\controllers\system;
 
 use Yii;
-use app\models\system\AdInfo;
+use app\models\system\SysFeedback;
 use yii\data\ActiveDataProvider;
-use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use app\modules\admin\controllers\MyController;
 
 /**
  * AdInfoController implements the CRUD actions for AdInfo model.
  */
-class AdInfoController extends MyController {
+class SysFeedbackController extends MyController {
 
     /**
      * Lists all AdInfo models.
      * @return mixed
      */
     public function actionIndex() {
+        $query=SysFeedback::find()->joinWith("vip")->orderBy(['id' => SORT_DESC]);
+        
         $dataProvider = new ActiveDataProvider([
-            'query' => AdInfo::find()->orderBy(['id' => SORT_DESC]),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -45,26 +46,12 @@ class AdInfoController extends MyController {
      * @return mixed
      */
     public function actionCreate() {
-        $model = new AdInfo();
+        $model = new SysFeedback();
+        $model['create_user_id']=Yii::$app->user->identity->id;
+        $model['create_date']=date('Y-m-d H:i:s',time());
 
-        if ($model->load(Yii::$app->request->post())) {
-
-            $model->file = $im = UploadedFile::getInstance($model, 'file');
-            $model->image_url = " ";
-            if ($im && ($model->image_url = $im->baseName) && $model->validate()) {
-                $f = date('YmdHms') . rand(1000, 9999) . '.' . $im->extension;
-                $newfileName = Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $f;
-                $im->saveAs($newfileName);
-                $model->image_url = $f;
-
-                //生成缩略图
-                $th = new \app\components\Thumb();
-                $th->scaleImage($newfileName, $newfileName, 220);
-            }
-
-            if ($model->save(false)) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -80,29 +67,11 @@ class AdInfoController extends MyController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $oldimage = $model['image_url'];
-        $newfileName = "";
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->file = $im = UploadedFile::getInstance($model, 'file');
-
-            if ($im && $model->validate()) {
-                $f = date('YmdHms') . rand(1000, 9999) . '.' . $im->extension;
-                $newfileName = Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $f;
-                if ($im->saveAs($newfileName)) {
-                    $model->image_url = $f;
-                    //生成缩略图
-                    $th = new \app\components\Thumb();
-                    $th->scaleImage($newfileName, $newfileName, 220);
-                }
-
-                if ($model->save(false)) {
-                    if ($im) {
-                        @unlink(Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $oldimage);
-                    }
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
+        $model['update_user_id']=Yii::$app->user->identity->id;
+        $model['update_date']=date('Y-m-d H:i:s',time());
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -117,8 +86,7 @@ class AdInfoController extends MyController {
      * @return mixed
      */
     public function actionDelete($id) {
-        $model = $this->findModel($id);
-        @unlink(Yii::getAlias('@webroot/upload/ad/') . $model->image_url);
+        $model = $this->findModel($id);       
         $model->delete();
 
         return $this->redirect(['index']);
@@ -132,7 +100,7 @@ class AdInfoController extends MyController {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = AdInfo::findOne($id)) !== null) {
+        if (($model = SysFeedback::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

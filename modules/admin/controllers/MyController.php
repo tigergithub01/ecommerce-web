@@ -31,4 +31,12 @@ class MyController extends Controller
            
         ]; 
     }
+    
+    public function ShowMessage($msg,$redirectUrl,$duration=5){
+        $this->redirect(['comm-message/show',
+            'msg'=>$msg,
+            'redirectUrl'=>$redirectUrl,
+            'duration'=>$duration,
+        ]);
+    }
 }

@@ -89,14 +89,16 @@ use yii\helpers\Url;
             <li class='menu1'><a href=""><span class="m11">产品管理</span></a>
                 <ul class="submenu">
                     <li><a href="<?=Url::to(['product/product-type/'])?>"><span class="m2">产品类别</span></a></li>
-                    <li><a href="<?=Url::to(['product/product/'])?>"><span class="m2">产品列表</span></a></li>                    
+                    <li><a href="<?=Url::to(['product/product/'])?>"><span class="m2">产品列表</span></a></li>
+                    <!--<li><a href="<?=Url::to(['product/product-comment'])?>"><span class="m2">产品反馈</span></a></li>-->
                 </ul>
             </li>
             <li class='menu1'><a href=""><span class="m11">会员管理</span></a>
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['vip/vip'])?>"><span class="m2">会员列表</span></a></li>
-                    <li><a href="<?=Url::to(['product/product-comment'])?>"><span class="m2">会员反馈</span></a></li>
-                    
+                    <li><a href="<?=Url::to(['system/sys-feedback'])?>"><span class="m2">会员反馈</span></a></li>
+                    <li><a href="<?=Url::to(['vip/vip-income'])?>"><span class="m2">会员收入记录</span></a></li>               
+                    <li><a href="<?=Url::to(['finance/vip-withdraw-flow'])?>"><span class="m2">会员提现单</span></a></li>               
                 </ul>
             </li>
             <li class='menu1'><a href=""><span class="m11">订单管理</span></a>
@@ -124,24 +126,27 @@ use yii\helpers\Url;
                 <ul class="submenu">                   
                     <li><a href="<?=Url::to(['basic/pay-type'])?>"><span class="m2">支付信息</span></a></li>
                     <li><a href="<?=Url::to(['basic/delivery-type'])?>"><span class="m2">配送信息</span></a></li>
-                    <li><a href="<?=Url::to(['basic/province'])?>"><span class="m2">区域信息</span></a></li>                    
+                    <li><a href="<?=Url::to(['basic/province'])?>"><span class="m2">区域信息</span></a></li>
+                    <li><a href="<?=Url::to(['basic/deduct-regular'])?>"><span class="m2">分润规则</span></a></li>
+                    <li><a href="<?=Url::to(['system/ad-info'])?>"><span class="m2">广告设置</span></a></li>
+                    <li><a href="<?=Url::to(['system/earn-guild'])?>"><span class="m2">我要赚钱</span></a></li>
+                    <li><a href="<?=Url::to(['system/notificatioin'])?>"><span class="m2">通知消息</span></a></li>                  
+                    <li><a href="<?=Url::to(['basic/sale-agreement'])?>"><span class="m2">销售协议</span></a></li>                  
+                    <li><a href="<?=Url::to(['basic/usage-rights'])?>"><span class="m2">注册使用权</span></a></li>                  
                 </ul>
             </li>
             
             <li class='menu1'><a href=""><span class="m11">系统设置</span></a>
-                <ul class="submenu">                   
+                <ul class="submenu">                    
                     <li><a href="<?=Url::to(['basic/user'])?>"><span class="m2">用户信息</span></a></li>
                     <li><a href="<?=Url::to(['basic/role'])?>"><span class="m2">角色信息</span></a></li>
                     <li><a href="<?=Url::to(['basic/user/change-my-password'])?>"><span class="m2">密码修改</span></a></li>
-                    <li><a href="<?=Url::to(['system/operation-log'])?>"><span class="m2">操作日志</span></a></li>
-                    
+                    <li><a href="<?=Url::to(['system/operation-log'])?>"><span class="m2">后台操作日志</span></a></li>                   
+                    <li><a href="<?=Url::to(['system/vip-operation-log'])?>"><span class="m2">会员操作日志</span></a></li>                   
                 </ul>
             </li>           
         </ul>
     </div>
-
-
-  
 
 <?php $this->endBody() ?>
 </body>

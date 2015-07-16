@@ -5,13 +5,13 @@ use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\system\AdInfo */
+/* @var $model app\models\basic\DeliveryType */
 
-$this->title = '添加广告';
-$this->params['breadcrumbs'][] = ['label' => '广告列表', 'url' => ['index']];
+$this->title = '添加后台用户';
+$this->params['breadcrumbs'][] = ['label' => '后台用户', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ad-info-create">
+<div class="delivery-type-create">
 
     <div class='clearfix h1div'>
         <div class='float-right'>
