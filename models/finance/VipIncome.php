@@ -3,6 +3,7 @@
 namespace app\models\finance;
 
 use Yii;
+use app\models\vip\Vip;
 
 /**
  * This is the model class for table "t_vip_income".
@@ -49,5 +50,9 @@ class VipIncome extends \yii\db\ActiveRecord
             'settled_amt' => '已结算金额',
         	'can_withdraw_amt' => '可提现金额',
         ];
+    }
+    
+    public function getVip(){
+        return $this->hasOne(Vip::className(), ['id'=>'vip_id']);
     }
 }

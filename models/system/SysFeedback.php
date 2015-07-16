@@ -3,7 +3,7 @@
 namespace app\models\system;
 
 use Yii;
-
+use app\models\vip\Vip;
 /**
  * This is the model class for table "t_sys_feedback".
  *
@@ -60,5 +60,9 @@ class SysFeedback extends \yii\db\ActiveRecord
             'phone_model' => '手机型号',
         	'contact_method' => '联系方式，邮箱或电话',
         ];
+    }
+    
+    public function getVip(){
+       return $this->hasOne(Vip::className(), ['id'=>'vip_id']);
     }
 }

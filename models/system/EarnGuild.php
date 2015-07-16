@@ -54,4 +54,12 @@ class EarnGuild extends \yii\db\ActiveRecord
             'update_date' => '更新人',
         ];
     }
+    
+    public function getCreaterName(){
+        return Yii::$app->db->createCommand('select user_name from t_user where id=:id',[':id'=>$this->create_user_id])->queryScalar();
+    }
+    
+    public function getUpdaterName(){
+        return Yii::$app->db->createCommand('select user_name from t_user where id=:id',[':id'=>$this->update_user_id])->queryScalar();
+    }
 }

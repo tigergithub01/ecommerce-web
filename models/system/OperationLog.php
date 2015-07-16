@@ -3,7 +3,7 @@
 namespace app\models\system;
 
 use Yii;
-
+use yii\data\SqlDataProvider;
 /**
  * This is the model class for table "t_operation_log".
  *
@@ -59,5 +59,33 @@ class OperationLog extends \yii\db\ActiveRecord
             'op_url' => '操作对应完整URL',
             'op_desc' => '操作描述',
         ];
+    }
+    
+    public static function getList($params){
+        $sql="select a.*,b.user_id,b.user_name,c.code as module_code,c.name as module_name,d.name as operation_name,d.code as operation_code from "
+                ." t_operation_log a left join t_user b on a.user_id=b.id"
+                ." left join t_module c on a.module_id=c.id"
+                ." left join t_operation d on a.operation_id=d.id";
+        
+        $countSql="select count(*) as num from t_operation_log a";
+        $count= Yii::$app->db->createCommand($countSql,$params)->queryScalar();
+        
+        $provider = new SqlDataProvider([
+            'sql' => $sql,
+            'params' => $params,
+            'totalCount' => intval($count),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort'=>[
+                'attributes'=>['a.id'=>SORT_DESC],
+            ],
+        ]);
+        
+        return $provider;
+    }
+    
+    public static function  addLog($log){
+        $log=new OperationLog();
     }
 }

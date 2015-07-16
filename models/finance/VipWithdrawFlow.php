@@ -3,6 +3,7 @@
 namespace app\models\finance;
 
 use Yii;
+use app\models\vip\Vip;
 
 /**
  * This is the model class for table "t_vip_withdraw_flow".
@@ -17,21 +18,19 @@ use Yii;
  * @property string $settled_date
  * @property integer $status
  */
-class VipWithdrawFlow extends \yii\db\ActiveRecord
-{
+class VipWithdrawFlow extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 't_vip_withdraw_flow';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['sheet_type_id', 'code', 'apply_date', 'vip_id', 'status'], 'required'],
             [['sheet_type_id', 'vip_id', 'status'], 'integer'],
@@ -44,8 +43,7 @@ class VipWithdrawFlow extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => '主键编号',
             'sheet_type_id' => '单据类型',
@@ -58,8 +56,35 @@ class VipWithdrawFlow extends \yii\db\ActiveRecord
             'status' => '提现申请状态（1:已结算、0：未结算）',
         ];
     }
-    
+
     /* public function getStatusName(){
-    	return ($this->status==1)?'已结算':'未结算';
-    } */
+      return ($this->status==1)?'已结算':'未结算';
+      } */
+
+    public function getVip() {
+        return $this->hasOne(Vip::className(), ['id' => 'vip_id']);
+    }
+
+    public function withdraw() {
+        $sql = "update t_vip_income"
+                . " inner join t_vip_withdraw_flow on t_vip_income.vip_id=t_vip_withdraw_flow.vip_id"
+                . " set t_vip_income.can_settle_amt=ifnull(t_vip_income.can_settle_amt,0) -ifnull(t_vip_withdraw_flow.settled_amt,0)"
+                . " ,t_vip_income.can_withdraw_amt=ifnull(t_vip_income.can_withdraw_amt,0) - ifnull(t_vip_withdraw_flow.settled_amt,0)"
+                . " ,t_vip_income.settled_amt=ifnull(t_vip_income.settled_amt,0) + ifnull(t_vip_withdraw_flow.settled_amt,0)"
+                . " where t_vip_withdraw_flow.id=:id";
+
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            Yii::$app->db->createCommand($sql, [':id' => $this->id])->execute();
+            $sql = "update t_vip_withdraw_flow set status=1,settled_date=now() where id=:id";
+            Yii::$app->db->createCommand($sql, [':id' => $this->id])->execute();
+            $transaction->commit();
+            return true;
+        } catch (Exception $ex) {
+            $transaction->rollBack();
+            throw $ex;
+        }
+    }
+
 }

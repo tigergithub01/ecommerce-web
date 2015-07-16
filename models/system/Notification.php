@@ -3,6 +3,7 @@
 namespace app\models\system;
 
 use Yii;
+use app\models\basic\Parameter;
 
 /**
  * This is the model class for table "t_notificatioin".
@@ -49,5 +50,9 @@ class Notification extends \yii\db\ActiveRecord
             'issue_date' => '消息发布日期',
             'content' => '消息内容',
         ];
+    }
+    
+    public function getScopeType(){
+        return $this->hasOne(Parameter::className(), ['id'=>'scope_type']);
     }
 }
