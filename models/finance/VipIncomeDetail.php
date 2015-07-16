@@ -17,6 +17,10 @@ use app\models\order\SoSheet;
  * @property integer $sub_vip_id
  * @property string $amount
  * @property string $deduct_price
+ * @property string $deduct_rate
+ * @property string $create_date
+ * @property string $widthdraw_date
+ * @property string $description
  */
 class VipIncomeDetail extends \yii\db\ActiveRecord {
 
@@ -76,7 +80,11 @@ class VipIncomeDetail extends \yii\db\ActiveRecord {
             'vip_id' => '会员编号',
             'sub_vip_id' => '贡献分润会员编号',
             'amount' => '贡献分润金额',
-            'deduct_price' => '产品分润单价'
+            'deduct_price' => '产品分润单价',
+        	'deduct_rate' => '分润比例',
+        	'create_date' => '创建日期',
+        	'widthdraw_date' => '提现自动汇总日期，默认为分润记录产生后7天',
+        	'description' => '描述',
         ];
     }
 
