@@ -258,4 +258,9 @@ footer .nav a{
 	height: 0px;
 }
 
+.weixin_download_notify{
+	/* background:	url(/images/sale/weixin_download_notify.png) no-repeat; */
+	/* background-image: url(/images/sale/weixin_download_notify.png) */
+}
+
 
