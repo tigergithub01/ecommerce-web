@@ -30,7 +30,8 @@ use Yii;
  * @property string $deduct_level1
  * @property string $deduct_level2
  * @property string $deduct_level3
- * @property string $deduct_level4
+ * @property string $show_in_homepage
+ * @property string $homepage_index
  */
 class Product extends \yii\db\ActiveRecord
 {    
@@ -53,7 +54,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['code', 'name', 'type_id', 'status', 'can_return_flag'], 'required'],
             [['type_id', 'status', 'create_user_id', 'update_user_id', 'can_return_flag', 'return_days', 'regular_type_id', 'special_deduct_flag'], 'integer'],
-            [['price', 'cost_price', 'stock_quantity', 'safety_quantity', 'deduct_price', 'deduct_level1', 'deduct_level2', 'deduct_level3', 'deduct_level4'], 'number'],
+            [['price', 'cost_price', 'stock_quantity', 'safety_quantity', 'deduct_price', 'deduct_level1', 'deduct_level2', 'deduct_level3', 'deduct_level4','show_in_homepage','homepage_index'], 'number'],
             [['description', 'return_desc'], 'string'],
             [['create_date', 'update_date'], 'safe'],
             [['code'], 'string', 'max' => 30],
@@ -92,6 +93,8 @@ class Product extends \yii\db\ActiveRecord
             'deduct_level3' => '三级分润比例',
             'deduct_level4' => '四级分润比例',
             'cost_price'=>'成本价格',
+        	'show_in_homepage'=>'是否在首页显示?1:显示;0:不显示',
+        	'homepage_index'=>'在首页显示顺序:1,2,3.....',
         ];
     }
     
