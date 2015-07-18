@@ -22,6 +22,7 @@ class ProductController extends BaseController {
 	public function actionIndex() {
 		// $productList = Product::find ()->all ();
 		$product_name = isset ( $_REQUEST ['product_name'] ) ? $_REQUEST ['product_name'] : '';
+		$show_in_homepage = isset ( $_REQUEST ['show_in_homepage'] ) ? $_REQUEST ['show_in_homepage'] : '';
 		$product_type_id = isset ( $_REQUEST ['product_type_id'] ) ? $_REQUEST ['product_type_id'] : null;
 		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
 		$order_direction = isset ( $_REQUEST ['order_direction'] ) ? $_REQUEST ['order_direction'] : null;
@@ -41,6 +42,13 @@ class ProductController extends BaseController {
 					':type_id' => $product_type_id 
 			] );
 		}
+		
+		if (! empty ( $show_in_homepage )) {
+			$query->andWhere ( 'show_in_homepage = :show_in_homepage', [
+					':show_in_homepage' => $show_in_homepage
+			] );
+		}
+		
 		
 		// order
 		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
