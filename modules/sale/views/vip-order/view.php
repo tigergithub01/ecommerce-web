@@ -84,7 +84,7 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		 -->
 		 <?php if ($model['status']==3001){?>
 			<a
-			class="default primary" onclick="return confirm('是否取消订单?');" href="<?=Url::toRoute(['/sale/vip-order/cancel','orderId'=>$model['id']])?>">取消订单1</a>
+			class="default primary" onclick="return confirm('是否取消订单?');" href="<?=Url::toRoute(['/sale/vip-order/cancel','orderId'=>$model['id']])?>">取消订单</a>
 		 <a
 			class="default primary" href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$model['id']])?>">付款</a>
 		<?php }else if($model['status']==3003){?>	
