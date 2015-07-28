@@ -44,6 +44,8 @@ class DeductRegularController extends MyController {
         $model = new DeductRegular();       
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'添加分润规矩','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
           return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -62,6 +64,8 @@ class DeductRegularController extends MyController {
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'修改分润规则','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
            return $this->redirect(['index']);
         }
 

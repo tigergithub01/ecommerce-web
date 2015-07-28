@@ -3,7 +3,8 @@
 namespace app\models\system;
 
 use Yii;
-
+use app\models\vip\Vip;
+use app\models\system\Module;
 /**
  * This is the model class for table "t_vip_operation_log".
  *
@@ -141,4 +142,12 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 				'op_app_ver' => 'app版本号'
 		];
 	}
+        
+        public function getVip(){
+            return $this->hasOne(Vip::className(), ['id'=>'vip_id']);
+        }
+        
+        public function getModule(){
+            return $this->hasOne(Module::className(), ['id'=>'module_id']);
+        }
 }

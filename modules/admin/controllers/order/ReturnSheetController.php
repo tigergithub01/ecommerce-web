@@ -91,6 +91,8 @@ class ReturnSheetController extends MyController
             
             if($v){
                 $transaction->commit();
+                $logData=['op_desc'=>'添加退货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
             }else{
                 $transaction->rollBack();
             }
@@ -156,6 +158,8 @@ class ReturnSheetController extends MyController
             
             if($v){
                 $transaction->commit();
+                $logData=['op_desc'=>'更新退货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
             }else{
                 $transaction->rollBack();
             }            
@@ -177,8 +181,10 @@ class ReturnSheetController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除退货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $model->delete();
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 
@@ -203,6 +209,8 @@ class ReturnSheetController extends MyController
         $request=Yii::$app->request;
         $id=$request->post("id");
         ReturnSheet ::updateStatus($id,5002);
+        $logData=['op_desc'=>'审核退货单','op_data'=>"id:$id,status:5002"];
+        $this->logAdmin($logData);
         
         return \yii\helpers\Json::encode(['err'=>0,'msg'=>'ok']);  
     }

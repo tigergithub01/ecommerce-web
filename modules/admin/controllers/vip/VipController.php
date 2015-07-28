@@ -69,6 +69,10 @@ class VipController extends \app\modules\admin\controllers\MyController
         $model->password=md5(substr($model->vip_no,-6));
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $logData=['op_desc'=>'添加会员','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+                    
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -88,6 +92,10 @@ class VipController extends \app\modules\admin\controllers\MyController
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $logData=['op_desc'=>'修改会员','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -104,8 +112,10 @@ class VipController extends \app\modules\admin\controllers\MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除会员','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $model->delete();
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 

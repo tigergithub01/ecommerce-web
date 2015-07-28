@@ -78,6 +78,9 @@ class ProductController extends MyController
         
         if ($c && $model->save()) {
             Product::AddPhotos($productPicNewModel,$model->id);
+            
+            $logData=['op_desc'=>'添加产品','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -106,6 +109,8 @@ class ProductController extends MyController
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Product::AddPhotos($productPicNewModel,$model->id);
+            $logData=['op_desc'=>'修改产品','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -146,10 +151,10 @@ class ProductController extends MyController
     public function actionDelete($id)
     {
         $model=$this->findModel($id);
-        
+        $logData=['op_desc'=>'删除产品','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];            
         Product::deleteAllPic($model->id,0);
         $model->delete();
-
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
     

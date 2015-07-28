@@ -64,6 +64,8 @@ class RefundSheetController extends MyController
         $model['sheet_date']=date(Yii::$app->params['date_format'],time());
             
         if ($v && $model->save()){
+            $logData=['op_desc'=>'添加退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['order/so-sheet/view', 'id' => $model->order_id]); 
         }
         else{
@@ -88,6 +90,8 @@ class RefundSheetController extends MyController
         $model['user_id']=Yii::$app->user->identity->id;  
             
         if ($v && $model->save()){
+            $logData=['op_desc'=>'修改退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
             return $this->redirect(['order/so-sheet/view', 'id' => $model->order_id]); 
         }
         else{
@@ -105,8 +109,10 @@ class RefundSheetController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $model->delete();
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 
@@ -131,7 +137,8 @@ class RefundSheetController extends MyController
         $request=Yii::$app->request;
         $id=$request->post("id");
         ReturnSheet ::updateStatus($id,5002);
-        
+        $logData=['op_desc'=>'审核退款单','op_data'=>"id:$id,status:5002"];
+        $this->logAdmin($logData);
         return \yii\helpers\Json::encode(['err'=>0,'msg'=>'ok']);  
     }
 }

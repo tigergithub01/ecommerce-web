@@ -59,6 +59,8 @@ class DeliveryTypeController extends MyController
         $model = new DeliveryType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'添加配送方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -78,6 +80,8 @@ class DeliveryTypeController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'修改配送方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -94,8 +98,10 @@ class DeliveryTypeController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除配送方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+        $model->delete();
         return $this->redirect(['index']);
     }
 

@@ -70,8 +70,9 @@ class OutStockSheetController extends MyController
         }
         
         if($orderModel->status!==3002){
-            echo "订单在该状态下无法进行发货操作";
-            exit;
+            $this->ShowMessage("订单在该状态下无法进行发货操作");
+            //echo "订单在该状态下无法进行发货操作";
+            //exit;
         }
         
         
@@ -97,6 +98,8 @@ class OutStockSheetController extends MyController
             
             if($v){
                 $transaction->commit();
+                $logData=['op_desc'=>'添加发货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                $this->logAdmin($logData);
             }else{
                 $transaction->rollBack();
             }
@@ -166,6 +169,8 @@ class OutStockSheetController extends MyController
             
             if($v){
                 $transaction->commit();
+                $logData=['op_desc'=>'修改发货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                $this->logAdmin($logData);
             }else{
                 $transaction->rollBack();
             }
@@ -189,8 +194,10 @@ class OutStockSheetController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'审核会员提现申请','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];        
+        $model->delete();
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 
@@ -215,7 +222,8 @@ class OutStockSheetController extends MyController
         $request=Yii::$app->request;
         $id=$request->post("id");
         OutStockSheet::updateStatus($id,4002);
-        
+        $logData=['op_desc'=>'确认发货完成','op_data'=>$id.":4002"];
+        $this->logAdmin($logData);
         return \yii\helpers\Json::encode(['err'=>0,'msg'=>'ok']);        
     }
 }

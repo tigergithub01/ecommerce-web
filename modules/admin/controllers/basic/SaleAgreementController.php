@@ -61,6 +61,8 @@ class SaleAgreementController extends MyController {
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData = ['op_desc' => '修改销售协议', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
            return $this->redirect(['index']);
         }
 

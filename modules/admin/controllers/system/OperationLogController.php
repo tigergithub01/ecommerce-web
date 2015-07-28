@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers\system;
 
 use Yii;
 use app\models\system\OperationLog;
+use app\models\system\AdminOperationLog;
 use app\modules\admin\controllers\MyController;
 
 
@@ -21,7 +22,7 @@ class OperationLogController extends MyController
         $params=[];
         
         return $this->render('index', [
-            'dataProvider' => OperationLog::getList($params),
+            'dataProvider' => AdminOperationLog::getList($params),
         ]);
     }
 

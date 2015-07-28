@@ -48,7 +48,7 @@ class AdInfoController extends MyController {
         $model = new AdInfo();
 
         if ($model->load(Yii::$app->request->post())) {
-
+            
             $model->file = $im = UploadedFile::getInstance($model, 'file');
             $model->image_url = " ";
             if ($im && ($model->image_url = $im->baseName) && $model->validate()) {
@@ -63,6 +63,8 @@ class AdInfoController extends MyController {
             }
 
             if ($model->save(false)) {
+                $logData=['op_desc'=>'添加广告','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                $this->logAdmin($logData);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -86,17 +88,24 @@ class AdInfoController extends MyController {
         if ($model->load(Yii::$app->request->post())) {
             $model->file = $im = UploadedFile::getInstance($model, 'file');
 
-            if ($im && $model->validate()) {
-                $f = date('YmdHms') . rand(1000, 9999) . '.' . $im->extension;
-                $newfileName = Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $f;
-                if ($im->saveAs($newfileName)) {
-                    $model->image_url = $f;
-                    //生成缩略图
-                    $th = new \app\components\Thumb();
-                    $th->scaleImage($newfileName, $newfileName, 220);
+            if ($model->validate()) {
+                
+                if ($im) {
+                    $f = date('YmdHms') . rand(1000, 9999) . '.' . $im->extension;
+                    $newfileName = Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $f;
+                    if ($im->saveAs($newfileName)) {
+                        $model->image_url = $f;
+                        //生成缩略图
+                        $th = new \app\components\Thumb();
+                        $th->scaleImage($newfileName, $newfileName, 220);
+                    }
                 }
 
+
                 if ($model->save(false)) {
+                    $logData=['op_desc'=>'修改广告','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                    $this->logAdmin($logData);
+            
                     if ($im) {
                         @unlink(Yii::getAlias('@webroot/upload/ad') . DIRECTORY_SEPARATOR . $oldimage);
                     }
@@ -120,6 +129,8 @@ class AdInfoController extends MyController {
         $model = $this->findModel($id);
         @unlink(Yii::getAlias('@webroot/upload/ad/') . $model->image_url);
         $model->delete();
+        $logData=['op_desc'=>'删除广告','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
 
         return $this->redirect(['index']);
     }

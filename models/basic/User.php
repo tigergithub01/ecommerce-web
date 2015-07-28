@@ -84,11 +84,15 @@ class User extends \yii\db\ActiveRecord
     }
     
     public function setUserRoles($roles){
+        
         $sql="delete from t_role_user where user_id=:user_id";
         Yii::$app->db->createCommand($sql,[':user_id'=>$this->id])->execute();
         $rows=[];
         foreach ($roles as &$r) {
             $rows[]=[$r,$this->id];            
+        }
+        if(count($rows)==0){
+            return;
         }
         Yii::$app->db->createCommand()->batchInsert('t_role_user', ['role_id','user_id'], $rows)->execute();
     }

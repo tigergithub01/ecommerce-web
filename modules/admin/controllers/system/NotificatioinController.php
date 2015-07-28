@@ -48,7 +48,9 @@ class NotificatioinController extends MyController {
         $model->issue_date=date('Y-m-d H:i:s',time());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          return $this->redirect(['view', 'id' => $model->id]);
+            $logData = ['op_desc' => '添加通知', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -66,7 +68,9 @@ class NotificatioinController extends MyController {
         $model = $this->findModel($id);      
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           return $this->redirect(['view', 'id' => $model->id]);
+            $logData = ['op_desc' => '修改通知', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -81,9 +85,10 @@ class NotificatioinController extends MyController {
      * @return mixed
      */
     public function actionDelete($id) {
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
         $model->delete();
-
+        $logData = ['op_desc' => '删除通知', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 

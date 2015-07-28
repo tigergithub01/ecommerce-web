@@ -33,23 +33,7 @@ class UsageRightsController extends MyController {
                     'model' => $this->findModel($id),
         ]);
     }
-
-    /**
-     * Creates a new AdInfo model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate() {
-        $model = new UsageRights();       
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-                    'model' => $model,
-        ]);
-    }
+    
 
     /**
      * Updates an existing AdInfo model.
@@ -61,25 +45,14 @@ class UsageRightsController extends MyController {
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData = ['op_desc' => '修改注册使用权', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
                     'model' => $model,
         ]);
-    }
-
-    /**
-     * Deletes an existing AdInfo model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id) {
-        $model = $this->findModel($id);       
-        $model->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

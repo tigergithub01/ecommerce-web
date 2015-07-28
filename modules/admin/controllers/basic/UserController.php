@@ -57,6 +57,8 @@ class UserController extends MyController
         if ($c && $model->save()) {
             $roles=Yii::$app->request->post("userRoles",[]);
             $model->setUserRoles($roles);
+            $logData = ['op_desc' => '添加用户', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -80,6 +82,8 @@ class UserController extends MyController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $roles=Yii::$app->request->post("userRoles",[]);
             $model->setUserRoles($roles);
+            $logData = ['op_desc' => '修改用户', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -96,7 +100,9 @@ class UserController extends MyController
         $model['update_user_id']=Yii::$app->user->identity->id;
         $model['update_date']=date(Yii::$app->params['date_format'],time());
         
-        if ($c && $model->save()) {           
+        if ($c && $model->save()) {    
+            $logData = ['op_desc' => '用户修改密码', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('change-password', [
@@ -113,8 +119,10 @@ class UserController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $logData = ['op_desc' => '删除用户', 'op_data' => json_encode($model->attributes, JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
+        $model->delete();
         return $this->redirect(['index']);
     }
 
@@ -144,6 +152,8 @@ class UserController extends MyController
         
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             $msg="修改成功";
+            $logData = ['op_desc' => '登录用户修改密码'];
+            $this->logAdmin($logData);
         }
         
          return $this->render('change-my-password', [

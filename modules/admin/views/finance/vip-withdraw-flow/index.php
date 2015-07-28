@@ -30,7 +30,7 @@ $(function(){
 
     <div class='clearfix h1div'>
         <div class='float-right'>
-            <a href='<?=Url::to(['create'])?>' class='button_link'><i class='icon-plus-sign-alt icon-large'></i>添加会员</a>
+            
         </div>
         <strong class='title'><?= Html::encode($this->title) ?></strong>
     </div>

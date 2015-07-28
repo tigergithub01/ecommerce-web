@@ -62,6 +62,8 @@ class PayTypeController extends MyController
         $model = new PayType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'添加支付方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -81,6 +83,8 @@ class PayTypeController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'修改支付方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -97,8 +101,10 @@ class PayTypeController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除支付方式','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
+        $model->delete();
         return $this->redirect(['index']);
     }
 

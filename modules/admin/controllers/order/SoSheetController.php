@@ -69,6 +69,10 @@ class SoSheetController extends MyController
         $model = new SoSheet();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $logData=['op_desc'=>'添加发货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -88,6 +92,10 @@ class SoSheetController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $logData=['op_desc'=>'修改发货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
+            
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -104,8 +112,10 @@ class SoSheetController extends MyController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model=$this->findModel($id);
+        $logData=['op_desc'=>'删除发货单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $model->delete();
+        $this->logAdmin($logData);
         return $this->redirect(['index']);
     }
 

@@ -43,36 +43,40 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [           
             [
                 'label'=>'时间',
-                'headerOptions'=>['style'=>"width:100px;"],
                 'value'=>'op_date'
             ],
             [
                 'label'=>'用户',
-                'headerOptions'=>['style'=>"width:100px;"],
                 'value'=>'user_id'
-            ],            
+            ],
+            [
+                'label'=>'模块',
+                'value'=>function($model){                    
+                    return $model['module_name'].'('.$model['module_code'].')';
+                },
+            ],
+            [
+                'label'=>'操作',
+                'value'=>function($model){                    
+                    return $model['operation_name'].'('.$model['operation_code'].')';
+                },
+            ],
             [
                 'label'=>'IP地址',
-                'headerOptions'=>['style'=>"width:100px;"],
                 'value'=>'op_ip_addr'
-            ],           
+            ],
+            [
+                'label'=>'浏览器',
+                'value'=>'op_browser_type'
+            ],
+            [
+                'label'=>'URL',
+                'value'=>'op_url'
+            ],
             [
                 'label'=>'描述',
-                'headerOptions'=>['style'=>"width:150px;"],
                 'value'=>'op_desc'
-            ],
-            [
-                'label'=>'数据',
-                'format'=>'raw',
-                'value'=>function($m){
-                    $h=$m['op_data'];
-                    if(strlen($h)>200){
-                        $h=  substr($h, 0,300).'...';
-                    }
-                    return "<div style='word-wrap:break-word;word-break:break-all;'>".Html::encode($h)."</div>";
-                }
-            ],
-                      
+            ]            
         ],
     ]);
     ?>

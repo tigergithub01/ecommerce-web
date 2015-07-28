@@ -51,6 +51,9 @@ class VipWithdrawFlowController extends MyController
         $model=$this->findModel($id);
         $model->withdraw();
         
+        $logData=['op_desc'=>'审核会员提现申请','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
+        
         $this->ShowMessage('结算成功，已经改变了状态。', $redirectUrl);
         
     }

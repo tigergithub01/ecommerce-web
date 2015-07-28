@@ -68,7 +68,10 @@ class ProductTypeController extends MyController
         
         $parentModel->load(Yii::$app->request->post());
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {   
+          
+            $logData=['op_desc'=>'添加产品类别','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);        
             return $this->redirect(['create']);
         } else {
             return $this->render('create', [
@@ -95,6 +98,8 @@ class ProductTypeController extends MyController
         $parentModel->load(Yii::$app->request->post());
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $logData=['op_desc'=>'修改产品类别','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+            $this->logAdmin($logData);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
