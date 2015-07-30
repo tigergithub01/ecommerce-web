@@ -32,8 +32,7 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 ?>
 
 <div class="product-view wrapper">
-<form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>"
-	id="product_detail_form" method="post"
+<form action="<?=Url::toRoute(['/sale/vip-order-confirm/create'])?>" id="product_detail_form" method="post">
 	<input type="hidden" name="_csrf"
 		value="<?= @Yii::$app->request->csrfToken ?>" />
 
