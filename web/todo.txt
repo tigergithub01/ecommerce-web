@@ -785,3 +785,5 @@ DELIMITER ;
 
 http://www.mantanghao.com/
 
+http://www.mantanghao.com/index.php?r=sale%2Fwxpay%2Fjsapi&code=0219cb21b5b55dd161fa10d382089baN&state=STATE
+
