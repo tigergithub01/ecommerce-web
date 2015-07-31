@@ -52,7 +52,7 @@ class BaseController extends Controller {
 		$model->op_ip_addr = Yii::$app->request->userIP;
 		
 		// op_browser_type
-		$model->op_browser_type = Yii::$app->request->userAgent;
+		$model->op_browser_type = substr(Yii::$app->request->userAgent, 0,300);
 		
 		//phone_model
 		$op_phone_model = isset ( $_REQUEST ['phone_model'] ) ? $_REQUEST ['phone_model'] : null;
@@ -75,7 +75,10 @@ class BaseController extends Controller {
 		$op_app_ver = isset ( $_REQUEST ['app_ver'] ) ? $_REQUEST ['app_ver'] : null;
 		$model->op_app_ver = $op_app_ver;
 		
-		$model->save ();
+		if(!$model->save ()){
+			Yii::trace ( 'VipOperationLog save errors:' );
+			Yii::error($model->errors);
+		}
 		
 		// var_dump ( $action );
 		// var_dump ( Yii::$app->request->userIP );
