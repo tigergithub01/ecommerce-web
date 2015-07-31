@@ -1,5 +1,7 @@
 <?php
 require_once "lib/WxPay.Api.php";
+require_once 'log.php';
+
 /**
  * 
  * JSAPI支付实现类
@@ -30,6 +32,9 @@ class JsApiPay
 	 */
 	public $data = null;
 	
+	/*added by tiger.guo 20150730*/
+	public $curl_timeout = 30;
+	
 	/**
 	 * 
 	 * 通过跳转获取用户的openid，跳转流程如下：
@@ -40,17 +45,40 @@ class JsApiPay
 	 */
 	public function GetOpenid()
 	{
+		$logHandler= new CLogFileHandler(__DIR__."/logs/".date('Y-m-d').'.log');
+		$log = Log::Init($logHandler, 15);
+		
+		
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].$_SERVER['QUERY_STRING']);
+			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi&'.$_SERVER['QUERY_STRING']);
+// 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+			$log::INFO('$baseUrl is:'.$baseUrl);
+			
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
-			Header("Location: $url");
+			
+			Header("Location: $url");			
+			$log::INFO('$url is:'.$url);
+			
 			exit();
 		} else {
 			//获取code码，以获取openid
 		    $code = $_GET['code'];
+		    $log::INFO('code value:'.(isset($code)?$code:''));
+		    
 			$openid = $this->getOpenidFromMp($code);
+			/* if(empty($openid)){
+				exit();
+			} */
+			$log::INFO('$openid:'.(isset($openid)?$openid:''));
+			
+			$callBackUrl = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&order_id='.$_GET['order_id'].'&pay_type_id='.$_GET['pay_type_id'];
+// 			$callBackUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&'.$_SERVER['QUERY_STRING']);
+// 			echo 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&order_id='.$_GET['order_id'].'&pay_type_id='.$_GET['pay_type_id'];
+// 			exit;
+			Header("Location: $callBackUrl");
+			
 			return $openid;
 		}
 	}
@@ -96,7 +124,8 @@ class JsApiPay
 		//初始化curl
 		$ch = curl_init();
 		//设置超时
-		curl_setopt($ch, CURLOP_TIMEOUT, $this->curl_timeout);
+		curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
+// 		curl_setopt($ch, CURLOP_TIMEOUT, $this->curl_timeout);
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,FALSE);
@@ -111,9 +140,15 @@ class JsApiPay
 		$res = curl_exec($ch);
 		curl_close($ch);
 		//取出openid
-		$data = json_decode($res,true);
+		$data = json_decode($res,true);		
+		
+		$logHandler= new CLogFileHandler(__DIR__."/logs/".date('Y-m-d').'.log');
+		$log = Log::Init($logHandler, 15);
+		$log::INFO(json_encode($data));
+		
 		$this->data = $data;
 		$openid = $data['openid'];
+// 		$openid = isset($data['openid'])?$data['openid']:null;
 		return $openid;
 	}
 	

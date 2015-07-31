@@ -12,13 +12,25 @@ require_once 'log.php';
 $logHandler= new CLogFileHandler(__DIR__."/logs/".date('Y-m-d').'.log');
 $log = Log::Init($logHandler, 15);
 
-
+//打印输出数组信息
+function printf_info($data)
+{
+    foreach($data as $key=>$value){
+        echo "<font color='#00ff55;'>$key</font> : $value <br/>";        
+    }
+}
 
 //①、获取用户openid
-$tools = new JsApiPay();
-$openId = $tools->GetOpenid();
+$openId = $model['open_id'];
 
-exit;
+$tools = new JsApiPay();
+/*
+$openId = $tools->GetOpenid();
+$log::INFO('wxjsapi openId:'+(isset($openId)?$openId:''));
+*/
+
+
+
 
 //②、统一下单
 
@@ -40,7 +52,7 @@ $total_fee = $model['WIDtotal_fee'];
 // $total_fee = isset($_POST['WIDtotal_fee'])?$_POST['WIDtotal_fee']:null;
 
 //notify url
-$notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback';
+$notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/notify';
 
 // $notify_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/wxpay/notify']);
 
@@ -123,7 +135,7 @@ $editAddress = $tools->GetEditAddressParameters();
 				var value4 = res.addressDetailInfo;
 				var tel = res.telNumber;
 				
-				alert(value1 + value2 + value3 + value4 + ":" + tel);
+				//alert(value1 + value2 + value3 + value4 + ":" + tel);
 			}
 		);
 	}
@@ -145,7 +157,7 @@ $editAddress = $tools->GetEditAddressParameters();
 </head>
 <body>
     <br/>
-    <font color="#9ACD32"><b>该笔订单支付金额为<span style="color:#f00;font-size:50px">￥<?php echo round($model['order_amt'],2)?></span>元</b></font><br/><br/>
+    <font color="#9ACD32"><b>该笔订单支付金额为<span style="color:#f00;font-size:50px">￥<?php echo round($model['WIDtotal_fee']/100,2)?></span>元</b></font><br/><br/>
 	<div align="center">
 		<button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
 	</div>

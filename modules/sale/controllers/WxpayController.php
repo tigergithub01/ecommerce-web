@@ -23,7 +23,21 @@ class WxpayController extends BaseController {
 	public function actionIndex() {
 		return $this->render ( 'index' );
 	}
+	
 	public function actionJsapi() {
+		$session = Yii::$app->session;
+		$vip = $session->get ( SaleConstants::$session_vip );
+		if (empty ( $vip )) {
+			return $this->redirect ( [
+					'/sale/vip-login/index'
+			] );
+		}	
+		// 		return $this->render ( 'jsapi' );
+		return $this->render ( 'jsapi');
+	
+	}
+	
+	public function actionJsapiCallback() {
 		$session = Yii::$app->session;
 		$vip = $session->get ( SaleConstants::$session_vip );
 		if (empty ( $vip )) {
@@ -32,7 +46,6 @@ class WxpayController extends BaseController {
 			] );
 		}
 		
-		// update order pay $pay_type_id & $pay_amt	
 		
 		$pay_type_id= $_REQUEST ['pay_type_id'];
 		if (empty ( $pay_type_id )) {
@@ -49,15 +62,14 @@ class WxpayController extends BaseController {
 		if(empty($soDetailList)){
 			throw new NotFoundHttpException ( '此订单无购买产品信息' );
 		}
+		
+		//generate pay information
 		$soDetail = $soDetailList [0];
-		$product = $soDetail->product;		
-		
-		
+		$product = $soDetail->product;	
 		$WIDout_trade_no = $soSheet ['code'];
 		$WIDsubject = $product['name'];
 		$WIDtotal_fee = $soSheet['order_amt'] * 100;//微信支付以分为单位
-		$WIDbody = '';		
-		
+		$WIDbody = '';	
 		$model = new PayInfo();
 		$model->pay_type_id = $pay_type_id;
 		$model->WIDout_trade_no = $WIDout_trade_no;
@@ -66,10 +78,12 @@ class WxpayController extends BaseController {
 		$model->WIDbody = $WIDbody;
 		$WIDshow_url = Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']]);
 		$model->WIDshow_url = $WIDshow_url;
+		$model->open_id = $_REQUEST['open_id'];
+		//execute save order,update order pay $pay_type_id & $pay_amt			
 		$service = new VipOrderService ();
 		$service->executeOrderPayApplyWx ( $model->WIDout_trade_no, $soSheet['order_amt'] );
 		// 		return $this->render ( 'jsapi' );
-		return $this->render ( 'jsapi',['model'=>$model] );
+		return $this->render ( 'callback',['model'=>$model] );
 		
 	}
 	
