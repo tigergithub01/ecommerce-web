@@ -10,6 +10,7 @@ class PayInfo extends Model
 	public $WIDtotal_fee;
 	public $WIDbody;
 	public $WIDshow_url;
+	public $open_id;
 
 
 }
