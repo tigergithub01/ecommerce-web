@@ -57,12 +57,27 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 		</div>
 		<div class="payment_btn_bar">
 			<input type="submit" class="submit" value="确认支付"/>
-			<input name="pay_type_id" id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
-			<input name="WIDout_trade_no"  value="<?php echo $model['code']?>" type="hidden"/>
-			<input name="WIDsubject" value="<?php echo $product['name']?>" type="hidden"/>
-			<input name="WIDtotal_fee"  value="<?php echo $model['order_amt']?>" type="hidden"/>
-			<input name="WIDbody"  value="" type="hidden"/>
-			<input name="WIDshow_url" value="<?php echo  Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']])?>" type="hidden"/>
+			<input id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
+			
+			<!--  
+			<input name="PayInfo[pay_type_id]" id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
+			<input name="PayInfo[WIDout_trade_no]"  value="<?php echo $model['code']?>" type="hidden"/>
+			<input name="PayInfo[WIDsubject]" value="<?php echo $product['name']?>" type="hidden"/>
+			<input name="PayInfo[WIDtotal_fee]"  value="<?php echo $model['order_amt']?>" type="hidden"/>
+			<input name="PayInfo[WIDbody]"  value="" type="hidden"/>
+			<input name="PayInfo[WIDshow_url]" value="<?php echo  Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']])?>" type="hidden"/>
+			-->
+			
+			<!-- 
+			<input name="PayInfo_pay_type_id" id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
+			<input name="PayInfo_WIDout_trade_no"  id="WIDout_trade_no" value="<?php echo $model['code']?>" type="hidden"/>
+			<input name="PayInfo_WIDsubject" id="WIDsubject" value="<?php echo $product['name']?>" type="hidden"/>
+			<input name="PayInfo_WIDtotal_fee" id="WIDtotal_fee"  value="<?php echo $model['order_amt']?>" type="hidden"/>
+			<input name="PayInfo_WIDbody" id="WIDbody" value="" type="hidden"/>
+			<input name="PayInfo_product_id" id="product_id" value="<?php echo $product['id']?>" type="hidden"/>
+			<input name="PayInfo_WIDshow_url" id="WIDshow_url" value="<?php echo  Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']])?>" type="hidden"/>
+			-->
+			
 		</div>
 	</form>
 
@@ -100,7 +115,8 @@ $(function(){
 				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-wap-direct/alipayapi')?>');
 			}else if($('#pay_type_id').val()==2){
 				//wxpay
-				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/wxpay/jsapi')?>');
+				var url = '&pay_type_id='+$('#pay_type_id').val();
+				$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/wxpay/jsapi','order_id'=>$model['id']])?>'+url);
 			}
 		}
 		//$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
