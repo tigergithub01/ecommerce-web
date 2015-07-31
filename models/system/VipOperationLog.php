@@ -99,7 +99,7 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 								'op_os_type' 
 						],
 						'string',
-						'max' => 200 
+						'max' => 300 
 				],
 				[ 
 						[ 
