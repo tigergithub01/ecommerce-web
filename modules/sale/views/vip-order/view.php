@@ -71,7 +71,7 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		<hr class="gray_solid">
 		<div class="trade_block">
 			<div>下单时间：<?php echo $model['order_date']?></div>
-			<div>付款时间：-</div>
+			<div>付款时间：<?php echo $model['pay_date']?></div>
 			<!-- 
 			<div>成交时间：-</div>
 			 -->
