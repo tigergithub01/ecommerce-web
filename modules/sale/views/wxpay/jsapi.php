@@ -16,7 +16,7 @@ $log = Log::Init($logHandler, 15);
 function printf_info($data)
 {
 	foreach($data as $key=>$value){
-		echo "<font color='#00ff55;'>$key</font> : $value <br/>";
+		//echo "<font color='#00ff55;'>$key</font> : $value <br/>";
 	}
 }
 
@@ -101,7 +101,7 @@ $editAddress = $tools->GetEditAddressParameters();
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
 				if('get_brand_wcpay_request:ok'==res.err_msg){
-					window.location.href= '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/sale/vip-order/view&orderId='.$model['id']?>';
+					window.location.href= '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/vip-order/view&orderId='.$model['order_id']?>';
 				}
 // 				alert(res.err_code+res.err_desc+res.err_msg);
 			}
