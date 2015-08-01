@@ -52,15 +52,14 @@ class JsApiPay
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi&'.$_SERVER['QUERY_STRING']);
+// 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi&'.$_SERVER['QUERY_STRING']);
 // 			$baseUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+			$baseUrl = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 			$log::INFO('$baseUrl is:'.$baseUrl);
 			
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 			
 			Header("Location: $url");			
-			$log::INFO('$url is:'.$url);
-			
 			exit();
 		} else {
 			//获取code码，以获取openid
@@ -73,11 +72,11 @@ class JsApiPay
 			} */
 			$log::INFO('$openid:'.(isset($openid)?$openid:''));
 			
-			$callBackUrl = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&order_id='.$_GET['order_id'].'&pay_type_id='.$_GET['pay_type_id'];
+// 			$callBackUrl = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&order_id='.$_GET['order_id'].'&pay_type_id='.$_GET['pay_type_id'];
 // 			$callBackUrl = urlencode('http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&'.$_SERVER['QUERY_STRING']);
 // 			echo 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/jsapi-callback&open_id='.$openid.'&order_id='.$_GET['order_id'].'&pay_type_id='.$_GET['pay_type_id'];
 // 			exit;
-			Header("Location: $callBackUrl");
+// 			Header("Location: $callBackUrl");
 			
 			return $openid;
 		}
@@ -144,7 +143,7 @@ class JsApiPay
 		
 		$logHandler= new CLogFileHandler(__DIR__."/logs/".date('Y-m-d').'.log');
 		$log = Log::Init($logHandler, 15);
-		$log::INFO(json_encode($data));
+		$log::INFO('$data is :'.json_encode($data));
 		
 		$this->data = $data;
 		$openid = $data['openid'];

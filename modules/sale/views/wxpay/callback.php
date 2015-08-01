@@ -105,6 +105,13 @@ $editAddress = $tools->GetEditAddressParameters();
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
 				alert(res.err_code+res.err_desc+res.err_msg);
+
+				/**
+				res.err_msg:
+					get_brand_wcpay_request:ok  支付成功
+get_brand_wcpay_request:cancel 支付过程中用户取消
+get_brand_wcpay_request:fail 支付失败
+				*/
 			}
 		);
 	}
