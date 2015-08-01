@@ -52,7 +52,9 @@ class BaseController extends Controller {
 		$model->op_ip_addr = Yii::$app->request->userIP;
 		
 		// op_browser_type
-		$model->op_browser_type = substr(Yii::$app->request->userAgent, 0,300);
+		$userAgent = Yii::$app->request->userAgent;
+		$model->op_browser_type =empty($userAgent)?null:$userAgent;
+		yii::trace($model->op_browser_type);
 		
 		//phone_model
 		$op_phone_model = isset ( $_REQUEST ['phone_model'] ) ? $_REQUEST ['phone_model'] : null;
