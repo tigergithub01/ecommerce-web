@@ -11,6 +11,7 @@ class PayInfo extends Model
 	public $WIDbody;
 	public $WIDshow_url;
 	public $open_id;
+	public $order_id;
 
 
 }
