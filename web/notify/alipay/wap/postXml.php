@@ -20,7 +20,7 @@ $data="<xml><appid><![CDATA[wx10d9f809def66ba3]]></appid>
 
 //$data = array('name' => 'Dennis', 'surname' => 'Pallett');
 
-$cul_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/wxNotify.php';
+$cul_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/alipay/wap/alipayNotify.php';
 
 // create a new curl resource
 $ch = curl_init();
