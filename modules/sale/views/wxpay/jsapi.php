@@ -100,7 +100,10 @@ $editAddress = $tools->GetEditAddressParameters();
 			<?php echo $jsApiParameters; ?>,
 			function(res){
 				WeixinJSBridge.log(res.err_msg);
-				alert(res.err_code+res.err_desc+res.err_msg);
+				if('get_brand_wcpay_request:ok'==res.err_msg){
+					window.location.href= '<?php echo 'http://'.$_SERVER['HTTP_HOST'].'/sale/vip-order/view&orderId='.$model['id']?>';
+				}
+// 				alert(res.err_code+res.err_desc+res.err_msg);
 			}
 		);
 	}

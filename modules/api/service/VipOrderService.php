@@ -17,6 +17,7 @@ use app\models\system\Parameter;
 use app\modules\sale\models\SaleConstants;
 use app\models\order\SoSheetDraft;
 use app\models\order\SoDetailDraft;
+use yii\web\NotFoundHttpException;
 
 class VipOrderService {
 	public function getOrder($orderId) {

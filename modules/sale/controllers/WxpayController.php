@@ -80,6 +80,7 @@ class WxpayController extends BaseController {
 		$model->WIDbody = $WIDbody;
 		$WIDshow_url = Yii::$app->request->hostInfo.URL::toRoute(['/sale/product/view','id'=>$product['id']]);
 		$model->WIDshow_url = $WIDshow_url;
+		$model->order_id = $soSheet['id'];
 // 		$model->open_id = $_REQUEST['open_id'];
 		//execute save order,update order pay $pay_type_id & $pay_amt			
 		$service = new VipOrderService ();
@@ -152,6 +153,8 @@ class WxpayController extends BaseController {
 	}
 	*/
 	public function actionNotify() {
+		/* $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+		var_dump($xml); */
 		return $this->render ( 'notify' );
 	}
 }
