@@ -3,7 +3,22 @@
 $data = $GLOBALS['HTTP_RAW_POST_DATA'];
 //var_dump($data);
 
-//$file_in = file_get_contents("php://input"); //接收post数据
+//$data = file_get_contents("php://input"); //接收post数据
+
+
+/*
+$log = fopen("nofity_log.txt", "w") or die("Unable to open file!");
+fwrite($log,'['.date('Y-m-d H:i:s').']');
+fwrite($log, $data);
+fclose($log);
+*/
+
+file_put_contents("notify_log.txt", '['.date('Y-m-d H:i:s').']', FILE_APPEND);
+file_put_contents("notify_log.txt", PHP_EOL, FILE_APPEND);
+file_put_contents("notify_log.txt", $data, FILE_APPEND);
+file_put_contents("notify_log.txt", PHP_EOL, FILE_APPEND);
+
+// var_dump($data);
 
 //$xml = simplexml_load_string($file_in);//转换post数据为simplexml对象
 
