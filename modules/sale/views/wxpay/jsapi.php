@@ -49,7 +49,7 @@ $total_fee = $model['WIDtotal_fee'];
 
 //notify url
 //$notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/wxpay/notify';
-$notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/wxNotify.php';
+$notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/wx/jsapi/wxNotify.php';
 // $notify_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/wxpay/notify']);
 
 $input = new WxPayUnifiedOrder();

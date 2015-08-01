@@ -108,11 +108,12 @@ $(function(){
 			return false;
 		}else{
 			if($('#pay_type_id').val()==1){
+				var url = '&pay_type_id='+$('#pay_type_id').val();
 				//alipay direct
-				//$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-direct/alipayapi')?>');
+				//$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/alipay-direct/alipayapi','order_id'=>$model['id']])?>'+url);
 				
 				//alipay wap direct
-				$("#order_pay_form").attr('action','<?php echo Url::toRoute('/sale/alipay-wap-direct/alipayapi')?>');
+				$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/alipay-wap-direct/alipayapi','order_id'=>$model['id']])?>'+url);
 			}else if($('#pay_type_id').val()==2){
 				//wxpay
 				var url = '&pay_type_id='+$('#pay_type_id').val();
