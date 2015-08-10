@@ -31,6 +31,24 @@ class DownloadAppController extends BaseController {
 			echo (Json::encode ( new JsonObj ( - 1, '文件不存在。', null ) ));
 		}
 	}
+	
+	public function actionAjaxViewIos() {
+		$app_ios_id = 2;
+		$file_name = null;
+	
+		//get application information
+		$appInfo = AppInfo::findOne ( $app_ios_id );
+		if (! empty ( $appInfo->release_id )) {
+			$appRelease = AppRelease::findOne ( $appInfo->release_id );
+			// 			$file_name = $appRelease->app_path;
+			$json = new JsonObj ( 1, null, $appRelease );
+			echo (Json::encode ( $json ));
+			return;
+		}else{
+			echo (Json::encode ( new JsonObj ( - 1, '文件不存在。', null ) ));
+		}
+	}
+	
 	public function actionViewApp() {
 		$file_name = isset ( $_REQUEST ['app_path'] ) ? $_REQUEST ['app_path'] : null;
 		
