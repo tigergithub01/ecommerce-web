@@ -37,6 +37,8 @@ $(function(){
 		//alert('xx');
 		//<a href="itms-services://?action=download-manifest&amp;url=https://www.xxx.com/zff.plist">苹果下载</a>
 		alert('正在开发中，请耐心等待。')
+		//window.location.href='<?=Url::toRoute(['/sale/download-app/ios'])?>';
+		
 	});
 	
 	$(".weixin_download_notify").css({'width':$(window).width(),'height':$(window).height()});
