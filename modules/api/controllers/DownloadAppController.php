@@ -17,10 +17,15 @@ class DownloadAppController extends BaseController {
 	public $enableCsrfValidation = false;
 	public function actionAjaxView() {
 		$app_android_id = 1;
-		$file_name = null;
+// 		$file_name = null;
+		
+		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
+		if(empty($id)){
+			$id = $app_android_id;
+		}
 		
 		//get application information
-		$appInfo = AppInfo::findOne ( $app_android_id );
+		$appInfo = AppInfo::findOne ( $id );
 		if (! empty ( $appInfo->release_id )) {
 			$appRelease = AppRelease::findOne ( $appInfo->release_id );
 			// 			$file_name = $appRelease->app_path;
@@ -32,6 +37,7 @@ class DownloadAppController extends BaseController {
 		}
 	}
 	
+	/*
 	public function actionAjaxViewIos() {
 		$app_ios_id = 2;
 		$file_name = null;
@@ -48,6 +54,7 @@ class DownloadAppController extends BaseController {
 			echo (Json::encode ( new JsonObj ( - 1, '文件不存在。', null ) ));
 		}
 	}
+	*/
 	
 	public function actionViewApp() {
 		$file_name = isset ( $_REQUEST ['app_path'] ) ? $_REQUEST ['app_path'] : null;
