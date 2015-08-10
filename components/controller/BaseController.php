@@ -77,6 +77,10 @@ class BaseController extends Controller {
 		$op_app_ver = isset ( $_REQUEST ['app_ver'] ) ? $_REQUEST ['app_ver'] : null;
 		$model->op_app_ver = $op_app_ver;
 		
+		//app_type_id
+		$app_type_id = isset ( $_REQUEST ['app_type_id'] ) ? $_REQUEST ['app_type_id'] : null;
+		$model->app_type_id = $app_type_id;
+		
 		if(!$model->save ()){
 			Yii::trace ( 'VipOperationLog save errors:' );
 			Yii::error($model->errors);
