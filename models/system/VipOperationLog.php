@@ -24,7 +24,7 @@ use app\models\system\Module;
  * @property string $op_controller
  * @property string $op_view
  * @property string $op_app_ver
- * @property integer $app_type_id
+ * @property integer $op_app_type_id
  */
 class VipOperationLog extends \yii\db\ActiveRecord {
 	/**
@@ -141,7 +141,7 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 				'op_controller' => 'Yii控制器',
 				'op_view' => 'Yii视图',
 				'op_app_ver' => 'app版本号',
-				'app_type_id' => 'app类型：1:andorid 2:ios'
+				'op_app_type_id' => 'app类型：1:andorid 2:ios',
 		];
 	}
         
