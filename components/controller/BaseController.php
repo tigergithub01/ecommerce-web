@@ -78,9 +78,9 @@ class BaseController extends Controller {
 		$model->op_app_ver = $op_app_ver;
 		
 		//app_type_id
-		$app_type_id = isset ( $_REQUEST ['app_type_id'] ) ? $_REQUEST ['app_type_id'] : null;
-		if(!empty($app_type_id)){
-			$model->app_type_id = $app_type_id;
+		$op_app_type_id = isset ( $_REQUEST ['app_type_id'] ) ? $_REQUEST ['app_type_id'] : null;
+		if(!empty($op_app_type_id)){
+			$model->op_app_type_id = $op_app_type_id;
 		}		
 		
 		if(!$model->save ()){
