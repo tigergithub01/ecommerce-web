@@ -15,6 +15,7 @@ use Yii;
  * @property string $issue_date
  * @property integer $issue_user_id
  * @property string $app_path
+ * @property integer $app_type_id
  */
 class AppRelease extends \yii\db\ActiveRecord
 {
@@ -56,6 +57,7 @@ class AppRelease extends \yii\db\ActiveRecord
             'issue_date' => '发布日期',
             'issue_user_id' => '发布人',
             'app_path' => '应用下载地址',
+        	'app_type_id' => 'app类型：1:andorid 2:ios',
         ];
     }
 }
