@@ -792,9 +792,16 @@ http://blog.csdn.net/janice0529/article/details/38051987
 
 php.ini设置:
 always_populate_raw_post_data = On
+session.cookie_lifetime=1800
 
 php有三种方法可以post数据,分别为Curl、socket、file_get_contents:
 
 find . -type f -name "*.txt" | xargs grep "phpzixue.cn"
 
 find -name 'notify*.txt';
+
+service httpd start 启动
+
+service httpd restart 重新启动
+
+service httpd stop 停止服务
