@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 
 header {
-	background: #337ab7;
+	/*background: #337ab7;*/
+	background: #cc3433;
 	color: white;
 	text-align: center;
 	margin: 0px;
