@@ -1,4 +1,4 @@
-20150327:
+﻿20150327:
 http://www.yiichina.com/doc/guide/2.0/start-workflow
 http://www.yiiframework.com/download/
 http://www.yiichina.com/doc/guide
@@ -805,3 +805,13 @@ service httpd start 启动
 service httpd restart 重新启动
 
 service httpd stop 停止服务
+
+
+ios版本：
+ipad分享弹出框
+uitableview下拉刷新与上拉加载更多有英文提示。
+webview中浏览产品时，没有返回键。
+ios版本中与php session的保持问题。
+产品过滤选择的时候，选择了条件，但是条件显示值没有改变。
+ios中sqlite数据库被锁住的问题。
+支付宝产品没有申请通过，支付接入待完善。
