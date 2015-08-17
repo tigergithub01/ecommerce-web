@@ -19,8 +19,12 @@ $this->registerCssFile('css/sale/bootstrap.css');
     
     <div class="form-group">
         <?= Html::submitButton('登录', ['class' => 'btn btn-primary','style'=>'width:100%;height:60px;']) ?>
+        
     </div>
-
+	
+	<div style="text-align: right;">
+	<a href="<?=Url::toRoute(['/sale/vip-register/index'])?>">注册新账号</a>
+	</div>
     <?php ActiveForm::end(); ?>
 
 </div>

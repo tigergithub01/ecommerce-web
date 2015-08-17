@@ -141,7 +141,7 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 <style type="text/css">
 /* ------------------------------------------------ 头部 ------------------------------------ */
 header {
-	background: #337ab7;
+	background: #cc3433;
 	color: white;
 	text-align: center;
 	margin: 0px;

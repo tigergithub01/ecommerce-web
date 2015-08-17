@@ -67,7 +67,7 @@ use yii\helpers\Url;
 	function testPhoneVerifyCodeCreate(){
 		$.post('<?php echo Url::toRoute(['/api/sms/create'])?>', 
                 {
-					'PhoneVerifyCode[phone_number]':'13724346640',
+					'PhoneVerifyCode[phone_number]':'13724346621',
 					'PhoneVerifyCode[verify_code]':'111111',
 					'PhoneVerifyCode[sms_content]':'test',
             }, function(data) {
