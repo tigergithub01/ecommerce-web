@@ -12,7 +12,8 @@ $this->registerJsFile ( "js/jquery/jquery-1.8.2.min.js", [
 
 <script type="text/javascript">
 $(function(){
-	window.location.href='<?=Url::toRoute(['/sale/default/index'])?>';	
+	//window.location.href='<?=Url::toRoute(['/sale/default/index'])?>';	
+	window.location.href='<?=Url::toRoute(['/sale/product/index'])?>';	
 });
 </script>
 
