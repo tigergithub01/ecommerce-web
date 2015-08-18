@@ -45,11 +45,11 @@ class Thumb {
         imagecopyresampled($hb, $img, 0, 0, 0, 0, $w, $h, imagesx($img), imagesy($img));
 
         if (substr($info['mime'], -4) == 'jpeg') {
-            imagejpeg($hb, $dest);
+            imagejpeg($hb, $dest,100);
         }
 
         if (substr($info['mime'], -3) == 'png') {
-            imagepng($hb, $dest);
+            imagepng($hb, $dest,0);
         }
 
         imagedestroy($hb);
