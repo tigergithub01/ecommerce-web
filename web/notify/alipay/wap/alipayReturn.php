@@ -1,11 +1,13 @@
 <?php
 
-$data = $GLOBALS['HTTP_RAW_POST_DATA'];
-//var_dump($data);
+// $data = $GLOBALS['HTTP_RAW_POST_DATA'];
+// var_dump($data);
+// exit();
 
-//$data = file_get_contents("php://input"); //接收post数据
-
-
+$data = http_build_query($_GET);
+// $data = file_get_contents("php://input"); //接收post数据
+// var_dump($data);
+// exit();
 /*
 $log = fopen("nofity_log.txt", "w") or die("Unable to open file!");
 fwrite($log,'['.date('Y-m-d H:i:s').']');
@@ -24,6 +26,9 @@ file_put_contents("notify_log.txt", PHP_EOL, FILE_APPEND);
 
 
 $notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/alipay-wap-direct/return';
+$notify_url = $notify_url.'&'.$data;
+Header("Location: $notify_url");
+/*
 // create a new curl resource
 $ch = curl_init();
 // set URL and other appropriate options
@@ -33,5 +38,6 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 // grab URL, and print
 curl_exec($ch);
 curl_close($ch);
+*/
 
 exit();
