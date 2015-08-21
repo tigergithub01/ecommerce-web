@@ -9,12 +9,16 @@ use app\modules\sale\models\SaleConstants;
 
 class BaseSaleController extends BaseController {
 	public function beforeAction($action) {
-		$session = Yii::$app->session;
+		$session = Yii::$app->session;		
 		$vip = $session->get ( SaleConstants::$session_vip );
 		if (empty ( $vip ) || !isset($vip)) {
+			$last_access_url = Yii::$app->request->absoluteUrl;
+			$session->set(SaleConstants::$last_access_url, $last_access_url);
 			return $this->redirect ( [ 
 					'/sale/vip-login/index' 
 			] );
+		}else{
+			$session->remove(SaleConstants::$last_access_url);
 		}
 		return parent::beforeAction ( $action );
 	}

@@ -24,6 +24,16 @@ class VipLoginController extends BaseController
     public function actionIndex()
     {
     	$model = new VipForm(['scenario' => 'login']);
+    	//TODO:
+    	$session = Yii::$app->session;
+    	if(!($session->isActive)){
+    		$session->open();
+    	}
+    	$redirect_url = isset ( $_REQUEST ['redirect_url'] ) ? $_REQUEST ['redirect_url'] : null;
+    	if(!empty($redirect_url)){
+    		$session->set(SaleConstants::$last_access_url, $redirect_url);
+    	}
+    	
     	if ($model->load(Yii::$app->request->post()) && $model->validate()) {
     		//find vip from vip_no
     		$vip_db = Vip::find ()->where ( 'vip_no=:vip_no', [ 
@@ -49,14 +59,31 @@ class VipLoginController extends BaseController
     				$vip_db->last_login_date=date ( SaleConstants::$date_format, time () );
     				$vip_db->update();
     				
-    				$session = Yii::$app->session;
-    				if(!($session->isActive)){
-    					$session->open();
-    				}
+    				
     				$session->set(SaleConstants::$session_vip, $vip_db);
     				$session->timeout=1*24*60;
     				
-    				return $this->redirect(['/sale/vip-center/index']);
+    				//TODO:
+    				/*
+    				$redirect_url = isset ( $_REQUEST ['redirect_url'] ) ? $_REQUEST ['redirect_url'] : null;
+    				if(!empty($redirect_url)){
+    					return $this->redirect($redirect_url);
+    				}else{
+    					$last_access_url = $session->get(SaleConstants::$last_access_url);
+    					if(empty($last_access_url)){
+    						return $this->redirect(['/sale/vip-center/index']);
+    					}else{
+    						return $this->redirect($last_access_url);
+    					}
+    				}
+    				*/
+    				$last_access_url = $session->get(SaleConstants::$last_access_url);
+    				if(empty($last_access_url)){
+    					return $this->redirect(['/sale/vip-center/index']);
+    				}else{
+    					return $this->redirect($last_access_url);
+    				}
+    				
     			}
     		}
     	} else {

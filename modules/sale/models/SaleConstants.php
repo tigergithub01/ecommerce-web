@@ -21,6 +21,9 @@ class SaleConstants
     
     //app photo path
     public static $app_path='upload/app/';
+    
+    public static $last_access_url='last_access_url';
+    
 
 
     

@@ -122,9 +122,12 @@ class VipRegisterController extends BaseController {
 				] );
 			} else {
 				$session->set ( SaleConstants::$session_vip, $vip );
-				return $this->redirect ( [ 
-						'/sale/vip-center/index' 
-				] );
+				$last_access_url = $session->get(SaleConstants::$last_access_url);
+				if(empty($last_access_url)){
+					return $this->redirect(['/sale/vip-center/index']);
+				}else{
+					return $this->redirect($last_access_url);
+				}				
 			}
 		} else {
 			return $this->render ( 'index', [ 

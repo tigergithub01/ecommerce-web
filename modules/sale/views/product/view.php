@@ -235,15 +235,25 @@ $(function(){
 		    },     
 		    success:function(data){ 
 			    console.debug(data);
+				/*
 			    if(data.status==1){
 			    	//$('#btn_collect').prop('src','images/sale/collect-undo.png');
 			    	//alert('添加购物车成功'); 
 			    	//window.location.href="<?=Url::toRoute(['/sale/vip-order/confirm','product_id'=>$model['id']])?>&quantity="+buy_quantity;
-			    	$("#product_detail_form").submit();
+			    	//$("#product_detail_form").submit();
+			    	window.location.href="<?=Url::toRoute(['/sale/vip-order-confirm/create','detailList[0][product_id]'=>$model['id']])?>&detailList[0][checked]=1&detailList[0][quantity]="+buy_quantity;
 			    }else{
-				    alert('请先登录');
-				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
+			    	jNotify('请先登录');
+			    	window.location.href="<?=Url::toRoute(['/sale/vip-order-confirm/create','detailList[0][product_id]'=>$model['id']])?>&detailList[0][checked]=1&detailList[0][quantity]="+buy_quantity;
+				    //window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
 			    }
+			    */
+			    if(data.status==1){
+			    }else{
+			    	jNotify('请先登录');	
+			    }
+			    var order_comfirm_url = "<?=Url::toRoute(['/sale/vip-order-confirm/create','detailList[0][product_id]'=>$model['id']])?>&detailList[0][checked]=1&detailList[0][quantity]="+buy_quantity;
+			    window.location.href= order_comfirm_url;
 			    $.unblockUI();
 		    }  
 		}); 
@@ -278,8 +288,9 @@ $(function(){
 // 			    	alert('添加购物车成功'); 
 			    	jNotify('添加购物车成功');
 			    }else{
-				    alert('请先登录');
-				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>';
+			    	jNotify('请先登录');
+			    	var product_view_url = '<?=Url::toRoute(['/sale/product/view','id'=>$model['id']])?>';
+				    window.location.href='<?=Url::toRoute(['/sale/vip-login/index'])?>&redirect_url='+encodeURIComponent(product_view_url);
 			    }
 			    $.unblockUI();
 		    }  
@@ -311,12 +322,12 @@ $(function(){
 		    	
 		    async :true, 
 		    error:function(){     
-		       alert('获取数据失败');    
+		    	jNotify('获取数据失败');    
 		    },     
 		    success:function(data){ 
 			    if(data.status==1){
 			    	$('#btn_collect').prop('src','images/sale/collect-undo.png');
-			    	alert('收藏成功'); 
+			    	jNotify('收藏成功'); 
 			    }
 		    	
 		    }  
@@ -334,12 +345,12 @@ $(function(){
 		    	},     
 		    async :true, 
 		    error:function(){     
-		       alert('获取数据失败');    
+		    	jNotify('获取数据失败');    
 		    },     
 		    success:function(data){ 
 			    if(data.status==1){
 			    	$('#btn_collect').prop('src','images/sale/collect.png');
-			    	alert('取消收藏成功'); 
+			    	jNotify('取消收藏成功'); 
 			    }
 		    	
 		    }  
