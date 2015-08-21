@@ -34,25 +34,33 @@ require_once("lib/alipay_submit.class.php");
         //服务器异步通知页面路径
 //         $notify_url = "http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/notify_url.php";
 // 		$notify_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/alipay-direct/notify']);
-        $notify_url = URL::toRoute(['/sale/alipay-direct/notify'],true);
+//         $notify_url = URL::toRoute(['/sale/alipay-direct/notify'],true);
+        $notify_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/alipay/direct/alipayNotify.php';
         //需http://格式的完整路径，不能加?id=123这类自定义参数 
         //页面跳转同步通知页面路径
 //         $return_url = "http://商户网关地址/create_direct_pay_by_user-PHP-UTF-8/return_url.php";
-		$return_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/alipay-direct/return']);
+// 		$return_url = $_SERVER['HTTP_HOST'].URL::toRoute(['/sale/alipay-direct/return']);
+        $return_url = 'http://'.$_SERVER['HTTP_HOST'].'/notify/alipay/direct/alipayReturn.php';
         //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
         //商户订单号
-        $out_trade_no = $_POST['WIDout_trade_no'];
+//         $out_trade_no = $_POST['WIDout_trade_no'];
+		$out_trade_no = $model['WIDout_trade_no'];
         //商户网站订单系统中唯一订单号，必填
         //订单名称
-        $subject = $_POST['WIDsubject'];
+//         $subject = $_POST['WIDsubject'];
+		$subject = $model['WIDsubject'];
         //必填
         //付款金额
-        $total_fee = $_POST['WIDtotal_fee'];
+//         $total_fee = $_POST['WIDtotal_fee'];
+		$total_fee = round($model['WIDtotal_fee'],2);
+// 		echo $total_fee;
+// 		exit();
         //必填
-        //订单描述
-        $body = $_POST['WIDbody'];
+        //订单描述//         $body = $_POST['WIDbody'];
+        $body = $model['WIDbody'];
         //商品展示地址
-        $show_url = $_POST['WIDshow_url'];
+//         $show_url = $_POST['WIDshow_url'];
+        $show_url = $model['WIDshow_url'];
         //需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
         //防钓鱼时间戳
         $anti_phishing_key = "";
