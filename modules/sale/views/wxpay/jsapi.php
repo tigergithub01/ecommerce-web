@@ -69,7 +69,7 @@ $input->SetNotify_url($notify_url);
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
 $order = WxPayApi::unifiedOrder($input);
-echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
+//echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
 printf_info($order);
 $log::INFO('order Info:'.json_encode($order));
 $jsApiParameters = $tools->GetJsApiParameters($order);
@@ -90,7 +90,7 @@ $editAddress = $tools->GetEditAddressParameters();
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/> 
-    <title>微信支付</title>
+    <title>微信订单支付</title>
     <script type="text/javascript">
 	//调用微信JS api 支付
 	function jsApiCall()
@@ -139,7 +139,9 @@ $editAddress = $tools->GetEditAddressParameters();
 		);
 	}
 	
-	window.onload = function(){
+	window.onload = function(){	
+		callpay();
+		/*
 		if (typeof WeixinJSBridge == "undefined"){
 		    if( document.addEventListener ){
 		        document.addEventListener('WeixinJSBridgeReady', editAddress, false);
@@ -150,15 +152,20 @@ $editAddress = $tools->GetEditAddressParameters();
 		}else{
 			editAddress();
 		}
+		*/
 	};
 	
 	</script>
 </head>
 <body>
+	<!-- 
     <br/>
     <font color="#9ACD32"><b>该笔订单支付金额为<span style="color:#f00;font-size:50px">￥<?php echo round($model['WIDtotal_fee']/100,2)?></span>元</b></font><br/><br/>
+	 -->
+	 <!-- 
 	<div align="center">
 		<button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
 	</div>
+	 -->
 </body>
 </html>
