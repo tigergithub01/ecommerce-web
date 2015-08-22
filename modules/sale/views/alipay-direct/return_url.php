@@ -54,9 +54,13 @@ if($verify_result) {//验证成功
       echo "trade_status=".$_GET['trade_status'];
     }
 		
-	echo "验证成功<br />";
+	//echo "验证成功<br />";
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+	//跳转到订单处理页面
+	$return_url = 'http://'.$_SERVER['HTTP_HOST'].'/index.php?r=/sale/vip-order/view&code='.$out_trade_no;
+	Header("Location: $return_url");
+	exit();
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

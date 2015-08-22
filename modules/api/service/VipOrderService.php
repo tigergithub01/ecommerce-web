@@ -20,6 +20,18 @@ use app\models\order\SoDetailDraft;
 use yii\web\NotFoundHttpException;
 
 class VipOrderService {
+	public function getOrderByCode($code){
+		$soSheet = SoSheet::find()->where('code=:code',[':code'=>$code])->one();
+		if(empty($soSheet)){
+			throw new NotFoundHttpException ();
+		}else{
+			$soSheet = self::getOrder($soSheet->id);
+		}
+		return $soSheet; 
+	}
+	
+	
+	
 	public function getOrder($orderId) {
 		$soSheet = SoSheet::findOne ( $orderId );
 		if (empty ( $soSheet )) {

@@ -53,6 +53,10 @@ function createLinkstringUrlencode($para) {
 function paraFilter($para) {
 	$para_filter = array();
 	while (list ($key, $val) = each ($para)) {
+		//added by tiger.guo 20150822 start for yii2 parameter r=/sale/alipay-direct/return
+		if($key=="r") continue;
+		//added by tiger.guo 20150822 end
+		
 		if($key == "sign" || $key == "sign_type" || $val == "")continue;
 		else	$para_filter[$key] = $para[$key];
 	}

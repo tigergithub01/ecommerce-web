@@ -42,12 +42,23 @@ class VipOrderController extends BaseSaleController {
 				'orderList' => $orderList 
 		] );
 	}
-	public function actionView($orderId) {
+	public function actionView($orderId=null) {
 		$vipOrderService = new VipOrderService ();
-		$soSheet = $vipOrderService->getOrder ( $orderId );
-		return $this->render ( 'view', [ 
-				'model' => $soSheet 
-		] );
+		if(!empty($orderId)){
+			$soSheet = $vipOrderService->getOrder ( $orderId );
+			return $this->render ( 'view', [
+					'model' => $soSheet
+			] );
+		}
+		
+		$code = isset ( $_REQUEST ['code'] ) ? $_REQUEST ['code'] : null;
+		if(!empty($code)){
+			$soSheet = $vipOrderService->getOrderByCode($code);
+			return $this->render ( 'view', [
+					'model' => $soSheet
+			] );
+		}
+		
 	}
 	public function actionConfirm() {
 		// initiate product information
