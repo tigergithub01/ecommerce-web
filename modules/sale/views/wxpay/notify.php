@@ -72,9 +72,11 @@ class PayNotifyCallBack extends WxPayNotify
 		$trade_status = 'TRADE_SUCCESS';
 		$order_no = $data["out_trade_no"];
 		$trade_no = $data["transaction_id"];
+		$total_fee = $data["total_fee"];
+		
 		
 		$service = new VipOrderService();
-		$service->executeOrderPayWx($order_no, $trade_no, $trade_status);
+		$service->executeOrderPayWx($order_no, $trade_no, $trade_status,round($total_fee/100,2));
 		
 		return true;
 	}

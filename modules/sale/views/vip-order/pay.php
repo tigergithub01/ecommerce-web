@@ -56,7 +56,10 @@ $this->registerJsFile ( "js/sale/jNotify/core/jNotify.jquery.min.js", [
 			</div>
 		</div>
 		<div class="payment_btn_bar">
+			<!-- 
 			<input type="submit" class="submit" value="确认支付"/>
+			 -->
+			<input id="btn_submit_pay" type="button" class="submit" value="确认支付"/>
 			<input id="pay_type_id" type="hidden" value="<?php echo $model['pay_type_id']?>"> 
 			
 			<!--  
@@ -101,6 +104,41 @@ $(function(){
 		
 	});
 
+	$('#btn_submit_pay').click(function(){
+		if($('a.checkbox_checked').length==0){
+			jNotify('请选择支付方式.');
+			//alert('请选择支付方式.');	
+			return false;
+		}else{
+			if($('#pay_type_id').val()==1){
+				//alipay direct
+				var url = '<?php echo Url::toRoute(['/sale/alipay-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
+
+				//alipay wap direct
+				//var url = '<?php echo Url::toRoute(['/sale/alipay-wap-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
+				
+				window.location.href=url;
+			}else if($('#pay_type_id').val()==2){
+				//wxpay
+				var app_browse_type = $("#app_browse_type").val();
+				if(app_browse_type==1){
+					//android of app
+					if(androidJs!=null){
+						androidJs.wxPay('<?=$model['id']?>');
+					}
+				}else if(app_browse_type==2){
+					//ios of app
+					
+				}else{
+					var url = '<?php echo Url::toRoute(['/sale/wxpay/jsapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
+					window.location.href=url;
+				}				
+			}
+		}
+		//$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
+	});
+
+	/*
 	$('#order_pay_form').submit(function(){
 		if($('a.checkbox_checked').length==0){
 			jNotify('请选择支付方式.');
@@ -116,12 +154,24 @@ $(function(){
 				//$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/alipay-wap-direct/alipayapi','order_id'=>$model['id']])?>'+url);
 			}else if($('#pay_type_id').val()==2){
 				//wxpay
-				var url = '&pay_type_id='+$('#pay_type_id').val();
-				$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/wxpay/jsapi','order_id'=>$model['id']])?>'+url);
+				var app_browse_type = $("#app_browse_type").val();
+				if(app_browse_type==1){
+					//android of app
+					if(androidJs!=null){
+						androidJs.wxPay('<?=$model['id']?>');
+					}
+				}else if(app_browse_type==2){
+					//ios of app
+					
+				}else{
+					var url = '&pay_type_id='+$('#pay_type_id').val();
+					$("#order_pay_form").attr('action','<?php echo Url::toRoute(['/sale/wxpay/jsapi','order_id'=>$model['id']])?>'+url);
+				}				
 			}
 		}
 		//$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
 	});
+	*/
 	
 });
 

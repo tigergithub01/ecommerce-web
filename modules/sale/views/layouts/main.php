@@ -43,8 +43,10 @@ $this->registerCssFile ('css/sale/common.css' );
 <?php }?>
 
 <?php $this->beginBody() ?>
+	<input type="hidden" value="" id="app_browse_type"/>
     <?= $content ?>
 <?php $this->endBody() ?>
+
 
 <?php if (isset($this->params['hidden_footer']) && $this->params['hidden_footer']==1){?>
 
@@ -75,4 +77,9 @@ button.btn-primary {
 	$(function(){
 		$(".wrapper").css({'min-height':($(window).height() - 100 - $(".bottom_bar").height())});
 	});
+
+	function setBrowseFlag(value){
+// 		alert('setBrowseFlag');
+		$("#app_browse_type").val(value);
+	}
 </script>
