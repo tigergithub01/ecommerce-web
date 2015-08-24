@@ -197,7 +197,7 @@ class VipOrderService {
 	 * @param unknown $trade_no        	
 	 * @param unknown $trade_status        	
 	 */
-	function executeOrderPayAlipay($order_no, $trade_no, $trade_status) {
+	function executeOrderPayAlipay($order_no, $trade_no, $trade_status,$pay_amt) {
 		$soSheet = SoSheet::find ()->where ( 'code=:code', [ 
 				':code' => $order_no 
 		] )->one ();
@@ -214,7 +214,9 @@ class VipOrderService {
 				'trade_no' => $trade_no,
 				'trade_status' => $trade_status,
 				'pay_date' => $pay_date,
-				'status' => 3002 
+				'status' => 3002,
+				'pay_amt' => $pay_amt,
+				'pay_type_id' => 1
 		], 'id=:id', [ 
 				":id" => $soSheet->id 
 		] );
@@ -242,7 +244,7 @@ class VipOrderService {
 				":code" => $order_no 
 		] );
 	}
-	function executeOrderPayWx($order_no, $trade_no, $trade_status) {
+	function executeOrderPayWx($order_no, $trade_no, $trade_status,$pay_amt) {
 		$soSheet = SoSheet::find ()->where ( 'code=:code', [ 
 				':code' => $order_no 
 		] )->one ();
@@ -259,7 +261,9 @@ class VipOrderService {
 				'trade_no' => $trade_no,
 				'trade_status' => $trade_status,
 				'pay_date' => $pay_date,
-				'status' => 3002 
+				'status' => 3002, 
+				'pay_amt' => $pay_amt,
+				'pay_type_id' => 2
 		], 'id=:id', [ 
 				":id" => $soSheet->id 
 		] );

@@ -15,6 +15,7 @@ use app\models\vip\Vip;
 use app\modules\api\service\VipService;
 use app\models\order\SoSheet;
 use app\models\system\Parameter;
+use app\modules\api\service\VipOrderService;
 
 class VipOrderController extends BaseApiController {
 	public $enableCsrfValidation = false;
@@ -122,12 +123,16 @@ class VipOrderController extends BaseApiController {
 			return;
 		}
 		
-		
 		$array = $this->getVipList($subVipList, $status, $vip_id, $offset, $limit, $order_column, $order_direction);
 		
-		
-		
 		$json = new JsonObj ( 1, null, $array );
+		echo (Json::encode ( $json ));
+	}
+	
+	public function actionView($id=null){
+		$vipOrderService = new VipOrderService();
+		$soSheet = $vipOrderService->getOrder($id);
+		$json = new JsonObj ( 1, null, $soSheet );
 		echo (Json::encode ( $json ));
 	}
 }
