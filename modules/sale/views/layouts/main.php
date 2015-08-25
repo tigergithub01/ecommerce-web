@@ -32,7 +32,7 @@ $this->registerCssFile ('css/sale/common.css' );
 
 <?php }else{ ?>
 <header style="">
-	<div class="button"><a class="back" href="javascript:window.history.back();"><img src="images/sale/btn_back.png"></a></div>
+	<div class="button"><a class="back" href="javascript:goback();"><img src="images/sale/btn_back.png"></a></div>
 	<div class="title"><?= Html::encode($this->title) ?></div>
 	<?php if (isset($_SESSION['current_vip'])){?>
 		<div class="button" style="vertical-align: middle;"><a class="nav" style="text-align: center;" href="<?=Url::toRoute(['/sale/vip-center/index'])?>"><img src="images/sale/icon_p_center_nav.png"></a></div>
@@ -77,6 +77,20 @@ button.btn-primary {
 	$(function(){
 		$(".wrapper").css({'min-height':($(window).height() - 100 - $(".bottom_bar").height())});
 	});
+
+	function goback(){
+		var app_browse_type = $("#app_browse_type").val();
+		if(app_browse_type==1){
+			//android app
+			if(androidJs!=null){
+				androidJs.goBack();
+			}
+		}else if(app_browse_type==2){
+			//ios app
+		}else{
+			window.history.back(-1);
+		}	
+	}
 
 	function setBrowseFlag(value){
 // 		alert('setBrowseFlag');
