@@ -121,8 +121,10 @@ $(function(){
 			}else if($('#pay_type_id').val()==2){
 				//wxpay
 				var app_browse_type = $("#app_browse_type").val();
+				
 				if(app_browse_type==1){
 					//android of app
+					//writeObj(androidJs);
 					if(androidJs!=null){
 						androidJs.wxPay('<?=$model['id']?>');
 					}
@@ -137,6 +139,15 @@ $(function(){
 		}
 		//$.blockUI({ message: '<span style="text-align:center"><img src="/images/sale/img_loading.png" /> 请稍等...</span>' });
 	});
+
+    function writeObj(obj){ 
+        var description = ""; 
+        for(var i in obj){   
+            var property=obj[i];   
+            description+=i+" = "+property+"\n";  
+        }   
+        alert(description); 
+    } 
 
 	/*
 	$('#order_pay_form').submit(function(){
