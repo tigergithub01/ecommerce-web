@@ -28,15 +28,13 @@ $this->registerJsFile('js/sale/jquery.blockUI.js', [
 			<hr class="gray_solid">			
 		<?php if($address_count==0){?>
 			<div style="text-align:center;">
-				您还没收收货地址<input type="button" value="新建收货地址">
+				您还没收收货地址
 				 <?= Html::a('新建收货地址', ['/sale/vip-address/create', 'orderId' => $soSheet->id], ['class' => 'btn btn-primary']) ?>
-				 <?= Html::a('请选择收货地址', ['/sale/vip-address/index', 'orderId' => $soSheet->id], ['class' => 'btn btn-primary']) ?>
 			</div>
 		<?php }else{?>
 			<?php if (empty($vipAddress)){?>
 				<div style="text-align:center;">
-					<input type="button" value="请选择收货地址" class="">
-					
+					<?= Html::a('请选择收货地址', ['/sale/vip-address/index', 'orderId' => $soSheet->id], ['class' => 'btn btn-primary']) ?>
 				</div>
 			<?php }else {?>
 			<div style="float: right;">

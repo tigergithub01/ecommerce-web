@@ -101,6 +101,12 @@ class VipAddressController extends BaseSaleController {
 		$model->default_flag = 0;
 		$model->status = 1;
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
+			
+			if($model->default_flag==1){
+				//update other vip address is not default
+				VipAddress::updateAll(['default_flag' => 0], 'vip_id=:vip_id and id<>:id',[":vip_id"=>$vip->id,":id"=>$model->id]);
+			}
+			
 			if(empty($orderId)){
 				return $this->redirect ( [
 						'index'
@@ -163,6 +169,12 @@ class VipAddressController extends BaseSaleController {
 			/* return $this->redirect ( [ 
 					'index' 
 			] ); */
+			$vip = $_SESSION [SaleConstants::$session_vip];
+			if($model->default_flag==1){
+				//update other vip address is not default
+				VipAddress::updateAll(['default_flag' => 0], 'vip_id=:vip_id and id<>:id',[":vip_id"=>$vip->id,":id"=>$model->id]);
+			}
+			
 			if(empty($orderId)){
 				return $this->redirect ( [
 						'index'
