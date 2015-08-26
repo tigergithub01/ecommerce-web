@@ -26,7 +26,7 @@ $alipay_config['partner']		= '2088911913702384';
 $alipay_config['seller_email']	= 'wiriclub@163.com';
 
 //安全检验码，以数字和字母组成的32位字符
-$alipay_config['key']			= '2de1aj0y08wxafcbisfzkt7v96lmrnu9';
+$alipay_config['key']			= '9kp6sir88eqz8snx2vw4whga769ftrqy';
 
 
 //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
