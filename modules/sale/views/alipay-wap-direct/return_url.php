@@ -48,7 +48,7 @@ if($verify_result) {//验证成功
     	$total_fee = $_GET['total_fee'];
     	
     	$service = new VipOrderService();
-    	$service->executeOrderPayAlipay($out_trade_no, $trade_no, $trade_status);
+    	$service->executeOrderPayAlipay($out_trade_no, $trade_no, $trade_status,$total_fee);
     }
     else {
       echo "trade_status=".$_GET['trade_status'];
