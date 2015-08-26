@@ -44,6 +44,7 @@ $this->registerCssFile ('css/sale/common.css' );
 
 <?php $this->beginBody() ?>
 	<input type="hidden" value="" id="app_browse_type"/>
+	<iframe style="display: none" src="" id="ios_app_interface"></iframe>
     <?= $content ?>
 <?php $this->endBody() ?>
 
@@ -76,6 +77,7 @@ button.btn-primary {
 <script type="text/javascript">
 	$(function(){
 		$(".wrapper").css({'min-height':($(window).height() - 100 - $(".bottom_bar").height())});
+		$("#ios_app_interface").attr("src","");
 	});
 
 	function goback(){
@@ -87,6 +89,7 @@ button.btn-primary {
 			}
 		}else if(app_browse_type==2){
 			//ios app
+			$("#ios_app_interface").attr("src","js-call://goBack/")
 		}else{
 			window.history.back(-1);
 		}	

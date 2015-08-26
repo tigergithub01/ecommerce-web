@@ -112,10 +112,10 @@ $(function(){
 		}else{
 			if($('#pay_type_id').val()==1){
 				//alipay direct
-				var url = '<?php echo Url::toRoute(['/sale/alipay-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
+				//var url = '<?php echo Url::toRoute(['/sale/alipay-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
 
 				//alipay wap direct
-				//var url = '<?php echo Url::toRoute(['/sale/alipay-wap-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
+				var url = '<?php echo Url::toRoute(['/sale/alipay-wap-direct/alipayapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
 				
 				window.location.href=url;
 			}else if($('#pay_type_id').val()==2){
@@ -130,7 +130,7 @@ $(function(){
 					}
 				}else if(app_browse_type==2){
 					//ios of app
-					
+					$("#ios_app_interface").attr("src","js-call://wxPay/<?=$model['id']?>")
 				}else{
 					var url = '<?php echo Url::toRoute(['/sale/wxpay/jsapi','order_id'=>$model['id']])?>'+'&pay_type_id='+$('#pay_type_id').val();
 					window.location.href=url;
