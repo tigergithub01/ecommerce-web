@@ -115,7 +115,7 @@ class VipOperationLog extends \yii\db\ActiveRecord {
 								'op_url' 
 						],
 						'string',
-						'max' => 400 
+						'max' => 1000 
 				] 
 		];
 	}
