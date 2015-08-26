@@ -17,10 +17,24 @@ function submitSearch(){
 
 $(function(){
     $(".commitSheet").click(function(){
+        if(!window.confirm("确定要提交结算申请吗？")){            
+            return false;
+        }
         var sheetID=$(this).attr("data-sheetID");       
-        $("#withdraw_id").val(sheetID);
+        $("#form_withdraw input[name='id']").val(sheetID);
         $("#withdraw_redirectUrl").val(window.location.href);
         $("#form_withdraw").trigger('submit');
+        return false;
+    });
+    
+     $(".confirmCommitSheet").click(function(){
+        if(!window.confirm("确定要结算吗？")){            
+            return false;
+        }
+        var sheetID=$(this).attr("data-sheetID");       
+        $("#form_confirmWithdraw input[name='id']").val(sheetID);
+        $("#withdraw_redirectUrl").val(window.location.href);
+        $("#form_confirmWithdraw").trigger('submit');
         return false;
     });
 });
@@ -41,6 +55,14 @@ $(function(){
 ]); ?>
     <input type="hidden" name='id' id='withdraw_id'>
     <input type="hidden" name='redirectUrl' id='withdraw_redirectUrl'>
+<?php ActiveForm::end(); ?>
+    
+<?php $form = ActiveForm::begin([
+        'id'=>'form_confirmWithdraw',
+        'action'=>['confirm-withdraw'],
+]); ?>
+    <input type="hidden" name='id'>
+    <input type="hidden" name='redirectUrl' id='confirmWithdraw_redirectUrl'>
 <?php ActiveForm::end(); ?>
     
 <div class='search_area'> 
@@ -100,7 +122,22 @@ $(function(){
                 'headerOptions'=>['class'=>'center'],
                 'contentOptions'=>['class'=>'center'],
                 'value'=>function($model){
-                    $html=$model->status?"<span class='msg_ok'>已结算</span>":"<span class='msg_forbid'>未结算</span>";                  
+                    $html="";
+                    switch($model['status']){
+                            case 0:
+                                $html="<span class='msg_forbid'>未结算</span>";
+                                break;
+                            case 1:
+                                $html="<span class='msg_ok'>已结算</span>";
+                                break;
+                            case 2:
+                                $html="<span class='msg_primary_f'>结算中</span>";
+                                break;
+                            default:
+                                $html="<span class='msg_forbid'>未知状态</span>";
+                                break;
+                    }               
+                                  
                     return $html;
                 }
             ],
@@ -108,8 +145,16 @@ $(function(){
                 'label'=>'操作',               
                 'format'=>'raw',
                 'contentOptions'=>['class'=>'center'],
-                'value'=>function($model){                    
-                    $html=$model->status?"":Html::a('去结算', 'commit',['class'=>'button_link commitSheet','data-sheetID'=>$model->id]);
+                'value'=>function($model){
+                    $html="";
+                    switch($model['status']){
+                        case 0:
+                                $html=Html::a('申请结算', 'commit',['class'=>'button_link commitSheet','data-sheetID'=>$model->id]);
+                                break;                           
+                            case 2:
+                                $html=Html::a('确认结算', 'commit',['class'=>'button_link confirmCommitSheet msg_warning','data-sheetID'=>$model->id]);
+                                break;                          
+                    }                   
                     return $html;
                 }
             ],

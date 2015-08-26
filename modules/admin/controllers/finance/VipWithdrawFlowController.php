@@ -44,12 +44,30 @@ class VipWithdrawFlowController extends MyController
             'model' => $this->findModel($id),
         ]);
     }
-    
+    /**
+     * 提交提现申请
+     */
     public function actionWithdraw(){
         $id=Yii::$app->request->post('id');
         $redirectUrl=Yii::$app->request->post('redirectUrl');
         $model=$this->findModel($id);
         $model->withdraw();
+        
+        $logData=['op_desc'=>'提交会员提现申请','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+        $this->logAdmin($logData);
+        
+        $this->ShowMessage('提交结算申请成功，等待审核。', $redirectUrl);
+        
+    }
+    
+    /**
+     * 确认提现
+     */
+     public function actionConfirmWithdraw(){
+        $id=Yii::$app->request->post('id');
+        $redirectUrl=Yii::$app->request->post('redirectUrl');
+        $model=$this->findModel($id);
+        $model->confirmWithdraw();
         
         $logData=['op_desc'=>'审核会员提现申请','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
         $this->logAdmin($logData);

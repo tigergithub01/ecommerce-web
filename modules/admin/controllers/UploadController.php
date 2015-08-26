@@ -76,7 +76,7 @@ class UploadController extends Controller {
         if(move_uploaded_file($_FILES["file"]["tmp_name"],$targetfile)){
             //生成缩略图
             $th=new \app\components\Thumb();
-            $th->scaleImage($targetfile,$targetfile,220);            
+            $th->scaleImage($targetfile,$targetfile,220);
             $webpath=$webDir.'/'.$file;            
             echo json_encode(array('data'=>$webpath));            
         }else{

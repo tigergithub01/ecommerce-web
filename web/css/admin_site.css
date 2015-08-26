@@ -372,7 +372,7 @@ input.has-error{
 
 .msg_ok { background-color:#00CC00;color:#fff;padding:3px; border-radius: 5px;}
 .msg_forbid { background-color: #da4f49;color:#fff;padding:3px;border-radius: 5px;}
-
+.msg_primary_f{background-color:#006dcc;color:#fff;padding:3px; border-radius: 5px;}
 .m{
     border: 1px solid #DADADA;
     padding: 0 5px 10px;
