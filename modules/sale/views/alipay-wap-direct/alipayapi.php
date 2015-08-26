@@ -48,7 +48,7 @@ require_once("lib/alipay_submit.class.php");
         //必填
         //付款金额
 //         $total_fee = $_POST['WIDtotal_fee'];
-        $total_fee = $model['WIDtotal_fee'];
+        $total_fee = round($model['WIDtotal_fee'],2);
         //必填
         //商品展示地址
 //         $show_url = $_POST['WIDshow_url'];
