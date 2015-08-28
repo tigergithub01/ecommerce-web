@@ -86,7 +86,7 @@ class VipOrderController extends BaseApiController {
 			$soSheet->order_status_val = $order_status->pa_val;
 		}
 		
-		$array = ArrayHelper::toArray ( $orderList, [
+		$array = ArrayHelper::toArray ( $soSheet, [
 				'app\models\order\SoSheet' => [
 						'id',
 						'code',
@@ -102,6 +102,7 @@ class VipOrderController extends BaseApiController {
 						'pay_date',
 						'order_status_val',
 						'vip_no',
+						'product_name',
 				]
 		] );
 		return $array;
@@ -132,7 +133,26 @@ class VipOrderController extends BaseApiController {
 	public function actionView($id=null){
 		$vipOrderService = new VipOrderService();
 		$soSheet = $vipOrderService->getOrder($id);
-		$json = new JsonObj ( 1, null, $soSheet );
+		$array = ArrayHelper::toArray ( $soSheet, [
+				'app\models\order\SoSheet' => [
+						'id',
+						'code',
+						'vip_id',
+						'order_amt',
+						'order_quantity',
+						'deliver_fee',
+						'status',
+						'settle_flag',
+						'order_date',
+						'pay_type_id',
+						'pay_amt',
+						'pay_date',
+						'order_status_val',
+						'vip_no',
+						'product_name',
+				]
+		] );
+		$json = new JsonObj ( 1, null, $array );
 		echo (Json::encode ( $json ));
 	}
 }

@@ -53,6 +53,7 @@ class VipOrderService {
 				$product->primaryPhoto = $productPhoto;
 				
 				$soDetail->setProduct ( $product );
+				$soSheet->product_name = $product->name;
 			}
 		}
 		$soSheet->soDetailList = $soDetailList;
