@@ -42,6 +42,7 @@ class SoSheet extends \yii\db\ActiveRecord
 	public $order_status;
 	public $vip_no;
 	public $order_status_val;
+	public $product_name;
 	
 	//static 
 	//待支付
