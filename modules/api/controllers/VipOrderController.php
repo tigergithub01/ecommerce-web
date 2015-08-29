@@ -130,7 +130,8 @@ class VipOrderController extends BaseApiController {
 		echo (Json::encode ( $json ));
 	}
 	
-	public function actionView($id=null){
+	public function actionView(){
+		$id = isset ( $_REQUEST ['id'] ) ? $_REQUEST ['id'] : null;
 		$vipOrderService = new VipOrderService();
 		$soSheet = $vipOrderService->getOrder($id);
 		$array = ArrayHelper::toArray ( $soSheet, [
