@@ -793,6 +793,8 @@ http://blog.csdn.net/janice0529/article/details/38051987
 php.ini设置:
 always_populate_raw_post_data = On
 session.cookie_lifetime=1800
+extension=php_openssl.dll
+
 
 php有三种方法可以post数据,分别为Curl、socket、file_get_contents:
 
@@ -809,9 +811,85 @@ service httpd stop 停止服务
 
 ios版本：
 ipad分享弹出框
-uitableview下拉刷新与上拉加载更多有英文提示。
-webview中浏览产品时，没有返回键。
+uitableview下拉刷新与上拉加载更多有英文提示。->ok
+webview中浏览产品时，没有返回键。->ok
 ios版本中与php session的保持问题。
-产品过滤选择的时候，选择了条件，但是条件显示值没有改变。
-ios中sqlite数据库被锁住的问题。
+产品过滤选择的时候，选择了条件，但是条件显示值没有改变。->ok
+ios中sqlite数据库被锁住的问题。->ok
 支付宝产品没有申请通过，支付接入待完善。
+产品列表显示中文乱码->ok
+
+
+1\android首页刷新的时候显示一个手指的按钮。->ok
+2\ios小屏幕的手机显示不协调。产品列表只显示一条记录。广告栏显示的太高。->ok
+3\微信支付。（在app内支付的时候提示请打开微信浏览器）（具体方案待定）
+4\点击购买后，登录后跳转到相应的页面（产品页面）。
+5\微信支付时，不要弹出使用你的地址信息。
+6\订单结算页面，微信点击支付后，弹出银行卡选择窗口后直接弹出密码窗口。不需要中间的订单确认页面。
+7\提现申请时间排序。
+8\去结算：进入结算确认页面。（增加一个结算中的状态）
+
+
+1\android产品列表显示乱码 ->ok
+2\android中打开浏览器时，键盘自动弹出了。 ->ok
+3\android http公用类中，没有加入app类型（android,ios）标识位。 ->ok
+4\andrid提现申请列表页面金额判断错误。 ->ok
+5\android退出登录完善。 ->ok
+
+android从后台激活应用后，出现多次退出的情况。
+ios欢迎页面没有出现。->ok
+把andorid代码从git删除。
+
+
+ViewController的生命周期中各方法执行流程如下：
+
+init—>loadView—>viewDidLoad—>viewWillApper—>viewDidApper—>viewWillDisapper—>viewDidDisapper—>viewWillUnload->viewDidUnload—>dealloc
+
+http://app.mantanghao.com/index.php?r=sale%2Fproduct%2Fview&id=4
+http://localhost:8085/index.php?r=sale%2Fproduct%2Fview&id=4
+
+&redirect_url=http://localhost:8085/index.php?r=sale%2Fproduct%2Fview&id=4
+http%3A%2F%2Flocalhost%3A8085%2Findex.php%3Fr%3Dsale%252Fproduct%252Fview%26id%3D4
+
+&redirect_url=http://localhost:8085/index.php?r=sale%2Fproduct%2Fview&ampid=4
+&XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14401477077942
+
+http://app.mantanghao.com/notify/alipay/direct/alipayReturn.php?buyer_email=13724346621&buyer_id=2088202312703969&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbh9YFYpid3vDIiNauB1gDPA4Xmdi8RGHTV%252FLCgIS88MAUdX%252F&notify_time=2015-08-21+18%3A10%3A13&notify_type=trade_status_sync&out_trade_no=SO-20150821-00099&payment_type=1&seller_email=wiriclub%40163.com&seller_id=2088911913702384&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&total_fee=0.01&trade_no=2015082100001000960058319703&trade_status=TRADE_SUCCESS&sign=07534a939cd8594abb09bec2bc5e3dc9&sign_type=MD5
+
+http://app.mantanghao.com/index.php?r=/sale/alipay-direct/return&buyer_email=13724346621&buyer_id=2088202312703969&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbh9YF3f8Y%252F3uVJUZdnhjpMD8M3q6l2eS3F6xu4El4OHL11K6&notify_time=2015-08-21+18%3A42%3A38&notify_type=trade_status_sync&out_trade_no=SO-20150821-00101&payment_type=1&seller_email=wiriclub%40163.com&seller_id=2088911913702384&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&total_fee=0.01&trade_no=2015082100001000960058321544&trade_status=TRADE_SUCCESS&sign=0261cde3521bd6effa1d669aac118292&sign_type=MD5
+验证失败
+
+http://localhost:8085/index.php?r=/sale/alipay-direct/return&buyer_email=13724346621&buyer_id=2088202312703969&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbh9YF3XAQWDiOo%252Bow5gwJbnWvaW%252BC0bIovqZJt3ynVW2Lo%252FW&notify_time=2015-08-21+18%3A38%3A48&notify_type=trade_status_sync&out_trade_no=SO-20150821-00100&payment_type=1&seller_email=wiriclub%40163.com&seller_id=2088911913702384&subject=【魅典幻镜】原创自制赫本气质宫廷范绣花蕾丝立领精品衬衫上衣&total_fee=0.01&trade_no=2015082100001000960058321349&trade_status=TRADE_SUCCESS&sign=9cd46f3bd3b9da1b9010b5a045b88af6&sign_type=MD5
+
+http://notify.alipay.com/trade/notify_query.do?partner=2088911913702384&notify_id=RqPnCoPT3K9%2Fvwbh3InVbh9YF3XAQWDiOo%2Bow5gwJbnWvaW%2BC0bIovqZJt3ynVW2Lo%2FW
+
+http://app.mantanghao.com/index.php?r=/sale/alipay-direct/return&buyer_email=13724346621&buyer_id=2088202312703969&exterface=create_direct_pay_by_user&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbhx14ECDrA5o71Tyzp3r%252BUVtkr3huLehiqIZuiav017EUyYH&notify_time=2015-08-22+19%3A26%3A32&notify_type=trade_status_sync&out_trade_no=SO-20150822-00107&payment_type=1&seller_email=wiriclub%40163.com&seller_id=2088911913702384&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&total_fee=0.01&trade_no=2015082200001000960058388428&trade_status=TRADE_SUCCESS&sign=f852f227e47791189fc802183299a34b&sign_type=MD5
+
+&XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14402409569531
+
+http://app.mantanghao.com/notify/alipay/direct/alipayReturn.php?payment_type=1&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&trade_no=2015082600001000600061095949&buyer_email=316407125%40qq.com&gmt_create=2015-08-26+10%3A16%3A14&notify_type=trade_status_sync&quantity=1&out_trade_no=SO-20150826-00164&seller_id=2088911913702384&notify_time=2015-08-26+10%3A20%3A36&trade_status=TRADE_SUCCESS&is_total_fee_adjust=N&total_fee=0.01&gmt_payment=2015-08-26+10%3A16%3A15&seller_email=wiriclub%40163.com&price=0.01&buyer_id=2088002337424603&notify_id=021c900c2683e57816115bfb83f86cf15c&use_coupon=N&sign_type=RSA&sign=kXupVReXFrr%2B%2FN09Da%2FdPyXdONyKbjqpL6dy6VZsz%2FEqzTQtK8SCDM%2BWfS1N1ABUo6%2FNwD3G7AQfa64eZm14NnF6uW54O7nGN3B%2BntPMAtQ3TwRnfNDrf2BXAnuy4sc5owA%2B6QgJTehwwYnaZmw9oFWpKVa8yoT%2BipaqBmmAdkg%3D
+
+http://localhost:8085/notify/alipay/wap/alipayReturn.php?is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbhs2Y1jqFCuwHBtCI9YlOLdLpVgdL7aDDanzzQXiVrdPVw%252FB&notify_time=2015-08-26+11%3A02%3A06&notify_type=trade_status_sync&out_trade_no=SO-20150826-00169&payment_type=1&seller_id=2088911913702384&service=alipay.wap.create.direct.pay.by.user&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&total_fee=0.01&trade_no=2015082600001000580062840196&trade_status=TRADE_SUCCESS&sign=ah27RLYiZ02YW%2BATPogWt%2FxyLsNwGOXv5CH5B756kcsGUVONDmyWP%2BOcq2RjboFHKYUEL%2FQWWwgWiBuES0TwSjRtn25%2BFktsd0puVOOx275%2BpJ3VWfhCcH7jC4CnE3vA8WNcF21ExPIEA4I%2FWD1GjOMEaRftaiTKdhKpe6Bsfo0%3D&sign_type=RSA
+1\点击购买的时候不能选择收货地址
+
+https://mclient.alipay.com/home/exterfaceAssign.htm?alipay_exterface_invoke_assign_client_ip=220.243.139.186&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&sign_type=RSA&notify_url=http%3A%2F%2Fwww.mantanghao.com%2Fnotify%2Falipay%2Fwap%2FalipayNotify.php&out_trade_no=SO-20150826-00171&return_url=http%3A%2F%2Fwww.mantanghao.com%2Fnotify%2Falipay%2Fwap%2FalipayReturn.php&sign=TwEoyiZvzvn8DtRJ%2FWYDQnJr3AGR7OTJhkm82f96IYApldjrOnn4dnOLpJuynF2JHghHel7jMuhbVr8yZw6gFMhseT7dnOsAOjKSAyFnYTzO%2BJw0sgHEdPYYsn6byIpuFIYkUEHOJmjWmA6BUfOzDBJdDNTh8RVb%2FuuALeJEWjo%3D&_input_charset=utf-8&alipay_exterface_invoke_assign_target=mapi_direct_trade.htm&alipay_exterface_invoke_assign_model=cashier&total_fee=0.01&service=alipay.wap.create.direct.pay.by.user&partner=2088911913702384&seller_id=2088911913702384&alipay_exterface_invoke_assign_sign=c7_o_e_w71_q84f_a_c%2Bq_x_z_b_w7a_t_e_go_b_v_njv13_j_v0_az_d0_mqgfaqn5_cz_yfoqg%3D%3D&payment_type=1&show_url=http%3A%2F%2Fwww.mantanghao.com%2Findex.php%3Fr%3Dsale%252Fproduct%252Fview%26id%3D4
+
+
+http://www.mantanghao.com/index.php?r=/sale/alipay-wap-direct/return&is_success=T&notify_id=RqPnCoPT3K9%252Fvwbh3InVbhs1rdp9SdmgF1Z01gtFyP0xhbNaQ1zBKPgnnwhXAjK3eHoK&notify_time=2015-08-26+12%3A08%3A14&notify_type=trade_status_sync&out_trade_no=SO-20150826-00171&payment_type=1&seller_id=2088911913702384&service=alipay.wap.create.direct.pay.by.user&subject=%E3%80%90%E9%AD%85%E5%85%B8%E5%B9%BB%E9%95%9C%E3%80%91%E5%8E%9F%E5%88%9B%E8%87%AA%E5%88%B6%E8%B5%AB%E6%9C%AC%E6%B0%94%E8%B4%A8%E5%AE%AB%E5%BB%B7%E8%8C%83%E7%BB%A3%E8%8A%B1%E8%95%BE%E4%B8%9D%E7%AB%8B%E9%A2%86%E7%B2%BE%E5%93%81%E8%A1%AC%E8%A1%AB%E4%B8%8A%E8%A1%A3&total_fee=0.01&trade_no=2015082600001000960058622957&trade_status=TRADE_SUCCESS&sign=ToiJ8qHrFzwaFkmrqupxVjMAIUUQJlAUEQWWNlCJKm%2FUbnTQ9MWMMJfKkJQYksKlZhDWfepZX6rBwU7k26HmWHk0PRv8ZAVDuBjiRFQI9pWDt5BnH4ZmM3PY1jjv%2FvlVFBMHHZNOADexV7MAcsyQlcSC3QDpOSZrQbcEL5Ep6Ms%3D&sign_type=RSA
+
+http://www.haorooms.com/post/php_openssl
+http://mirrors.sohu.com/php/
+http://www.haorooms.com/post/php_openssl
+wget http://mirrors.sohu.com/php/php-5.4.23.tar.gz
+./configure --with-openssl --with-php-config=/alidata/server/php/bin/php-config
+
+Installing shared extensions:     /alidata/server/php/lib/php/extensions/no-debug-non-zts-20100525/
+
+订单列表确认收货业务问题。
+
+http://localhost:8085/notify/wx/jsapi/wxNotify.php
+http://localhost:8085/notify/wx/jsapi/postXml.php
+localhost:8085/notify/wx/jsapi/postXml.php?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=14408914465172
+
+因为网络，付款时间更新延迟问题
+
