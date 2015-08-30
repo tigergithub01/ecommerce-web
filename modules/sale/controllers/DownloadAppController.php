@@ -59,6 +59,7 @@ class DownloadAppController extends \yii\web\Controller {
 	}
 	
 	public function actionIos() {
-		return $this->redirect("http://fir.im/1mwl");
+		//return $this->redirect("http://fir.im/1mwl");
+		return $this->redirect("http://www.pgyer.com/GJcT");
 	}
 }
