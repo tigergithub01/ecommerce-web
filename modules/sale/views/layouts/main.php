@@ -84,8 +84,13 @@ button.btn-primary {
 		var app_browse_type = $("#app_browse_type").val();
 		if(app_browse_type==1){
 			//android app
+			/*
 			if(androidJs!=null){
 				androidJs.goBack();
+			}
+			*/
+			if(androidJs!=null){
+				androidJs.finish();
 			}
 		}else if(app_browse_type==2){
 			//ios app
