@@ -40,11 +40,12 @@ $roles=$model->getRoleList();
             ],
             'last_login_date',
             'create_date',
+            /*
             [
                 'label'=>'角色',
                 'format'=>'raw',
                 'value'=>implode('，',ArrayHelper::getColumn($roles, 'name'))
-            ]
+            ]*/
         ],
     ]) ?>
 

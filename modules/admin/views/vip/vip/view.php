@@ -59,12 +59,13 @@ $(function(){
                         'label'=>'上级会员',
                         'format'=>'raw',
                         'value'=>$model->getParentName()
-                    ],                   
+                    ],
+                    /*
                     [
                         'label'=>'安全邮箱是否已验证',
                         'format'=>'raw',
                         'value'=>($model->email_verify_flag?"<span class='msg_ok'><i class='icon-ok'></i>已验证</span>":"<span class='msg_forbid'><i class=' icon-remove'></i>未验证</span>")
-                    ],
+                    ],*/
                     [
                         'label'=>'状态',
                         'format'=>'raw',

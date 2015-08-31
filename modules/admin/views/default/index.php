@@ -138,8 +138,7 @@ use yii\helpers\Url;
             
             <li class='menu1'><a href=""><span class="m11">系统设置</span></a>
                 <ul class="submenu">                    
-                    <li><a href="<?=Url::to(['basic/user'])?>"><span class="m2">用户信息</span></a></li>
-                    <li><a href="<?=Url::to(['basic/role'])?>"><span class="m2">角色信息</span></a></li>
+                    <li><a href="<?=Url::to(['basic/user'])?>"><span class="m2">用户信息</span></a></li>                    
                     <li><a href="<?=Url::to(['basic/user/change-my-password'])?>"><span class="m2">密码修改</span></a></li>
                     <li><a href="<?=Url::to(['system/operation-log'])?>"><span class="m2">后台操作日志</span></a></li>                   
                     <li><a href="<?=Url::to(['system/vip-operation-log'])?>"><span class="m2">会员操作日志</span></a></li>                   

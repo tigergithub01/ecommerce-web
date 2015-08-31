@@ -78,6 +78,7 @@ foreach($myroles as $item){
                 <?= Html::activeDropDownList($model, 'status', User::getUserStatusMeta(), ['class' => 'form-select']) ?>
             </td>
         </tr>
+        <!--
         <tr>
             <td class="td-column">角色</td>
             <td>
@@ -86,6 +87,7 @@ foreach($myroles as $item){
                 <?php } ?>
             </td>
         </tr>
+        -->
     </table>
     <p class="center">
         <?= Html::submitButton($model->isNewRecord ? '添加' : '修改', ['class' => $model->isNewRecord ? 'btn btn_large' : 'btn btn_large btn-primary ']) ?>

@@ -20,10 +20,12 @@ $this->registerJsFile('@web/js/jquery.easytabs.min.js');
 $(function(){
     $('#tab-container').easytabs({'animate':false});
     
-    $.validator.addMethod("special_deduct_flag", function(value, element) {        
-        var s=0;
+    $.validator.addMethod("special_deduct_flag", function(value, element) {
         
-        if(!$("#product-special_deduct_flag").val()){return true;}
+        if(!$("#product-special_deduct_flag")[0].checked){
+            return true;
+        }
+        var s=0;
         $("#tbodyDeductFlag input:text").each(function(i,n){
             s+=parseFloat($(this).val());
         });
@@ -242,7 +244,7 @@ function changeDeductFlag(sender){
                         <img src='<?=Yii::getAlias('@web').$item['url']?>' class='productImg' />
                         <div style="position:absolute;left:150px;top:10px;">
                             <a href="#" data-func="delete" onclick="return deleteSignPic(<?=$item['id']?>);"><i class="icon-trash icon-large"></i> 删除</a>
-                            <a href="#" data-func="setface" data-face="<?=$item['id']?>|old"><i class="icon-picture"></i> 设未封面</a>
+                            <a href="#" data-func="setface" data-face="<?=$item['id']?>|old"><i class="icon-picture"></i> 设为封面</a>
                         </div>
                     </div>
                 <?php    }} ?>
@@ -254,7 +256,7 @@ function changeDeductFlag(sender){
                         <img src='<?=$item['url']?>' class='productImg' />
                         <div style="position:absolute;left:150px;top:10px;">
                             <a href="#" data-func="delete"><i class="icon-trash icon-large"></i> 删除</a>
-                            <a href="#" data-func="setface" data-face="<?=$key?>|new"><i class="icon-picture"></i> 设未封面</a>
+                            <a href="#" data-func="setface" data-face="<?=$key?>|new"><i class="icon-picture"></i> 设为封面</a>
                         </div>
                     </div>
                 <?php    }} ?>
