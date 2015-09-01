@@ -17,7 +17,7 @@ function submitSearch(){
 
 $(function(){
     $(".commitSheet").click(function(){
-        if(!window.confirm("确定要提交结算申请吗？")){            
+        if(!window.confirm("确定要去结算吗？")){            
             return false;
         }
         var sheetID=$(this).attr("data-sheetID");       
@@ -28,7 +28,7 @@ $(function(){
     });
     
      $(".confirmCommitSheet").click(function(){
-        if(!window.confirm("确定要结算吗？")){            
+        if(!window.confirm("确定要结算完成吗？")){            
             return false;
         }
         var sheetID=$(this).attr("data-sheetID");       
@@ -149,10 +149,10 @@ $(function(){
                     $html="";
                     switch($model['status']){
                         case 0:
-                                $html=Html::a('申请结算', 'commit',['class'=>'button_link commitSheet','data-sheetID'=>$model->id]);
+                                $html=Html::a('去结算', 'commit',['class'=>'button_link commitSheet','data-sheetID'=>$model->id]);
                                 break;                           
                             case 2:
-                                $html=Html::a('确认结算', 'commit',['class'=>'button_link confirmCommitSheet msg_warning','data-sheetID'=>$model->id]);
+                                $html=Html::a('结算完成', 'commit',['class'=>'button_link confirmCommitSheet msg_warning','data-sheetID'=>$model->id]);
                                 break;                          
                     }                   
                     return $html;
