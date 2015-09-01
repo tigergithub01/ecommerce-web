@@ -32,6 +32,7 @@ use app\models\basic\DeliveryType;
  * @property string $message
  * @property string $trade_no
  * @property string $trade_status
+ * @property string $finish_date
  */
 class SoSheet extends \yii\db\ActiveRecord
 {
@@ -76,7 +77,7 @@ class SoSheet extends \yii\db\ActiveRecord
             [['sheet_type_id', 'code', 'vip_id', 'status', 'settle_flag', 'order_date'], 'required'],
             [['sheet_type_id', 'vip_id', 'status', 'settle_flag', 'delivery_type', 'pay_type_id'], 'integer'],
             [['order_amt', 'order_quantity', 'deliver_fee', 'pay_amt', 'return_amt'], 'number'],
-            [['order_date', 'delivery_date', 'pay_date', 'return_date'], 'safe'],
+            [['order_date', 'delivery_date', 'pay_date', 'return_date','finish_date'], 'safe'],
             [['code'], 'string', 'max' => 30],
             [['delivery_no'], 'string', 'max' => 60],
             [['memo'], 'string', 'max' => 400],
@@ -113,6 +114,7 @@ class SoSheet extends \yii\db\ActiveRecord
             'message' => '买家留言',
         	'trade_no' => '支付宝交易号',
         	'trade_status' => '支付宝交易状态',
+        	'finish_date' => '订单完成日期',	
         ];
     }
     
