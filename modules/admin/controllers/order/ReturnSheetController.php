@@ -123,8 +123,7 @@ class ReturnSheetController extends MyController
         $outStockSheetModel= OutStockSheet::findOne($model->out_id);
        
         if(Yii::$app->request->isPost && $model->status!=5001){
-            echo "改状态下不允许修改退货单[5001]";
-            exit;
+            $this->ShowMessage("该状态下不允许修改退货单[".$model->status.']');           
         }
         
         if ($v) {

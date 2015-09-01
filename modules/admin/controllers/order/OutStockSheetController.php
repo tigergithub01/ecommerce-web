@@ -70,7 +70,7 @@ class OutStockSheetController extends MyController
         }
         
         if($orderModel->status!==3002){
-            $this->ShowMessage("订单在该状态下无法进行发货操作");
+            $this->ShowMessage("订单在该状态下无法进行发货操作[".$orderModel->status.']');
             //echo "订单在该状态下无法进行发货操作";
             //exit;
         }
@@ -85,6 +85,10 @@ class OutStockSheetController extends MyController
             
             $transaction=\Yii::$app->db->beginTransaction();
             $v=$osd_id=$model->save();
+            
+            //订单状态修改
+            $orderModel->status=3003;
+            $orderModel->save();
            
             if($v){
                 //发货单明细               
