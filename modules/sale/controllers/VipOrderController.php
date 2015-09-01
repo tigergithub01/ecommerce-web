@@ -548,4 +548,30 @@ class VipOrderController extends BaseSaleController {
 				'/sale/vip-center/index'
 		] );
 	}
+	
+	public function actionReturnConfirm() {
+		// submit order
+		// vip information
+		$vip = $_SESSION [SaleConstants::$session_vip];
+		$orderId = $_REQUEST ['orderId'];
+		$vipOrderService = new VipOrderService ();
+		$soSheet = $vipOrderService->getOrder ( $orderId );
+		if($vip->id != $soSheet->vip_id){
+			throw new HttpException ( '非法操作，只能操作自己的订单。' );
+		}
+	
+		if(empty($soSheet)){
+			throw new HttpException ( '订单不存在' );
+		}
+		$finish_date = date ( SaleConstants::$date_format, time () );
+		SoSheet::updateAll ( [
+				'status' => 3007,
+		], 'id=:id', [
+				":id" => $soSheet->id
+		] );
+	
+		return $this->redirect ( [
+				'/sale/vip-center/index'
+		] );
+	}
 }
