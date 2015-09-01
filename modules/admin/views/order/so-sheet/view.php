@@ -87,11 +87,11 @@ $this->registerJsFile('@web/js/jquery.easytabs.min.js');
                                         break;
                                     case 3007://待退货
                                         $h = '<span class="msg msg_warning"><i class="icon-bolt icon-large"></i>{status}</span>&nbsp;';
-                                        $h.=Html::a('退货', ['return_sheet', 'id' => $model->id], ['class' => 'button_link']);
+                                        /*$h.=Html::a('退货', ['return_sheet', 'id' => $model->id], ['class' => 'button_link']);*/
                                         break;
                                     case 3008://待退款
                                         $h = '<span class="msg msg_warning"><i class="icon-money icon-large"></i>{status}</span>&nbsp;';
-                                        $h.=Html::a('退款', ['refund_sheet', 'id' => $model->id], ['class' => 'button_link']);
+                                        /*$h.=Html::a('退款', ['refund_sheet', 'id' => $model->id], ['class' => 'button_link']);*/
                                         break;
                                 }
 

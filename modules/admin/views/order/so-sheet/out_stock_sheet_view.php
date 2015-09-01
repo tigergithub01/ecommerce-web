@@ -23,10 +23,13 @@ use yii\helpers\Url;
             return false;
     });
 </script>
+<?php
+if($model->status==3002){
+?>
 <p>
     <a href='<?= Url::to(['order/out-stock-sheet/create', 'order_id' => $model->id]) ?>' class='button_link'>填写新发货单</a>
 </p>
-
+<?php } ?>
 <?php
 
 $outStockSheetList = $model->outStockSheetList;
@@ -41,6 +44,7 @@ if ($outStockSheetList) {
                             <ul>
                                 <li><span class="lt1">发货单号：</span><?= $item->code ?></li>
                                 <li><span class="lt1">运费：</span><?= Yii::$app->formatter->asDecimal($item->deliver_fee, 2) ?></li>
+                                <li><span class="lt1">快递单号：</span><?= $item->delivery_no ?></li>
                                 <li><span class="lt1">下单时间：</span><?= $item->sheet_date ?></li>
                                 <li><span class="lt1">状态：</span><?= $item->statusData->pa_val ?></li>
                                 <li><span class="lt1">备注：</span><?= $item->memo ?></li>                                    
@@ -52,7 +56,7 @@ if ($outStockSheetList) {
                                     echo "&nbsp;&nbsp;";
                                     echo "<a href='#' class='button_link submitOutStockButton' data-outStockID='".$item->id."'>确认本次发货完成</a>";
                                 }
-                                if ($item->status == 4002) {
+                                if ($item->status == 4002 && $model->status==3007) {
                                     echo Html::a('填写退货单', ['order/return-sheet/create', 'out_id' => $item->id], ['class' => 'button_link']);
                                 }
                                 ?>

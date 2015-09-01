@@ -88,6 +88,9 @@ class OutStockSheetController extends MyController
             
             //订单状态修改
             $orderModel->status=3003;
+            $orderModel->delivery_date=date('Y-m-d H:i:s',time());
+            $orderModel->delivery_no=$model->delivery_no;
+            $orderModel->delivery_type =$model->delivery_type;
             $orderModel->save();
            
             if($v){

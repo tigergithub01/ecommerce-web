@@ -63,6 +63,7 @@ class ReturnSheetController extends MyController
         
         $v=$model->load(Yii::$app->request->post());
         $outStockSheetModel= OutStockSheet::findOne($model->out_id);
+        $orderModel=  \app\models\order\SoSheet::findOne($outStockSheetModel->order_id);
         
         if(!$outStockSheetModel){
             echo "无效的出货单号";
@@ -78,7 +79,14 @@ class ReturnSheetController extends MyController
             $model['sheet_date']=Yii::$app->formatter->asDate('now', 'yyyy-MM-dd HH::mm::ss');
             
             $transaction=\Yii::$app->db->beginTransaction();
-            $v=$model->save();           
+            $v=$model->save();
+            
+            //订单的退货时间，退货金额，订单状态改为 待退款
+            $orderModel->status=3008;
+            $orderModel->return_date=date('Y-m-d H:i:s',time());
+            $orderModel->return_amt=$model->return_amt;
+            $orderModel->save();
+            
             if($v){
                 //退货单明细               
                 foreach (Yii::$app->request->post('ReturnDetail') as $i => $value) {

@@ -35,7 +35,7 @@ class OutStockSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sheet_type_id', 'code', 'order_id', 'user_id', 'sheet_date', 'status'], 'required'],
+            [['sheet_type_id', 'code', 'order_id', 'user_id', 'sheet_date', 'status','delivery_no'], 'required'],
             [['sheet_type_id', 'order_id', 'user_id', 'status'], 'integer'],
             [['sheet_date'], 'safe'],
             [['deliver_fee'], 'number'],

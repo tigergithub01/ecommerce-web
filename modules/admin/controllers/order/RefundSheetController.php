@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers\order;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use app\models\order\SoSheet;
 use app\models\order\RefundSheet;
 use app\modules\admin\controllers\MyController;
 use yii\web\NotFoundHttpException;
@@ -62,10 +63,30 @@ class RefundSheetController extends MyController
         $model['code']=SheetCodeGenUtil::getCode(4);
         $model['user_id']=Yii::$app->user->identity->id;
         $model['sheet_date']=date(Yii::$app->params['date_format'],time());
+        
+        if ($v){
+            $transaction=\Yii::$app->db->beginTransaction();
+            $v=$model->save();
             
-        if ($v && $model->save()){
-            $logData=['op_desc'=>'添加退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
-            $this->logAdmin($logData);
+            if($v){
+                //修改订单的状态为关闭
+                $orderModel=SoSheet::findOne($model->order_id);
+                if($model->status==1){
+                    $orderModel->status=3006;
+                }                
+                $v=$orderModel->save();
+            }
+            
+            if($v){
+                $transaction->commit();
+                $logData=['op_desc'=>'添加退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                $this->logAdmin($logData);
+            }else{
+                $transaction->rollBack();
+            }  
+        }
+        
+        if($v){
             return $this->redirect(['order/so-sheet/view', 'id' => $model->order_id]); 
         }
         else{
@@ -89,16 +110,39 @@ class RefundSheetController extends MyController
         $v=$model->load(Yii::$app->request->post());        
         $model['user_id']=Yii::$app->user->identity->id;  
             
-        if ($v && $model->save()){
-            $logData=['op_desc'=>'修改退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
-        $this->logAdmin($logData);
+        if ($v ){
+            $transaction=\Yii::$app->db->beginTransaction();
+            $v=$model->save();
+            
+            if($v){
+                //修改订单的状态为关闭
+                $orderModel=SoSheet::findOne($model->order_id);                
+                switch($model->status){
+                    case 6001:$orderModel->status=3008;//失效，回到退款状态
+                        break;;
+                    case 6002:$orderModel->status=3006;//有效，关闭状态
+                        break;
+                }                    
+                $v=$orderModel->save();
+            }
+            
+            if($v){
+                $transaction->commit();
+                $logData=['op_desc'=>'修改退款单','op_data'=>json_encode($model->attributes,JSON_UNESCAPED_UNICODE)];
+                $this->logAdmin($logData);
+            }else{
+                $transaction->rollBack();
+            }             
+        }
+        
+        if($v){
             return $this->redirect(['order/so-sheet/view', 'id' => $model->order_id]); 
         }
         else{
-            return $this->render('update', [
+            return $this->render('create', [
                 'model' => $model,
             ]);     
-        }
+        }         
     }
 
     /**
