@@ -20,9 +20,9 @@ class VipIncomeDetailController extends \app\modules\admin\controllers\MyControl
      * Lists all Vip models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($vip_id)
     {
-        $query=VipIncomeDetail::find()->joinWith(['vip','subVip','product']);
+        $query=VipIncomeDetail::find()->joinWith(['vip','subVip','product'])->where(['vip_id'=>$vip_id]);
        
         
         $dataProvider = new ActiveDataProvider([

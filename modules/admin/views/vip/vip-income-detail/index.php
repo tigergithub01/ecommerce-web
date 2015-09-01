@@ -20,8 +20,12 @@ function submitSearch(){
 <div class="vip-index">
 
   <div class='clearfix h1div'>
-
-
+        <div class='float-right'>
+            <a href='<?=Url::to(['vip/vip-income/index'])?>' class='button_link'><i class=' icon-angle-left'></i>返回</a>
+        </div>
+        <strong class='title'><?= Html::encode($this->title) ?></strong>
+   </div>
+    
     <?= GridView::widget([
         'layout'=>'{items}{summary}{pager}',
         'dataProvider' => $dataProvider,
@@ -94,5 +98,6 @@ function submitSearch(){
             ],
         ],
     ]); ?>
+
 
 </div>
