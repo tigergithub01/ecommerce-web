@@ -493,17 +493,29 @@ class VipOrderController extends BaseSaleController {
 		$vipOrderService = new VipOrderService ();
 		$soSheet = $vipOrderService->getOrder ( $orderId );	
 		if($vip->id != $soSheet->vip_id){
-			throw new HttpException ( '非法操作，只能取消自己的订单。' );
+			throw new NotFoundHttpException ( '非法操作，只能取消自己的订单。' );
 		}
 		
 		if(empty($soSheet)){
 			throw new HttpException ( '订单不存在' );
 		}
-		SoSheet::updateAll ( [
-				'status' => 3006,
-		], 'id=:id', [
-				":id" => $soSheet->id
-		] );
+		
+		//待发货情况下，要更新状态为待退款
+		if($soSheet->status==3002){
+			SoSheet::updateAll ( [
+					'status' => 3008,
+			], 'id=:id', [
+					":id" => $soSheet->id
+			] );
+		}else{
+			//其它情况更新为关闭状态
+			SoSheet::updateAll ( [
+					'status' => 3006,
+			], 'id=:id', [
+					":id" => $soSheet->id
+			] );
+		}		
+		
 		
 		return $this->redirect ( [ 
 					'/sale/vip-center/index'
@@ -524,8 +536,10 @@ class VipOrderController extends BaseSaleController {
 		if(empty($soSheet)){
 			throw new HttpException ( '订单不存在' );
 		}
+		$finish_date = date ( SaleConstants::$date_format, time () );
 		SoSheet::updateAll ( [
 				'status' => 3005,
+				'finish_date' => $finish_date,
 		], 'id=:id', [
 				":id" => $soSheet->id
 		] );

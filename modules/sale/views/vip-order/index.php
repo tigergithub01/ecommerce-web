@@ -81,8 +81,10 @@ $this->registerCssFile ( 'css/sale/order.css', [
 					<a class="default primary" style="background-color: #c00000"
 						href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$order['id']])?>">付款</a>
 				<?php } else if($order['status']==3003){?>
+				<!-- 
 					<a class="default primary" style="background-color: #c00000" onclick="return confirm('是否确认收货?');" 
 						href="<?=Url::toRoute(['/sale/vip-order/rev-confirm','orderId'=>$order['id']])?>">确认收货</a>
+						 -->
 				<?php }?>
 				
 		</div>

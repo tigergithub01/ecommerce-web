@@ -82,12 +82,18 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 		<a class="default danger" href="javascript:void(0)"
 			onclick="confirm_url('确定要取消此订单吗？','')">取消订单</a>
 		 -->
-		 <?php if ($model['status']==3001){?>
+		 <?php if ($model['status']==3001 || $model['status']==3002){?>
 			<a
 			class="default primary" onclick="return confirm('是否取消订单?');" href="<?=Url::toRoute(['/sale/vip-order/cancel','orderId'=>$model['id']])?>">取消订单</a>
+		 <?php }?>
+		 
+		 <?php if ($model['status']==3001){?>
 		 <a
 			class="default primary" href="<?=Url::toRoute(['/sale/vip-order/pay','orderId'=>$model['id']])?>">付款</a>
-		<?php }else if($model['status']==3003){?>	
+		<?php }?>	
+		
+		
+		<?php if ($model['status']==3003){?>	
 			<a
 			class="default primary" onclick="return confirm('是否确认收货?');" href="<?=Url::toRoute(['/sale/vip-order/rev-confirm','orderId'=>$model['id']])?>">确认收货</a>
 		<?php }?>
