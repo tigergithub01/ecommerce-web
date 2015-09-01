@@ -97,6 +97,11 @@ $this->registerCssFile ('css/sale/order.css',['position' => \yii\web\View::POS_H
 			<a
 			class="default primary" onclick="return confirm('是否确认收货?');" href="<?=Url::toRoute(['/sale/vip-order/rev-confirm','orderId'=>$model['id']])?>">确认收货</a>
 		<?php }?>
+		
+		<?php if ($model['status']==3005){?>	
+			<a
+			class="default primary" onclick="return confirm('是否确认退货?');" href="<?=Url::toRoute(['/sale/vip-order/return-confirm','orderId'=>$model['id']])?>">退货申请</a>
+		<?php }?>
 	</div>
 
 </div>
