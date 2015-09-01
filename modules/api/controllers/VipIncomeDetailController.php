@@ -23,18 +23,24 @@ class VipIncomeDetailController extends BaseApiController {
 		$offset = isset ( $_REQUEST ['offset'] ) ? $_REQUEST ['offset'] : 0;
 		$limit = isset ( $_REQUEST ['page_count'] ) ? $_REQUEST ['page_count'] : 15;
 		$order_column = isset ( $_REQUEST ['order_column'] ) ? $_REQUEST ['order_column'] : null;
-		$order_direction = isset ( $_REQUEST ['$order_direction'] ) ? $_REQUEST ['$order_direction'] : null;
+		$order_direction = isset ( $_REQUEST ['order_direction'] ) ? $_REQUEST ['order_direction'] : null;
 		
 		$query = new \yii\db\ActiveQuery ( 'app\models\finance\VipIncomeDetail' );
 		$query->where ( 'vip_id=:vip_id', [ 
 				':vip_id' => $vip_id 
 		] );
 		
+		//set default value
+		if (empty ( $order_column )) {
+			$order_column='create_date';
+			$order_direction='desc';
+		}
+		
 		// order
 		$yii_sql_order = (empty ( $order_direction ) or $order_direction == 'asc') ? SORT_ASC : SORT_DESC;
 		if (! empty ( $order_column )) {
-			$query->orderBy ( [
-					$order_direction => $yii_sql_order
+			$query->orderBy ( [ 
+					$order_column => $yii_sql_order 
 			] );
 		}
 		
