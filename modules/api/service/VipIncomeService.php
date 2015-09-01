@@ -24,7 +24,7 @@ class VipIncomeService {
 		 ] )->andWhere ( 'status=0' )->all (); */
 		$approving_amt = (new \yii\db\Query ())->select ( 'sum(amount) as amount' )->from ( 't_vip_withdraw_flow' )->where ( 'vip_id=:vip_id', [ 
 				':vip_id' => $vip_id 
-		] )->andWhere ( 'status=0' )->one ();
+		] )->andWhere ( 'status=0 or status=2' )->one ();
 		
 // 		$model->can_settle_amt = ($model->amount) - $approving_amt ['amount'] - ($model->settled_amt);
 		$model->can_settle_amt = ($model->can_settle_amt) - $approving_amt ['amount'];
