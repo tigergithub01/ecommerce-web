@@ -3,7 +3,10 @@ use app\models\system\PhoneVerifyCode;
 use app\modules\sale\models\SaleConstants;
 
 
-session_start();
+// session_start();
+if(!isset($_SESSION)){
+	session_start();
+}
 
 header("Content-type:text/html; charset=UTF-8");
 
